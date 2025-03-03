@@ -40,7 +40,7 @@ const AudienceSection = () => {
   const particleCount = isMobile ? 6 : 20;
 
   return (
-    <section className="relative w-full py-10 sm:py-16 md:py-20 lg:py-28 bg-[#1a2332] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen">
+    <section className="relative w-full py-10 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen audience-section">
       {/* Fundo com elementos visuais */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0c1220] via-[#182030] to-[#1d2638]" />
@@ -152,9 +152,9 @@ const AudienceSection = () => {
         }}
       />
       
-      {/* Otimizações CSS para mobile */}
+      {/* Transição suave entre as seções em mobile */}
       <style jsx>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           /* Reduzir qualidade de blur em dispositivos móveis para melhor performance */
           .blur-3xl {
             filter: blur(15px);
@@ -162,6 +162,22 @@ const AudienceSection = () => {
           
           .blur-2xl {
             filter: blur(10px);
+          }
+          
+          /* Adicionar transição suave no topo para conectar com o Hero */
+          .audience-section {
+            margin-top: -1px;
+          }
+          
+          .audience-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(15, 20, 30, 0.98), transparent);
+            z-index: 5;
           }
         }
       `}</style>

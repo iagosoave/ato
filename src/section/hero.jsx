@@ -1,20 +1,36 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import cristofer from './cristofer.png';
 import logo from './logo.png';
 
 const Hero = () => {
+  // Estado para detectar mobile apenas com useEffect para evitar SSR issues
+  const [isMobile, setIsMobile] = useState(false);
+    
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Generate connection nodes
   const connectionNodes = useMemo(() => {
-    return Array.from({ length: 20 }, (_, index) => ({
+    // Reduzir número de nós em dispositivos móveis
+    const nodeCount = isMobile ? 10 : 20;
+    
+    return Array.from({ length: nodeCount }, (_, index) => ({
       id: index,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: Math.random() * 10 + 2,
       connections: Math.floor(Math.random() * 3) + 1
     }));
-  }, []);
+  }, [isMobile]);
 
   // Generate connections between nodes
   const connections = useMemo(() => {
@@ -40,12 +56,21 @@ const Hero = () => {
   }, [connectionNodes]);
 
   return (
-    <section className="relative w-full min-h-screen bg-[#1a2332] overflow-hidden flex items-center justify-center pt-24 lg:pt-0">
-      {/* Connection Network Background */}
+    <section className="relative w-full min-h-screen bg-[#1a2332] overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0">
+      {/* Logo for mobile only */}
+      <div className="absolute top-0 left-0 w-full py-5 z-50 md:hidden flex justify-center">
+        <img 
+          src={logo} 
+          alt="Mobile Logo" 
+          className="h-12 w-auto drop-shadow-lg" 
+        />
+      </div>
+
+      {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Gradient Background Layer */}
         <motion.div 
-          className="absolute inset-0 bg-gradient-to-br from-[#1a2332] via-[#1a2332] to-[#e19d24]/20 opacity-90"
+          className="absolute inset-0 bg-gradient-to-br from-[#0c1220] via-[#182030] to-[#1d2638] opacity-90"
           initial={{ backgroundPosition: '0% 50%' }}
           animate={{ backgroundPosition: '100% 50%' }}
           transition={{
@@ -55,6 +80,14 @@ const Hero = () => {
             ease: 'easeInOut'
           }}
         />
+
+        {/* Grid de fundo - ocultado em mobile muito pequeno */}
+        <div className="absolute inset-0 opacity-5 hidden sm:block">
+          <div className="h-full w-full" style={{ 
+            backgroundImage: 'linear-gradient(to right, #e19d24 1px, transparent 1px), linear-gradient(to bottom, #e19d24 1px, transparent 1px)',
+            backgroundSize: isMobile ? '30px 30px' : '40px 40px'
+          }} />
+        </div>
 
         {/* Connection Network */}
         <svg className="absolute inset-0 connections-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -100,11 +133,10 @@ const Hero = () => {
           ))}
         </svg>
 
-        {/* Particle Overlay */}
-        <div className="absolute inset-0 opacity-[0.1]">
-          <div 
-            className="absolute inset-0 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(225,157,36,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(225,157,36,0.05)_1px,transparent_1px)]"
-          />
+        {/* Gradientes de fundo */}
+        <div className="absolute inset-0 opacity-30 mix-blend-soft-light">
+          <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,#e19d2440_0%,transparent_60%)]" />
+          <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,#e19d2430_0%,transparent_50%)]" />
         </div>
       </div>
 
@@ -113,12 +145,13 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           
           {/* Coluna de texto */}
-          <div className="w-full lg:w-5/12 xl:w-1/2 space-y-8 relative px-4">
+          <div className="w-full lg:w-5/12 xl:w-1/2 space-y-8 relative px-4" style={{ marginTop: isMobile ? '0' : '-200px' }}>
+            {/* Logo for desktop */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="relative text-center lg:text-left"
+              className="relative text-center lg:text-left hidden md:block"
             >
               <img 
                 src={logo} 
@@ -135,7 +168,7 @@ const Hero = () => {
               className="text-center lg:text-left"
             >
               <motion.h1 
-                className="text-4xl md:text-5xl font-bold leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -147,7 +180,7 @@ const Hero = () => {
               </motion.h1>
 
               <motion.p
-                className="text-lg md:text-xl text-[#c8d4e6] mt-6 max-w-xl mx-auto lg:mx-0"
+                className="text-base sm:text-lg md:text-xl text-[#c8d4e6] mt-4 sm:mt-6 max-w-xl mx-auto lg:mx-0"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -156,191 +189,171 @@ const Hero = () => {
               </motion.p>
 
               <motion.div
-                className="mt-10 flex justify-center lg:justify-start"
+                className="mt-6 sm:mt-8 md:mt-10 flex justify-center lg:justify-start"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
                 <motion.button
-                  className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] rounded-xl text-lg font-semibold text-white hover:shadow-xl transition-all duration-300 hover:gap-4"
+                  className="flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold text-white hover:shadow-xl transition-all duration-300 hover:gap-4"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Iniciar Jornada
-                  <ArrowRight className="transition-all" size={20} />
+                  <ArrowRight className="transition-all" size={isMobile ? 18 : 20} />
                 </motion.button>
               </motion.div>
             </motion.div>
           </div>
 
           {/* Coluna da imagem ajustada */}
-          <div className="w-full lg:w-7/12 xl:w-1/2 relative mt-12 lg:mt-0">
-            <div className="relative z-20 transform lg:translate-x-10">
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative h-full"
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#e19d2433_0%,transparent_60%)] smoke-effect" />
-                
-                <img
-                  src={cristofer}
-                  alt="Cristofer Leone"
-                  className="w-full h-[600px] md:h-[700px] object-cover object-top scale-[1.02] lg:scale-100 cristofer-image"
-                  style={{
-                    clipPath: 'polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%)',
-                    maskImage: 'linear-gradient(to right, black 85%, transparent 98%)'
-                  }}
-                />
-              </motion.div>
-            </div>
+          <div className="w-full lg:w-7/12 xl:w-1/2 relative mt-8 sm:mt-10 md:mt-12 lg:mt-0 lg:h-[calc(100vh-200px)]">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative h-full"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#e19d2433_0%,transparent_60%)] smoke-effect" />
+              <img
+                src={cristofer}
+                alt="Cristofer Leone"
+                className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] object-cover object-top scale-[1.02] lg:scale-100 cristofer-image"
+                style={{
+                  clipPath: 'polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%)',
+                  maskImage: 'linear-gradient(to right, black 85%, transparent 98%)',
+                  position: isMobile ? 'relative' : 'absolute',
+                  bottom: '0'
+                }}
+              />
+            </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Mobile-specific styles */}
-      <style jsx global>{`
-        /* Estilos para assegurar que as conexões apareçam em dispositivos móveis */
+      {/* Elementos de Fundo Adicionais similares ao AudienceSection */}
+      <motion.div
+        className="absolute top-1/4 right-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-[#e19d24]/15 rounded-full blur-2xl"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.1, 0.15, 0.1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: 'easeInOut'
+        }}
+      />
+
+      {/* Mobile Styles */}
+      <style jsx>{`
         @media (max-width: 768px) {
-          .connections-bg {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.7 !important;
-            z-index: 1 !important;
+          /* Base structure */
+          section {
+            background: #1a2332;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0;
+            margin: 0;
           }
           
-          .smoke-effect {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.7 !important;
-            z-index: 10 !important;
+          /* Imagem do Cristofer */
+          .w-full.lg\\:w-7\\/12 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 82%;
+            margin-top: 0 !important;
+            overflow: hidden;
+            z-index: 10;
           }
-          
+
+          /* Adiciona gradiente suave na parte inferior para transição com o texto */
           .cristofer-image {
-            position: relative !important;
-            z-index: 5 !important;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            clip-path: none !important;
+            mask-image: linear-gradient(to bottom, black 90%, transparent 100%) !important;
+            -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%) !important;
+            position: absolute !important;
+          }
+
+          /* Efeito de destaque ao redor da imagem */
+          .w-full.lg\\:w-7\\/12:after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: radial-gradient(ellipse at bottom, rgba(225, 157, 36, 0.15), transparent 70%);
+            z-index: 5;
+            pointer-events: none;
+          }
+
+          /* Coluna de texto */
+          .w-full.lg\\:w-5\\/12 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            margin-top: 0 !important;
+            padding: 1.5rem 1.25rem 1.75rem;
+            background: transparent;
+            z-index: 20;
+            text-align: center;
+          }
+
+          /* Background semitransparente atrás do texto */
+          .w-full.lg\\:w-5\\/12:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(15, 20, 30, 0.98), rgba(15, 20, 30, 0.92) 85%);
+            backdrop-filter: blur(10px);
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
+            z-index: -1;
+            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          /* Efeito de borda brilhante para o componente de texto */
+          .w-full.lg\\:w-5\\/12:after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(225, 157, 36, 0.7), transparent);
+            border-radius: 50%;
+            filter: blur(1px);
+            z-index: 2;
+          }
+          
+          /* Reduzir qualidade de blur em dispositivos móveis para melhor performance */
+          .blur-3xl {
+            filter: blur(15px);
+          }
+          
+          .blur-2xl {
+            filter: blur(10px);
           }
         }
-      `}</style>
-
-      {/* Media queries ajustadas */}
-      <style jsx>{`
-@media (max-width: 768px) {
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    padding-bottom: 0;
-  }
-
-  img[alt="Logo"] {
-    margin-top: 0;
-    height: 4.5rem;
-  }
-
-  img[alt="Cristofer Leone"] {
-    height: auto !important;
-    min-height: 75vh;
-    margin-top: 1.5rem;
-    margin-bottom: 0;
-    object-position: top;
-    object-fit: cover;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
-    mask-image: none !important;
-    width: 100%;
-  }
-
-  button {
-    width: auto;
-    max-width: 100%;
-  }
-  
-  section {
-    padding-top: 0 !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  /* Garantir que a imagem chegue até o final da section */
-  section > div.container {
-    margin-bottom: 0;
-  }
-  
-  section > div.container > div {
-    margin-bottom: 0;
-  }
-  
-  /* Ajuste para a imagem ficar grudada no fundo */
-  div.w-full.lg\\:w-7\\/12 {
-    margin-top: 1rem;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    position: relative;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  
-  div.relative.z-20 {
-    height: 100%;
-    width: 100%;
-    transform: none !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .container {
-    padding-top: 1.5rem;
-  }
-  
-  img[alt="Logo"] {
-    height: 4rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  h1 {
-    font-size: 2.25rem;
-  }
-  
-  img[alt="Cristofer Leone"] {
-    min-height: 65vh;
-  }
-}
-
-@media (max-height: 700px) and (max-width: 768px) {
-  img[alt="Cristofer Leone"] {
-    min-height: 55vh;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  p {
-    font-size: 1rem;
-    margin-top: 0.75rem;
-  }
-  
-  .mt-10 {
-    margin-top: 1.5rem;
-  }
-  
-  .container {
-    padding-top: 1rem;
-  }
-  
-  section {
-    min-height: 100%;
-  }
-}
       `}</style>
     </section>
   );
