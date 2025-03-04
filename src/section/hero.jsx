@@ -7,10 +7,12 @@ import logo from './logo.png';
 const Hero = () => {
   // Estado para detectar mobile apenas com useEffect para evitar SSR issues
   const [isMobile, setIsMobile] = useState(false);
+  const [screenHeight, setScreenHeight] = useState(0);
     
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
+      setScreenHeight(window.innerHeight);
     };
     
     checkMobile();
@@ -56,7 +58,7 @@ const Hero = () => {
   }, [connectionNodes]);
 
   return (
-    <section className="relative w-full min-h-screen bg-[#1a2332] overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0">
+    <section className="relative w-full min-h-screen bg-[#1a2332] overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0 hero-section">
       {/* Logo for mobile only */}
       <div className="absolute top-0 left-0 w-full py-5 z-50 md:hidden flex justify-center">
         <img 
@@ -145,7 +147,7 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           
           {/* Coluna de texto */}
-          <div className="w-full lg:w-5/12 xl:w-1/2 space-y-8 relative px-4" style={{ marginTop: isMobile ? '0' : '-200px' }}>
+          <div className="w-full lg:w-5/12 xl:w-1/2 space-y-8 relative px-4 hero-text-column" style={{ marginTop: isMobile ? '0' : '-200px' }}>
             {/* Logo for desktop */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -212,7 +214,7 @@ const Hero = () => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-full"
+              className="relative h-full cristofer-image-container"
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#e19d2433_0%,transparent_60%)] smoke-effect" />
               <img
@@ -251,18 +253,23 @@ const Hero = () => {
           /* Base structure */
           section {
             background: #1a2332;
-            min-height: 100vh;
+            min-height: auto;
+            height: ${screenHeight < 700 ? '100vh' : '95vh'};
+            max-height: 100vh;
             position: relative;
-            overflow: hidden;
+            overflow: visible; /* Alterado para visible para permitir conteúdo fora da section */
+            display: flex;
+            flex-direction: column;
+            padding-bottom: env(safe-area-inset-bottom, 0);
           }
 
           .container {
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             padding: 0;
             margin: 0;
+            flex: 1;
           }
           
           /* Imagem do Cristofer */
@@ -271,7 +278,7 @@ const Hero = () => {
             top: 0;
             left: 0;
             width: 100%;
-            height: 82%;
+            height: 70%; /* Reduzido para evitar sobreposição com outras seções */
             margin-top: 0 !important;
             overflow: hidden;
             z-index: 10;
@@ -284,8 +291,8 @@ const Hero = () => {
             object-fit: cover;
             object-position: top center;
             clip-path: none !important;
-            mask-image: linear-gradient(to bottom, black 90%, transparent 100%) !important;
-            -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%) !important;
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%) !important;
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%) !important;
             position: absolute !important;
           }
 
@@ -296,7 +303,7 @@ const Hero = () => {
             bottom: 10%;
             left: 0;
             right: 0;
-            height: 40%;
+            height: 30%; /* Ajustado */
             background: radial-gradient(ellipse at bottom, rgba(225, 157, 36, 0.15), transparent 70%);
             z-index: 5;
             pointer-events: none;
@@ -309,7 +316,7 @@ const Hero = () => {
             left: 0;
             width: 100%;
             margin-top: 0 !important;
-            padding: 1.5rem 1.25rem 1.75rem;
+            padding: 1.25rem 1rem 1.5rem;
             background: transparent;
             z-index: 20;
             text-align: center;
@@ -352,6 +359,60 @@ const Hero = () => {
           
           .blur-2xl {
             filter: blur(10px);
+          }
+
+          /* Ajustes para telas menores */
+          @media (max-height: 667px) {
+            section {
+              height: 100vh;
+              min-height: 100vh;
+            }
+            
+            .w-full.lg\\:w-7\\/12 {
+              height: 65%; /* Ainda mais reduzido para iPhones pequenos */
+            }
+            
+            .cristofer-image {
+              height: 100%;
+              object-position: 50% 15%; /* Ajuste para garantir que o rosto seja visível */
+            }
+            
+            .w-full.lg\\:w-5\\/12 {
+              padding: 1rem 1rem 1.25rem;
+            }
+          }
+          
+          /* Ajustes específicos para dispositivos muito pequenos */
+          @media (max-height: 568px) {
+            section {
+              padding-top: 8px;
+              height: 100vh;
+            }
+            
+            .w-full.lg\\:w-7\\/12 {
+              height: 60%;
+            }
+            
+            .cristofer-image {
+              object-position: 50% 10%;
+            }
+            
+            .w-full.lg\\:w-5\\/12 {
+              padding: 0.75rem 0.75rem 1rem;
+            }
+            
+            h1 {
+              font-size: 1.25rem;
+            }
+            
+            p {
+              font-size: 0.875rem;
+              margin-top: 0.5rem !important;
+            }
+            
+            .mt-6 {
+              margin-top: 0.75rem !important;
+            }
           }
         }
       `}</style>

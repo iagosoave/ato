@@ -1,1 +1,56 @@
 @import 'tailwindcss';
+
+html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+    position: static !important;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Configurações específicas para mobile */
+  @media (max-width: 767px) {
+    /* Redefine o layout do container principal para comportar múltiplas seções */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      overflow-x: hidden;
+      height: auto;
+      min-height: 100vh;
+    }
+    
+    /* Garantir que cada seção seja independente e possa ser scrollada */
+    .app-container > section {
+      min-height: 100vh;
+      height: auto;
+      position: relative;
+      overflow: visible;
+    }
+    
+    /* Ajustes específicos para a seção Hero */
+    section:first-child {
+      z-index: 10;
+      height: 100vh; /* Altura fixa para a primeira seção */
+    }
+    
+    /* Ajustes específicos para a seção Audience */
+    .audience-section {
+      z-index: 20;
+      margin-top: 0 !important; /* Força a margem 0 */
+      padding-top: 2rem;
+    }
+    
+    /* Impedir que elementos de fundo causem problemas de layout */
+    .absolute {
+      pointer-events: none;
+    }
+  }
+  
+  /* Suporte adicional para dispositivos muito pequenos */
+  @media (max-width: 360px) and (max-height: 640px) {
+    section {
+      padding-top: 1rem !important;
+      padding-bottom: 1rem !important;
+    }
+  }

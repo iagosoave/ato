@@ -5,10 +5,12 @@ import { ArrowRight } from 'lucide-react';
 const AudienceSection = () => {
   // Estado para detectar mobile apenas com useEffect para evitar SSR issues
   const [isMobile, setIsMobile] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(0);
     
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
+      setScreenWidth(window.innerWidth);
     };
     
     checkMobile();
@@ -94,9 +96,9 @@ const AudienceSection = () => {
           viewport={{ once: true, margin: "-10%" }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 mb-3 sm:mb-6">
             Para Quem é a
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] mt-1 sm:mt-2">
+            <span className="inline-mobile text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] sm:block sm:mt-2">
               Formação Método ATO?
             </span>
           </h2>
@@ -166,7 +168,9 @@ const AudienceSection = () => {
           
           /* Adicionar transição suave no topo para conectar com o Hero */
           .audience-section {
-            margin-top: -1px;
+            margin-top: 0;
+            padding-top: calc(1.5rem + env(safe-area-inset-top, 0));
+            z-index: 30;
           }
           
           .audience-section:before {
@@ -178,6 +182,27 @@ const AudienceSection = () => {
             height: 40px;
             background: linear-gradient(to bottom, rgba(15, 20, 30, 0.98), transparent);
             z-index: 5;
+          }
+          
+          /* Correção para o espaçamento do título em mobile */
+          .inline-mobile {
+            display: inline;
+            margin-left: 0.25rem;
+          }
+          
+          h2 {
+            line-height: 1.3;
+          }
+          
+          p {
+            margin-top: 0.5rem;
+          }
+        }
+
+        /* Fix para dispositivos de tamanho médio (tablets em modo vertical) */
+        @media (min-width: 768px) and (max-width: 992px) {
+          .audience-section {
+            margin-top: -1px;
           }
         }
       `}</style>
