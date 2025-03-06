@@ -1,11 +1,11 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import cristofer from './cristofer.png';
 import logo from './logo.png';
 
-const Hero = () => {
-  // Estado para detectar mobile apenas com useEffect para evitar SSR issues
+const Hero = forwardRef(({ noBackground = false }, ref) => {
+  // State for detecting mobile
   const [isMobile, setIsMobile] = useState(false);
   const [screenHeight, setScreenHeight] = useState(0);
     
@@ -20,47 +20,10 @@ const Hero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Generate connection nodes
-  const connectionNodes = useMemo(() => {
-    // Reduzir número de nós em dispositivos móveis
-    const nodeCount = isMobile ? 10 : 20;
-    
-    return Array.from({ length: nodeCount }, (_, index) => ({
-      id: index,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 10 + 2,
-      connections: Math.floor(Math.random() * 3) + 1
-    }));
-  }, [isMobile]);
-
-  // Generate connections between nodes
-  const connections = useMemo(() => {
-    const conns = [];
-    connectionNodes.forEach((node, index) => {
-      const potentialTargets = connectionNodes
-        .filter((_, targetIndex) => 
-          targetIndex !== index && 
-          Math.abs(node.x - connectionNodes[targetIndex].x) < 40 &&
-          Math.abs(node.y - connectionNodes[targetIndex].y) < 40
-        )
-        .slice(0, node.connections);
-
-      potentialTargets.forEach(target => {
-        conns.push({
-          start: node,
-          end: target,
-          opacity: Math.random() * 0.3 + 0.1
-        });
-      });
-    });
-    return conns;
-  }, [connectionNodes]);
-
   return (
-    <section className="relative w-full min-h-screen bg-[#1a2332] overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0 hero-section">
+    <section ref={ref} className="relative w-full min-h-screen bg-transparent overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0 hero-section">
       {/* Logo for mobile only */}
-      <div className="absolute top-0 left-0 w-full py-5 z-50 md:hidden flex justify-center">
+      <div className="absolute top-0 left-0 w-full py-5 z-50 md:hidden flex justify-center content-absolute">
         <img 
           src={logo} 
           alt="Mobile Logo" 
@@ -68,85 +31,11 @@ const Hero = () => {
         />
       </div>
 
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Gradient Background Layer */}
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-br from-[#0c1220] via-[#182030] to-[#1d2638] opacity-90"
-          initial={{ backgroundPosition: '0% 50%' }}
-          animate={{ backgroundPosition: '100% 50%' }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut'
-          }}
-        />
-
-        {/* Grid de fundo - ocultado em mobile muito pequeno */}
-        <div className="absolute inset-0 opacity-5 hidden sm:block">
-          <div className="h-full w-full" style={{ 
-            backgroundImage: 'linear-gradient(to right, #e19d24 1px, transparent 1px), linear-gradient(to bottom, #e19d24 1px, transparent 1px)',
-            backgroundSize: isMobile ? '30px 30px' : '40px 40px'
-          }} />
-        </div>
-
-        {/* Connection Network */}
-        <svg className="absolute inset-0 connections-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {/* Connection Lines */}
-          {connections.map((conn, index) => (
-            <motion.line
-              key={index}
-              x1={conn.start.x}
-              y1={conn.start.y}
-              x2={conn.end.x}
-              y2={conn.end.y}
-              stroke="#e19d24"
-              strokeWidth="0.3"
-              strokeOpacity={conn.opacity}
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{
-                duration: 2,
-                delay: index * 0.1,
-                ease: 'easeInOut'
-              }}
-            />
-          ))}
-
-          {/* Connection Nodes */}
-          {connectionNodes.map((node) => (
-            <motion.circle
-              key={node.id}
-              cx={node.x}
-              cy={node.y}
-              r={node.size / 10}
-              fill="#f8c56d"
-              fillOpacity="0.5"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.7 }}
-              transition={{
-                duration: 1,
-                delay: node.id * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
-            />
-          ))}
-        </svg>
-
-        {/* Gradientes de fundo */}
-        <div className="absolute inset-0 opacity-30 mix-blend-soft-light">
-          <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,#e19d2440_0%,transparent_60%)]" />
-          <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,#e19d2430_0%,transparent_50%)]" />
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="container mx-auto px-4 z-20 relative max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           
-          {/* Coluna de texto */}
+          {/* Text column */}
           <div className="w-full lg:w-5/12 xl:w-1/2 space-y-8 relative px-4 hero-text-column" style={{ marginTop: isMobile ? '0' : '-200px' }}>
             {/* Logo for desktop */}
             <motion.div
@@ -208,15 +97,15 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Coluna da imagem ajustada */}
+          {/* Image column (adjusted) */}
           <div className="w-full lg:w-7/12 xl:w-1/2 relative mt-8 sm:mt-10 md:mt-12 lg:mt-0 lg:h-[calc(100vh-200px)]">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-full cristofer-image-container"
+              className="relative h-full cristofer-image-container content-absolute"
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#e19d2433_0%,transparent_60%)] smoke-effect" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#e19d2433_0%,transparent_60%)] smoke-effect content-absolute" />
               <img
                 src={cristofer}
                 alt="Cristofer Leone"
@@ -233,31 +122,17 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Elementos de Fundo Adicionais similares ao AudienceSection */}
-      <motion.div
-        className="absolute top-1/4 right-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-[#e19d24]/15 rounded-full blur-2xl"
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.1, 0.15, 0.1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }}
-      />
-
       {/* Mobile Styles */}
       <style jsx>{`
         @media (max-width: 768px) {
           /* Base structure */
           section {
-            background: #1a2332;
+            background: transparent;
             min-height: auto;
             height: ${screenHeight < 700 ? '100vh' : '95vh'};
             max-height: 100vh;
             position: relative;
-            overflow: visible; /* Alterado para visible para permitir conteúdo fora da section */
+            overflow: visible; /* Changed to visible to allow content outside the section */
             display: flex;
             flex-direction: column;
             padding-bottom: env(safe-area-inset-bottom, 0);
@@ -272,19 +147,19 @@ const Hero = () => {
             flex: 1;
           }
           
-          /* Imagem do Cristofer */
+          /* Cristofer's image */
           .w-full.lg\\:w-7\\/12 {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70%; /* Reduzido para evitar sobreposição com outras seções */
+            height: 70%; /* Reduced to avoid overlapping with other sections */
             margin-top: 0 !important;
             overflow: hidden;
             z-index: 10;
           }
 
-          /* Adiciona gradiente suave na parte inferior para transição com o texto */
+          /* Add smooth gradient at the bottom for transition with text */
           .cristofer-image {
             width: 100%;
             height: 100%;
@@ -296,20 +171,20 @@ const Hero = () => {
             position: absolute !important;
           }
 
-          /* Efeito de destaque ao redor da imagem */
+          /* Highlight effect around the image */
           .w-full.lg\\:w-7\\/12:after {
             content: '';
             position: absolute;
             bottom: 10%;
             left: 0;
             right: 0;
-            height: 30%; /* Ajustado */
+            height: 30%; /* Adjusted */
             background: radial-gradient(ellipse at bottom, rgba(225, 157, 36, 0.15), transparent 70%);
             z-index: 5;
             pointer-events: none;
           }
 
-          /* Coluna de texto */
+          /* Text column */
           .w-full.lg\\:w-5\\/12 {
             position: absolute;
             bottom: 0;
@@ -322,7 +197,7 @@ const Hero = () => {
             text-align: center;
           }
 
-          /* Background semitransparente atrás do texto */
+          /* Semi-transparent background behind text */
           .w-full.lg\\:w-5\\/12:before {
             content: '';
             position: absolute;
@@ -338,7 +213,7 @@ const Hero = () => {
             box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
           }
           
-          /* Efeito de borda brilhante para o componente de texto */
+          /* Glowing border effect for text component */
           .w-full.lg\\:w-5\\/12:after {
             content: '';
             position: absolute;
@@ -351,17 +226,8 @@ const Hero = () => {
             filter: blur(1px);
             z-index: 2;
           }
-          
-          /* Reduzir qualidade de blur em dispositivos móveis para melhor performance */
-          .blur-3xl {
-            filter: blur(15px);
-          }
-          
-          .blur-2xl {
-            filter: blur(10px);
-          }
 
-          /* Ajustes para telas menores */
+          /* Adjustments for smaller screens */
           @media (max-height: 667px) {
             section {
               height: 100vh;
@@ -369,12 +235,12 @@ const Hero = () => {
             }
             
             .w-full.lg\\:w-7\\/12 {
-              height: 65%; /* Ainda mais reduzido para iPhones pequenos */
+              height: 65%; /* Further reduced for small iPhones */
             }
             
             .cristofer-image {
               height: 100%;
-              object-position: 50% 15%; /* Ajuste para garantir que o rosto seja visível */
+              object-position: 50% 15%; /* Adjustment to ensure face is visible */
             }
             
             .w-full.lg\\:w-5\\/12 {
@@ -382,7 +248,7 @@ const Hero = () => {
             }
           }
           
-          /* Ajustes específicos para dispositivos muito pequenos */
+          /* Specific adjustments for very small devices */
           @media (max-height: 568px) {
             section {
               padding-top: 8px;
@@ -418,6 +284,8 @@ const Hero = () => {
       `}</style>
     </section>
   );
-};
+});
+
+Hero.displayName = 'Hero';
 
 export default Hero;

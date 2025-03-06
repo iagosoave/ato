@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const AudienceSection = () => {
-  // Estado para detectar mobile apenas com useEffect para evitar SSR issues
+const AudienceSection = forwardRef(({ noBackground = false }, ref) => {
+  // Helper function to check if the device is iOS
+  const isIOS = () => {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  };
+  // State for detecting mobile
   const [isMobile, setIsMobile] = useState(false);
   const [screenWidth, setScreenWidth] = useState(0);
     
@@ -18,7 +22,7 @@ const AudienceSection = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
     
-  // Dados para a seção
+  // Data for the section
   const targetAudience = [
     {
       title: "Profissionais com Experiência",
@@ -38,57 +42,20 @@ const AudienceSection = () => {
     }
   ];
 
-  // Número de partículas baseado no dispositivo
-  const particleCount = isMobile ? 6 : 20;
+  // Apply iOS-specific check for safe-area-inset handling at runtime
+  useEffect(() => {
+    if (isMobile && isIOS() && typeof document !== 'undefined') {
+      const audienceSection = document.querySelector('.audience-section');
+      if (audienceSection) {
+        audienceSection.style.paddingTop = 'env(safe-area-inset-top, 16px)';
+      }
+    }
+  }, [isMobile]);
 
   return (
-    <section className="relative w-full py-10 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen audience-section">
-      {/* Fundo com elementos visuais */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0c1220] via-[#182030] to-[#1d2638]" />
-        
-        {/* Gradientes de fundo */}
-        <div className="absolute inset-0 opacity-30 mix-blend-soft-light">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,#e19d2440_0%,transparent_60%)]" />
-          <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,#e19d2430_0%,transparent_50%)]" />
-        </div>
-  
-        {/* Grid de fundo - ocultado em mobile muito pequeno */}
-        <div className="absolute inset-0 opacity-5 hidden sm:block">
-          <div className="h-full w-full" style={{ 
-            backgroundImage: 'linear-gradient(to right, #e19d24 1px, transparent 1px), linear-gradient(to bottom, #e19d24 1px, transparent 1px)',
-            backgroundSize: isMobile ? '30px 30px' : '40px 40px'
-          }} />
-        </div>
-  
-        {/* Partículas animadas com número reduzido em mobile */}
-        <div className="absolute inset-0 z-1 opacity-20">
-          {Array.from({ length: particleCount }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-[#e19d24]"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                opacity: 0.2 + Math.random() * 0.3,
-              }}
-              animate={{
-                y: [0, -20 + Math.random() * 40, 0],
-                x: [0, -10 + Math.random() * 20, 0],
-                scale: [1, 1.1 + Math.random() * 0.2, 1],
-              }}
-              transition={{
-                duration: isMobile ? 4 + Math.random() * 2 : 6 + Math.random() * 4,
-                repeat: Infinity,
-                ease: 'easeInOut'
-              }}
-            />
-          ))}
-        </div>
-      </div>
-  
-      {/* Conteúdo Principal */}
-      <div className="container mx-auto px-3 sm:px-4 z-10 relative">
+    <section ref={ref} className="relative w-full py-5 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen audience-section">
+      {/* Main Content */}
+      <div className="container mx-auto px-3 sm:px-4 z-10 relative mobile-adjust">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -107,8 +74,8 @@ const AudienceSection = () => {
           </p>
         </motion.div>
   
-        {/* Grid de Benefícios */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 md:gap-8 max-w-6xl mx-auto">
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 md:gap-8 max-w-6xl mx-auto mobile-card-grid">
           {targetAudience.map((item, index) => (
             <motion.div
               key={index}
@@ -116,7 +83,7 @@ const AudienceSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: isMobile ? 0.05 * index : 0.1 * index }}
               viewport={{ once: true, margin: "-5%" }}
-              className="group relative p-3 sm:p-5 md:p-8 bg-[#16202d] rounded-lg sm:rounded-xl md:rounded-2xl border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all"
+              className="group relative p-3 sm:p-5 md:p-8 bg-[#16202d] rounded-lg sm:rounded-xl md:rounded-2xl border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all mobile-card"
             >
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#e19d2405_0%,transparent_70%)] rounded-lg sm:rounded-xl md:rounded-2xl" />
               <div className="flex items-start gap-3 sm:gap-4 md:gap-6">
@@ -129,48 +96,22 @@ const AudienceSection = () => {
                 </div>
               </div>
               
-              {/* Efeito hover */}
+              {/* Hover effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#e19d24]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg sm:rounded-xl md:rounded-2xl" />
             </motion.div>
           ))}
         </div>
-  
-        {/* Efeitos de Brilho - ajustados para mobile */}
-        <div className="absolute -top-20 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#e19d24]/10 rounded-full blur-3xl -z-1" />
-        <div className="absolute bottom-0 left-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#e19d24]/10 rounded-full blur-3xl -z-1" />
       </div>
   
-      {/* Elementos de Fundo Adicionais */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-[#e19d24]/15 rounded-full blur-2xl"
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.1, 0.15, 0.1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }}
-      />
-      
-      {/* Transição suave entre as seções em mobile */}
+      {/* Smooth transition between sections on mobile */}
       <style jsx>{`
         @media (max-width: 768px) {
-          /* Reduzir qualidade de blur em dispositivos móveis para melhor performance */
-          .blur-3xl {
-            filter: blur(15px);
-          }
-          
-          .blur-2xl {
-            filter: blur(10px);
-          }
-          
-          /* Adicionar transição suave no topo para conectar com o Hero */
+          /* Add smooth transition at the top to connect with Hero */
           .audience-section {
             margin-top: 0;
-            padding-top: calc(1.5rem + env(safe-area-inset-top, 0));
+            padding-top: 0; /* Reduced padding for mobile */
             z-index: 30;
+            min-height: auto !important; /* Override min-height */
           }
           
           .audience-section:before {
@@ -184,30 +125,124 @@ const AudienceSection = () => {
             z-index: 5;
           }
           
-          /* Correção para o espaçamento do título em mobile */
+          /* Fix for title spacing on mobile */
           .inline-mobile {
             display: inline;
             margin-left: 0.25rem;
           }
           
-          h2 {
-            line-height: 1.3;
+          /* Adjust sizing and spacing for mobile */
+          .audience-section .container {
+            padding-top: 2rem; /* Bring content closer to top */
           }
           
-          p {
+          .audience-section h2 {
+            line-height: 1.3;
+            font-size: 1.5rem; /* Smaller title */
+            margin-bottom: 0.5rem;
+          }
+          
+          .audience-section p {
             margin-top: 0.5rem;
+            font-size: 0.875rem; /* Smaller description text */
+          }
+          
+          .audience-section .mb-8 {
+            margin-bottom: 1rem !important; /* Reduce title bottom margin */
+          }
+          
+          /* Make grid cards more compact */
+          .mobile-card-grid {
+            gap: 0.75rem !important;
+            max-width: 90% !important;
+            margin: 0 auto !important;
+          }
+          
+          .mobile-card {
+            padding: 0.75rem !important; /* Tighter padding in cards */
+          }
+          
+          .mobile-card h3 {
+            font-size: 0.95rem !important; /* Smaller card titles */
+            margin-bottom: 0.25rem !important;
+            line-height: 1.3 !important;
+          }
+          
+          .mobile-card p {
+            font-size: 0.75rem !important; /* Smaller card text */
+            line-height: 1.3 !important;
+          }
+          
+          /* Reduce icon size */
+          .mobile-card .p-2 {
+            padding: 0.4rem !important;
+          }
+          
+          .mobile-card .p-2 svg {
+            width: 14px !important;
+            height: 14px !important;
+          }
+          
+          /* Further reduce gap between icon and text */
+          .mobile-card .flex.items-start {
+            gap: 0.5rem !important;
+          }
+          
+          /* Fix section transition for small devices */
+          .audience-section:after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #0c1220;
+            z-index: 15;
           }
         }
 
-        /* Fix para dispositivos de tamanho médio (tablets em modo vertical) */
+        /* Fix for medium sized devices (tablets in portrait mode) */
         @media (min-width: 768px) and (max-width: 992px) {
           .audience-section {
             margin-top: -1px;
           }
         }
+        
+        /* Extra small devices */
+        @media (max-width: 375px) {
+          .audience-section .container {
+            padding-top: 1.5rem;
+          }
+          
+          .mobile-card-grid {
+            grid-template-columns: minmax(0, 1fr) !important; /* Force single column on very small screens */
+            max-width: 85% !important;
+          }
+        }
+        
+        /* Target tablet sizes around 853x1280 to use desktop layout */
+        @media (min-width: 768px) and (max-width: 1024px) and (min-height: 1000px) {
+          .audience-section {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+          }
+          
+          /* Keep 2-column layout but with adjusted spacing */
+          .mobile-card-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem !important;
+            max-width: 90% !important;
+          }
+          
+          .mobile-card {
+            padding: 1rem !important;
+          }
+        }
       `}</style>
     </section>
   );
-};
+});
+
+AudienceSection.displayName = 'AudienceSection';
 
 export default AudienceSection;
