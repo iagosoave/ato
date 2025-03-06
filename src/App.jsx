@@ -1,27 +1,57 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Hero from './section/hero';
 import AudienceSection from './section/AudienceSection';
+import MethodJourneySection from './section/MethodJourneySection';
+import  HistoricalMentorsSection from './section/HistoricalMentorsSection';
+import  EventDetailsSection from './section/EventDetailsSection';
+import  PricingSection from './section/PricingSection';
+import  CristoferLeoneSectionn from './section/CristoferLeoneSectionn';
+import  FinalCtaSection from './section/FinalCtaSection';
+import  FAQSection from './section/FAQSection';
 import UnifiedBackground from './components/UnifiedBackground';
 
 const App = () => {
   const [viewportHeight, setViewportHeight] = useState(0);
   const [currentSection, setCurrentSection] = useState('hero');
-  const [deviceType, setDeviceType] = useState('desktop'); // 'desktop', 'tablet', 'mobile', 'small'
+  const [deviceType, setDeviceType] = useState('desktop'); // 'desktop', 'tablet', 'mobile', 'small', 'foldable', 'ipad-pro', 'ipad-air', 'ipad-mini', 'surface'
   const audienceSectionRef = useRef(null);
   const heroSectionRef = useRef(null);
 
   useEffect(() => {
-    // Função para detectar tipo de dispositivo
+    // Função aprimorada para detectar tipo de dispositivo com suporte a tablets específicos
     const detectDeviceType = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
+      const aspectRatio = width / height;
+      const userAgent = navigator.userAgent.toLowerCase();
+      
+      // Detecção de dispositivos específicos
+      const isIPad = /ipad/.test(userAgent) || (/macintosh/.test(userAgent) && 'ontouchend' in document);
+      const isSurface = /windows nt/.test(userAgent) && (width >= 768 && width <= 1024);
+      const isFoldable = aspectRatio > 0.65 && aspectRatio < 0.8 && width >= 768 && width <= 1180;
       
       if (width <= 400) {
         setDeviceType('small');
       } else if (width < 768) {
         setDeviceType('mobile');
+      } else if (isIPad && width >= 1024) {
+        // iPad Pro (12.9")
+        setDeviceType('ipad-pro');
+      } else if (isIPad && width <= 834 && width >= 820) {
+        // iPad Air (10.9")
+        setDeviceType('ipad-air');
+      } else if (isIPad && width <= 768) {
+        // iPad Mini
+        setDeviceType('ipad-mini');
+      } else if (isSurface) {
+        // Surface Pro 7
+        setDeviceType('surface');
+      } else if (isFoldable || (width <= 1180 && width >= 768 && aspectRatio < 0.8)) {
+        // Asus ZenBook Fold ou outros dobráveis
+        setDeviceType('foldable');
       } else if (width <= 1024 && height >= 1000) {
-        setDeviceType('tablet'); // Tablet específico tipo 853x1280
+        // Outros tablets genéricos
+        setDeviceType('tablet');
       } else {
         setDeviceType('desktop');
       }
@@ -217,6 +247,142 @@ const App = () => {
           }
         }
         
+        /* Ajustes para iPad Pro (12.9") */
+        .device-type-ipad-pro .hero-section {
+          height: 100vh !important;
+          min-height: 100vh !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+        
+        .device-type-ipad-pro .hero-text-column {
+          margin-top: -50px !important;
+          padding-left: 3rem !important;
+        }
+        
+        .device-type-ipad-pro .cristofer-image-container {
+          height: 85vh !important;
+        }
+        
+        .device-type-ipad-pro .audience-section {
+          min-height: 100vh !important;
+          padding-top: 3rem !important;
+          padding-bottom: 3rem !important;
+        }
+        
+        .device-type-ipad-pro .mobile-card-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 2.5rem !important;
+          width: 85% !important;
+          max-width: 1200px !important;
+        }
+        
+        .device-type-ipad-pro .mobile-card {
+          padding: 2rem !important;
+        }
+        
+        /* Ajustes para iPad Air (10.9") */
+        .device-type-ipad-air .hero-section {
+          height: 100vh !important;
+          min-height: 100vh !important;
+        }
+        
+        .device-type-ipad-air .hero-text-column {
+          margin-top: -80px !important;
+        }
+        
+        .device-type-ipad-air .cristofer-image-container {
+          height: 80vh !important;
+        }
+        
+        .device-type-ipad-air .audience-section {
+          min-height: 100vh !important;
+          padding-top: 2.5rem !important;
+        }
+        
+        .device-type-ipad-air .mobile-card-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 2rem !important;
+          width: 90% !important;
+        }
+        
+        /* Ajustes para iPad Mini */
+        .device-type-ipad-mini .hero-section {
+          height: 100vh !important;
+          min-height: 100vh !important;
+        }
+        
+        .device-type-ipad-mini .hero-text-column {
+          margin-top: -70px !important;
+        }
+        
+        .device-type-ipad-mini .cristofer-image-container {
+          height: 75vh !important;
+        }
+        
+        .device-type-ipad-mini .audience-section {
+          min-height: 100vh !important;
+          padding-top: 2rem !important;
+        }
+        
+        .device-type-ipad-mini .mobile-card-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 1.5rem !important;
+          width: 92% !important;
+        }
+        
+        /* Ajustes para Surface Pro 7 */
+        .device-type-surface .hero-section {
+          height: 100vh !important;
+          min-height: 100vh !important;
+        }
+        
+        .device-type-surface .hero-text-column {
+          margin-top: -90px !important;
+        }
+        
+        .device-type-surface .cristofer-image-container {
+          height: 80vh !important;
+        }
+        
+        .device-type-surface .audience-section {
+          min-height: 100vh !important;
+          padding-top: 2.5rem !important;
+        }
+        
+        .device-type-surface .mobile-card-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 1.75rem !important;
+          width: 90% !important;
+        }
+        
+        /* Ajustes para dispositivos dobráveis como Asus ZenBook Fold */
+        .device-type-foldable .hero-section {
+          height: 100vh !important;
+          min-height: 100vh !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+        
+        .device-type-foldable .hero-text-column {
+          margin-top: -40px !important;
+        }
+        
+        .device-type-foldable .cristofer-image-container {
+          height: 75vh !important;
+        }
+        
+        .device-type-foldable .audience-section {
+          min-height: 100vh !important;
+          padding-top: 3rem !important;
+        }
+        
+        .device-type-foldable .mobile-card-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 1.5rem !important;
+          width: 90% !important;
+        }
+        
         /* Correção para dispositivos pequenos 360x640 */
         @media (max-width: 400px) {
           body {
@@ -283,6 +449,13 @@ const App = () => {
       {/* Section components with refs */}
       <Hero ref={heroSectionRef} noBackground={true} deviceType={deviceType} />
       <AudienceSection ref={audienceSectionRef} noBackground={true} deviceType={deviceType} />
+     < MethodJourneySection/>
+     < HistoricalMentorsSection/>
+     <EventDetailsSection/>
+     <PricingSection/>
+     <CristoferLeoneSectionn/>
+     <FinalCtaSection/>
+     <FAQSection/>
     </main>
   );
 };
