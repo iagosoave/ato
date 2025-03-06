@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import Hero from './section/hero';
 import AudienceSection from './section/AudienceSection';
 import MethodJourneySection from './section/MethodJourneySection';
-import  HistoricalMentorsSection from './section/HistoricalMentorsSection';
-import  EventDetailsSection from './section/EventDetailsSection';
-import  PricingSection from './section/PricingSection';
-import  CristoferLeoneSectionn from './section/CristoferLeoneSectionn';
-import  FinalCtaSection from './section/FinalCtaSection';
-import  FAQSection from './section/FAQSection';
+import HistoricalMentorsSection from './section/HistoricalMentorsSection';
+import EventDetailsSection from './section/EventDetailsSection';
+import PricingSection from './section/PricingSection';
+import CristoferLeoneSectionn from './section/CristoferLeoneSectionn';
+import FinalCtaSection from './section/FinalCtaSection';
+import FAQSection from './section/FAQSection';
 import UnifiedBackground from './components/UnifiedBackground';
 
 const App = () => {
@@ -109,6 +109,120 @@ const App = () => {
       } else {
         document.body.classList.remove('small-device');
       }
+      
+      // Fix para outras seções - aplica a mesma lógica para as seções após a audience section
+      if (window.innerWidth < 768) {
+        const fixOtherSections = () => {
+          // Selecionar todas as seções após AudienceSection
+          const sections = [
+            document.querySelector('.method-journey-section'),
+            document.querySelector('.historical-mentors-section'),
+            document.querySelector('.event-logistics-section'),
+            document.querySelector('.pricing-section'),
+            document.querySelector('.cristofer-section'),
+            document.querySelector('.final-cta-section'),
+            document.querySelector('.faq-section')
+          ];
+          
+          // Garantir que todas as seções tenham a mesma cor de fundo
+          sections.forEach(section => {
+            if (section) {
+              section.style.backgroundColor = '#0c1220';
+              section.style.position = 'relative';
+            }
+          });
+          
+          // Aplicar correções para cada par de seções adjacentes
+          for (let i = 0; i < sections.length - 1; i++) {
+            const currentSection = sections[i];
+            const nextSection = sections[i + 1];
+            
+            if (currentSection && nextSection) {
+              // Criar uma sobreposição sutil entre as seções
+              currentSection.style.marginBottom = '-1px';
+              nextSection.style.marginTop = '-1px';
+              
+              // Adicionar elemento para cobrir qualquer gap
+              if (!currentSection.querySelector(`.section-${i}-bottom-fix`)) {
+                const bottomFix = document.createElement('div');
+                bottomFix.className = `section-${i}-bottom-fix`;
+                bottomFix.style.position = 'absolute';
+                bottomFix.style.bottom = '-2px';
+                bottomFix.style.left = '0';
+                bottomFix.style.width = '100%';
+                bottomFix.style.height = '4px';
+                bottomFix.style.backgroundColor = '#0c1220';
+                bottomFix.style.zIndex = '10';
+                currentSection.appendChild(bottomFix);
+              }
+              
+              if (!nextSection.querySelector(`.section-${i+1}-top-fix`)) {
+                const topFix = document.createElement('div');
+                topFix.className = `section-${i+1}-top-fix`;
+                topFix.style.position = 'absolute';
+                topFix.style.top = '-2px';
+                topFix.style.left = '0';
+                topFix.style.width = '100%';
+                topFix.style.height = '4px';
+                topFix.style.backgroundColor = '#0c1220';
+                topFix.style.zIndex = '10';
+                nextSection.insertBefore(topFix, nextSection.firstChild);
+              }
+            }
+          }
+          
+          // Adicionar um z-index específico para cada seção, com valores decrescentes
+          const baseZIndex = 40;
+          sections.forEach((section, index) => {
+            if (section) {
+              section.style.zIndex = (baseZIndex - index).toString();
+            }
+          });
+          
+          // Garantir que a primeira seção após AudienceSection se conecte corretamente com ela
+          const methodSection = document.querySelector('.method-journey-section');
+          const audienceSection = document.querySelector('.audience-section');
+          
+          if (methodSection && audienceSection) {
+            audienceSection.style.marginBottom = '-1px';
+            methodSection.style.marginTop = '-1px';
+            methodSection.style.backgroundColor = '#0c1220';
+            
+            // Adicionar elemento para cobrir o gap entre audience e method
+            if (!audienceSection.querySelector('.audience-bottom-fix')) {
+              const bottomFix = document.createElement('div');
+              bottomFix.className = 'audience-bottom-fix';
+              bottomFix.style.position = 'absolute';
+              bottomFix.style.bottom = '-2px';
+              bottomFix.style.left = '0';
+              bottomFix.style.width = '100%';
+              bottomFix.style.height = '4px';
+              bottomFix.style.backgroundColor = '#0c1220';
+              bottomFix.style.zIndex = '10';
+              audienceSection.appendChild(bottomFix);
+            }
+            
+            if (!methodSection.querySelector('.method-top-fix')) {
+              const topFix = document.createElement('div');
+              topFix.className = 'method-top-fix';
+              topFix.style.position = 'absolute';
+              topFix.style.top = '-2px';
+              topFix.style.left = '0';
+              topFix.style.width = '100%';
+              topFix.style.height = '4px';
+              topFix.style.backgroundColor = '#0c1220';
+              topFix.style.zIndex = '10';
+              methodSection.insertBefore(topFix, methodSection.firstChild);
+            }
+          }
+        };
+        
+        // Executar após um pequeno delay para garantir que o DOM está pronto
+        setTimeout(fixOtherSections, 100);
+        // Executar novamente após um tempo maior para garantir que todo o conteúdo foi carregado
+        setTimeout(fixOtherSections, 500);
+        setTimeout(fixOtherSections, 1000);
+      }
     };
 
     // Executa imediatamente e adiciona listener
@@ -117,6 +231,9 @@ const App = () => {
     window.addEventListener('orientationchange', () => {
       setTimeout(updateViewportHeight, 200);
     });
+    
+    // Executar novamente após carregamento completo
+    window.addEventListener('load', updateViewportHeight);
     
     // Configuração do observer para detectar seção atual
     const observerOptions = {
@@ -144,6 +261,7 @@ const App = () => {
     return () => {
       window.removeEventListener('resize', updateViewportHeight);
       window.removeEventListener('orientationchange', updateViewportHeight);
+      window.removeEventListener('load', updateViewportHeight);
       if (heroSectionRef.current) sectionObserver.unobserve(heroSectionRef.current);
       if (audienceSectionRef.current) sectionObserver.unobserve(audienceSectionRef.current);
     };
@@ -220,170 +338,95 @@ const App = () => {
           display: block;
         }
         
-        /* Ajustes específicos para tablet 853x1280 */
-        @media (min-width: 768px) and (max-width: 1024px) and (min-height: 1000px) {
-          .device-type-tablet .hero-section {
-            height: 100vh !important;
-            min-height: 100vh !important;
+        /* Otimizações específicas para mobile que não afetam o layout original */
+        @media (max-width: 768px) {
+          /* Garantir que todas as seções tenham cor de fundo consistente */
+          .app-container, .app-container section, body, html {
+            background-color: #0c1220 !important;
           }
           
-          .device-type-tablet .hero-text-column {
-            margin-top: -100px !important;
+          /* Container principal */
+          .app-container {
+            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
           }
           
-          .device-type-tablet .audience-section {
-            min-height: 100vh !important;
+          body {
+            position: static;
+            width: 100%;
+            height: auto;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
           }
           
-          .device-type-tablet .mobile-card-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 2rem !important;
-            width: 90% !important;
-            max-width: 1000px !important;
+          /* Hero section */
+          .app-container section.hero-section {
+            min-height: calc(var(--vh, 1vh) * 100);
+            max-height: calc(var(--vh, 1vh) * 100);
           }
           
-          .device-type-tablet .mobile-card {
-            padding: 1.5rem !important;
+          /* Audience section */
+          .app-container section.audience-section {
+            z-index: 45;
+          }
+          
+          /* Outras seções */
+          .app-container section.method-journey-section {
+            z-index: 40;
+          }
+          
+          .app-container section.historical-mentors-section {
+            z-index: 35;
+          }
+          
+          .app-container section.event-logistics-section {
+            z-index: 30;
+          }
+          
+          .app-container section.pricing-section {
+            z-index: 25;
+          }
+          
+          .app-container section.cristofer-section {
+            z-index: 20;
+          }
+          
+          .app-container section.final-cta-section {
+            z-index: 15;
+          }
+          
+          .app-container section.faq-section {
+            z-index: 10;
+          }
+          
+          /* Evitar que elementos quebrem o layout */
+          .app-container section:not(.hero-section):not(.audience-section) {
+            margin-bottom: -1px !important;
+            position: relative !important;
+            background-color: #0c1220 !important;
+          }
+          
+          /* Elementos de correção para as seções */
+          .section-0-bottom-fix, 
+          .section-1-bottom-fix,
+          .section-2-bottom-fix,
+          .section-3-bottom-fix,
+          .section-4-bottom-fix,
+          .section-5-bottom-fix,
+          .section-6-bottom-fix,
+          .section-1-top-fix,
+          .section-2-top-fix,
+          .section-3-top-fix,
+          .section-4-top-fix,
+          .section-5-top-fix,
+          .section-6-top-fix,
+          .audience-bottom-fix,
+          .method-top-fix {
+            display: block !important;
           }
         }
         
-        /* Ajustes para iPad Pro (12.9") */
-        .device-type-ipad-pro .hero-section {
-          height: 100vh !important;
-          min-height: 100vh !important;
-          display: flex !important;
-          align-items: center !important;
-        }
-        
-        .device-type-ipad-pro .hero-text-column {
-          margin-top: -50px !important;
-          padding-left: 3rem !important;
-        }
-        
-        .device-type-ipad-pro .cristofer-image-container {
-          height: 85vh !important;
-        }
-        
-        .device-type-ipad-pro .audience-section {
-          min-height: 100vh !important;
-          padding-top: 3rem !important;
-          padding-bottom: 3rem !important;
-        }
-        
-        .device-type-ipad-pro .mobile-card-grid {
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 2.5rem !important;
-          width: 85% !important;
-          max-width: 1200px !important;
-        }
-        
-        .device-type-ipad-pro .mobile-card {
-          padding: 2rem !important;
-        }
-        
-        /* Ajustes para iPad Air (10.9") */
-        .device-type-ipad-air .hero-section {
-          height: 100vh !important;
-          min-height: 100vh !important;
-        }
-        
-        .device-type-ipad-air .hero-text-column {
-          margin-top: -80px !important;
-        }
-        
-        .device-type-ipad-air .cristofer-image-container {
-          height: 80vh !important;
-        }
-        
-        .device-type-ipad-air .audience-section {
-          min-height: 100vh !important;
-          padding-top: 2.5rem !important;
-        }
-        
-        .device-type-ipad-air .mobile-card-grid {
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 2rem !important;
-          width: 90% !important;
-        }
-        
-        /* Ajustes para iPad Mini */
-        .device-type-ipad-mini .hero-section {
-          height: 100vh !important;
-          min-height: 100vh !important;
-        }
-        
-        .device-type-ipad-mini .hero-text-column {
-          margin-top: -70px !important;
-        }
-        
-        .device-type-ipad-mini .cristofer-image-container {
-          height: 75vh !important;
-        }
-        
-        .device-type-ipad-mini .audience-section {
-          min-height: 100vh !important;
-          padding-top: 2rem !important;
-        }
-        
-        .device-type-ipad-mini .mobile-card-grid {
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 1.5rem !important;
-          width: 92% !important;
-        }
-        
-        /* Ajustes para Surface Pro 7 */
-        .device-type-surface .hero-section {
-          height: 100vh !important;
-          min-height: 100vh !important;
-        }
-        
-        .device-type-surface .hero-text-column {
-          margin-top: -90px !important;
-        }
-        
-        .device-type-surface .cristofer-image-container {
-          height: 80vh !important;
-        }
-        
-        .device-type-surface .audience-section {
-          min-height: 100vh !important;
-          padding-top: 2.5rem !important;
-        }
-        
-        .device-type-surface .mobile-card-grid {
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 1.75rem !important;
-          width: 90% !important;
-        }
-        
-        /* Ajustes para dispositivos dobráveis como Asus ZenBook Fold */
-        .device-type-foldable .hero-section {
-          height: 100vh !important;
-          min-height: 100vh !important;
-          display: flex !important;
-          align-items: center !important;
-        }
-        
-        .device-type-foldable .hero-text-column {
-          margin-top: -40px !important;
-        }
-        
-        .device-type-foldable .cristofer-image-container {
-          height: 75vh !important;
-        }
-        
-        .device-type-foldable .audience-section {
-          min-height: 100vh !important;
-          padding-top: 3rem !important;
-        }
-        
-        .device-type-foldable .mobile-card-grid {
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 1.5rem !important;
-          width: 90% !important;
-        }
-        
-        /* Correção para dispositivos pequenos 360x640 */
+        /* Correção para dispositivos muito pequenos */
         @media (max-width: 400px) {
           body {
             background-color: #0c1220 !important;
@@ -399,31 +442,6 @@ const App = () => {
             padding-top: 1rem !important;
             margin-top: 0 !important;
             background-color: #0c1220 !important;
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .app-container {
-            min-height: 100vh;
-            min-height: calc(var(--vh, 1vh) * 100);
-            overflow-x: hidden;
-          }
-          
-          body {
-            position: static;
-            width: 100%;
-            height: auto;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-          }
-          
-          .app-container section.hero-section {
-            min-height: calc(var(--vh, 1vh) * 100);
-            max-height: calc(var(--vh, 1vh) * 100);
-          }
-          
-          .app-container section > .absolute:not(.content-absolute) {
-            display: none;
           }
         }
         
@@ -449,13 +467,13 @@ const App = () => {
       {/* Section components with refs */}
       <Hero ref={heroSectionRef} noBackground={true} deviceType={deviceType} />
       <AudienceSection ref={audienceSectionRef} noBackground={true} deviceType={deviceType} />
-     < MethodJourneySection/>
-     < HistoricalMentorsSection/>
-     <EventDetailsSection/>
-     <PricingSection/>
-     <CristoferLeoneSectionn/>
-     <FinalCtaSection/>
-     <FAQSection/>
+      <MethodJourneySection noBackground={true} deviceType={deviceType} />
+      <HistoricalMentorsSection noBackground={true} deviceType={deviceType} />
+      <EventDetailsSection noBackground={true} deviceType={deviceType} />
+      <PricingSection noBackground={true} deviceType={deviceType} />
+      <CristoferLeoneSectionn noBackground={true} deviceType={deviceType} />
+      <FinalCtaSection noBackground={true} deviceType={deviceType} />
+      <FAQSection noBackground={true} deviceType={deviceType} />
     </main>
   );
 };

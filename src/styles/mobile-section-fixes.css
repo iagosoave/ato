@@ -1,0 +1,164 @@
+/* Estilos para corrigir gaps entre seções em dispositivos móveis */
+
+/* Fixar problemas de gaps entre seções para todos os dispositivos */
+.app-container section + section {
+    margin-top: 0 !important;
+    border-top: none !important;
+  }
+  
+  /* Garantir que todas as seções tenham a cor de fundo correta */
+  .app-container section {
+    background-color: #0c1220 !important;
+  }
+  
+  /* Solução para dispositivos móveis */
+  @media (max-width: 768px) {
+    /* Reset para remover efeitos indesejados */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+      position: relative;
+    }
+    
+    body {
+      background-color: #0c1220 !important;
+    }
+    
+    /* Garantir que as seções se conectem perfeitamente */
+    .app-container section {
+      position: relative;
+      margin: 0 !important;
+      padding: 2rem 0 !important;
+      overflow: hidden;
+      border: none !important;
+    }
+    
+    /* Fix especial para a primeira seção */
+    .app-container section.hero-section {
+      padding-top: 0 !important;
+    }
+    
+    /* Correção para conectar seções adjacentes */
+    .app-container section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #0c1220;
+      z-index: 10;
+    }
+    
+    .app-container section::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #0c1220;
+      z-index: 10;
+    }
+    
+    /* Ajuste para container dentro das seções */
+    .app-container section .container {
+      position: relative;
+      z-index: 5;
+    }
+    
+    /* Fix para problemas específicos com espaçamento */
+    .section-gap-fix {
+      display: block !important;
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: #0c1220 !important;
+      z-index: 100;
+    }
+    
+    /* Ajustes específicos para diferentes seções */
+    .audience-section {
+      z-index: 20 !important;
+    }
+    
+    .method-journey-section {
+      z-index: 19 !important;
+    }
+    
+    .historical-mentors-section {
+      z-index: 18 !important;
+    }
+    
+    .event-logistics-section {
+      z-index: 17 !important;
+    }
+    
+    .pricing-section {
+      z-index: 16 !important;
+    }
+    
+    .cristofer-section {
+      z-index: 15 !important;
+    }
+    
+    .final-cta-section {
+      z-index: 14 !important;
+    }
+    
+    .faq-section {
+      z-index: 13 !important;
+    }
+  }
+  
+  /* Correção específica para dispositivos muito pequenos */
+  @media (max-width: 400px) {
+    .app-container section {
+      padding: 1.5rem 0 !important;
+    }
+    
+    .app-container section h2 {
+      font-size: 1.25rem !important;
+    }
+    
+    .app-container section p {
+      font-size: 0.85rem !important;
+    }
+    
+    /* Ajuste para cards em dispositivos pequenos */
+    .mobile-card-grid {
+      gap: 0.5rem !important;
+    }
+    
+    .mobile-card {
+      padding: 0.75rem !important;
+    }
+  }
+  
+  /* Correção para orientação landscape em dispositivos móveis */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .app-container section {
+      min-height: auto !important;
+      height: auto !important;
+      padding: 1.5rem 0 !important;
+    }
+    
+    .hero-section {
+      height: 100vh !important;
+      min-height: 100vh !important;
+      padding: 0 !important;
+    }
+  }
+  
+  /* Solução global para sombras sutis entre seções */
+  .section-divider {
+    height: 2px;
+    background-color: #0c1220;
+    width: 100%;
+    position: relative;
+    z-index: 50;
+    margin: -1px 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }

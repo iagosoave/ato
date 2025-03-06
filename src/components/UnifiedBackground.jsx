@@ -68,7 +68,7 @@ const UnifiedBackground = ({ currentSection }) => {
     }));
   }, [deviceType]);
 
-  // Generate connections between nodes with melhorias para tablets
+  // Generate connections between nodes com melhorias para tablets
   const connections = useMemo(() => {
     const conns = [];
     connectionNodes.forEach((node, index) => {
@@ -357,6 +357,25 @@ const UnifiedBackground = ({ currentSection }) => {
       {(deviceType === 'tablet' || deviceType === 'ipad-pro') && (
         <div className="absolute inset-x-0 bottom-0 h-[20vh] bg-gradient-to-t from-[#0c1220] to-transparent opacity-50 pointer-events-none z-20" />
       )}
+      
+      {/* Adicione isto ao final - uma camada extra para lidar com problemas de gap em mobile */}
+      <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none mobile-section-fix">
+        <style jsx>{`
+          @media (max-width: 768px) {
+            .mobile-section-fix::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 20%;
+              background: linear-gradient(to top, #0c1220 0%, rgba(12, 18, 32, 0.8) 50%, transparent 100%);
+              pointer-events: none;
+              z-index: 5;
+            }
+          }
+        `}</style>
+      </div>
       
       {/* Device-specific optimizations */}
       <style jsx>{`
