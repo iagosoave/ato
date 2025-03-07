@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import Hero from './section/hero';
 import AudienceSection from './section/AudienceSection';
 import MethodJourneySection from './section/MethodJourneySection';
-import HistoricalMentorsSection from './section/HistoricalMentorsSection';
 import EventDetailsSection from './section/EventDetailsSection';
 import PricingSection from './section/PricingSection';
 import CristoferLeoneSectionn from './section/CristoferLeoneSectionn';
@@ -468,7 +467,6 @@ const App = () => {
       <Hero ref={heroSectionRef} noBackground={true} deviceType={deviceType} />
       <AudienceSection ref={audienceSectionRef} noBackground={true} deviceType={deviceType} />
       <MethodJourneySection noBackground={true} deviceType={deviceType} />
-      <HistoricalMentorsSection noBackground={true} deviceType={deviceType} />
       <EventDetailsSection noBackground={true} deviceType={deviceType} />
       <PricingSection noBackground={true} deviceType={deviceType} />
       <CristoferLeoneSectionn noBackground={true} deviceType={deviceType} />

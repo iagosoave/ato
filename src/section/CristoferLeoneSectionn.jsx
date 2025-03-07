@@ -2,83 +2,129 @@ import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { Award, Star, Globe, Book } from 'lucide-react';
 
-const CristoferLeoneSectionn = forwardRef(({ noBackground = false, profileImage = null }, ref) => {
-  // State for detecting mobile
+const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
+  // State para detecção de dispositivos
   const [isMobile, setIsMobile] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(0);
+  const [isSmallMobile, setIsSmallMobile] = useState(false);
     
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
-      setScreenWidth(window.innerWidth);
+      setIsSmallMobile(window.innerWidth < 375);
     };
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    
+    // Fix para gaps entre seções
+    const fixSectionGaps = () => {
+      if (window.innerWidth < 768) {
+        const section = document.querySelector('.cristofer-section');
+        if (section) {
+          section.style.position = 'relative';
+          section.style.zIndex = '20';
+          section.style.backgroundColor = '#0c1220';
+          section.style.marginTop = '-1px';
+          section.style.marginBottom = '-1px';
+          
+          if (!section.querySelector('.section-fix')) {
+            const fix = document.createElement('div');
+            fix.className = 'section-fix';
+            fix.style.position = 'absolute';
+            fix.style.top = '-2px';
+            fix.style.left = '0';
+            fix.style.width = '100%';
+            fix.style.height = '4px';
+            fix.style.backgroundColor = '#0c1220';
+            fix.style.zIndex = '5';
+            section.appendChild(fix.cloneNode(true));
+            
+            fix.style.top = 'auto';
+            fix.style.bottom = '-2px';
+            section.appendChild(fix);
+          }
+        }
+      }
+    };
+    
+    fixSectionGaps();
+    setTimeout(fixSectionGaps, 100);
+    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Cristofer's Credentials
+  // Credenciais otimizadas - textos mais curtos para mobile
   const credentials = [
     {
-      icon: <Globe className="text-[#e19d24]" size={isMobile ? 18 : 24} />,
-      title: "Formações Internacionais",
+      icon: <Globe className="text-[#e19d24]" size={isMobile ? 12 : 20} />,
+      title: "Formações",
       description: [
-        "Coaching Skills - Imperial College London",
-        "Neurociência - Harvard & UC Berkeley"
+        "Imperial College London",
+        "Harvard & UC Berkeley"
       ]
     },
     {
-      icon: <Book className="text-[#e19d24]" size={isMobile ? 18 : 24} />,
+      icon: <Book className="text-[#e19d24]" size={isMobile ? 12 : 20} />,
       title: "Certificações",
       description: [
-        "Análise Comportamental DISC",
-        "Terapia Cognitivo-Comportamental",
+        "Análise DISC",
+        "Terapia Cognitiva",
         "Liderança - Harvard"
       ]
     },
     {
-      icon: <Star className="text-[#e19d24]" size={isMobile ? 18 : 24} />,
+      icon: <Star className="text-[#e19d24]" size={isMobile ? 12 : 20} />,
       title: "Experiência",
       description: [
-        "+20 anos em desenvolvimento de negócios",
-        "Fundador de múltiplos negócios",
-        "Mentor de mais de 500 pessoas"
+        "+20 anos em negócios",
+        "Múltiplos empreendimentos",
+        "Mentor de +500 pessoas"
       ]
     }
   ];
 
+  // Animações ultra-otimizadas para performance
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: isMobile ? 0.2 : 0.4 } }
+  };
+
   return (
-    <section ref={ref} className="relative w-full py-5 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen cristofer-section">
-      {/* Main Content */}
-      <div className="container mx-auto px-3 sm:px-4 z-10 relative mobile-adjust">
+    <section 
+      ref={ref} 
+      className="relative w-full py-4 sm:py-16 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-screen cristofer-section"
+    >
+      <div className="container mx-auto px-2 sm:px-4 z-10 relative">
+        {/* Título compacto */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true, margin: "-10%" }}
-          className="text-center mb-5 sm:mb-12 md:mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="text-center mb-3 sm:mb-12"
         >
-          <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 mb-2 sm:mb-6">
-            Quem é 
-            <span className="inline-mobile text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] sm:block sm:mt-2 ml-1 sm:ml-0">
+          <h2 className="text-xl sm:text-3xl font-bold text-gray-100 mb-0 leading-tight">
+            Quem é
+          </h2>
+          <div className="mb-1 sm:mb-6">
+            <span className="text-2xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d]">
               Cristofer Leone
             </span>
-          </h2>
-          <p className="text-sm sm:text-lg md:text-xl text-[#c8d4e6] max-w-2xl mx-auto px-2">
-            O mentor que transforma conhecimento em impacto e propósito
+          </div>
+          <p className="text-xs sm:text-lg text-[#c8d4e6] max-w-xl mx-auto">
+            O mentor que transforma conhecimento em impacto
           </p>
         </motion.div>
 
-        {/* Profile Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-6xl mx-auto items-center">
-          {/* Profile Image */}
+        {/* Layout otimizado */}
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-3 sm:gap-8 max-w-6xl mx-auto">
+          {/* Imagem de perfil */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true, margin: "-10%" }}
-            className="w-full rounded-2xl overflow-hidden shadow-2xl relative"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="w-full rounded-xl overflow-hidden shadow-lg relative mb-3 md:mb-0"
           >
             {profileImage ? (
               <img 
@@ -87,71 +133,76 @@ const CristoferLeoneSectionn = forwardRef(({ noBackground = false, profileImage 
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-52 sm:h-80 md:h-96 bg-[#16202d] flex items-center justify-center text-[#c8d4e6]">
-                Imagem de Cristofer Leone em breve
+              <div className="w-full h-40 sm:h-80 bg-[#16202d] flex items-center justify-center text-[#c8d4e6]">
+                Imagem de Cristofer Leone
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-100"></div>
-            <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white">
-              <h3 className="text-lg sm:text-2xl font-bold">Cristofer Leone</h3>
-              <p className="text-xs sm:text-base">Especialista em Desenvolvimento Humano</p>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+            <div className="absolute bottom-2 left-2 text-white">
+              <h3 className="text-base sm:text-2xl font-bold">Cristofer Leone</h3>
+              <p className="text-2xs sm:text-base">Especialista em Desenvolvimento Humano</p>
             </div>
           </motion.div>
 
-          {/* Profile Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true, margin: "-10%" }}
-            className="space-y-4 sm:space-y-6"
-          >
-            <p className="text-xs sm:text-base text-[#c8d4e6] leading-relaxed">
-              Cristofer Leone é especialista em desenvolvimento humano, gestão de equipes de alta performance e neurociência aplicada à aprendizagem. Com uma trajetória marcada por grandes transformações pessoais e profissionais, ele fundou e geriu múltiplos negócios, validando na prática a capacidade de estruturar conhecimento em modelos escaláveis.
-            </p>
+          {/* Detalhes do perfil */}
+          <div className="space-y-3 sm:space-y-6">
+            <motion.p 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              className="text-2xs sm:text-base text-[#c8d4e6] leading-relaxed text-center md:text-left"
+            >
+              Especialista em desenvolvimento humano, gestão de equipes de alta performance e neurociência aplicada à aprendizagem. Com trajetória marcada por transformações e múltiplos negócios, estrutura conhecimento em modelos escaláveis.
+            </motion.p>
 
-            {/* Credentials Grid */}
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+            {/* Grid de credenciais ultra-compacto */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               {credentials.map((credential, index) => (
-                <div 
-                  key={index} 
-                  className="bg-[#16202d] p-2 sm:p-4 rounded-xl border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all"
+                <motion.div 
+                  key={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeIn}
+                  transition={{ delay: isMobile ? 0.05 * index : 0.1 * index }}
+                  className="bg-[#16202d] p-1.5 sm:p-4 rounded-lg border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all"
                 >
-                  <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-3">
+                  <div className="flex items-center gap-1 mb-1 justify-center md:justify-start">
                     {credential.icon}
-                    <h4 className="text-xs sm:text-base font-semibold text-gray-100">
+                    <h4 className="text-3xs sm:text-base font-semibold text-gray-100 whitespace-nowrap">
                       {credential.title}
                     </h4>
                   </div>
-                  <ul className="text-2xs sm:text-sm text-[#c8d4e6] space-y-0.5 sm:space-y-1">
+                  <ul className="text-3xs sm:text-sm text-[#c8d4e6] space-y-0.5 text-center md:text-left">
                     {credential.description.map((item, itemIndex) => (
-                      <li key={itemIndex} className="flex items-start gap-1 sm:gap-2">
-                        <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#e19d24] rounded-full mt-1 sm:mt-1.5 flex-shrink-0"></span>
-                        <span className="text-2xs sm:text-sm">{item}</span>
+                      <li key={itemIndex} className="flex items-start gap-1 justify-center md:justify-start">
+                        <span className="w-0.5 h-0.5 sm:w-1.5 sm:h-1.5 bg-[#e19d24] rounded-full mt-1 flex-shrink-0"></span>
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Quotes Section */}
+        {/* Citação compacta */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true, margin: "-10%" }}
-          className="mt-5 sm:mt-12 md:mt-16 max-w-xs sm:max-w-3xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="mt-3 sm:mt-12 max-w-xs sm:max-w-3xl mx-auto"
         >
-          <div className="bg-[#16202d] p-3 sm:p-8 rounded-xl border border-[#e19d24]/20">
-            <p className="text-xs sm:text-lg text-[#c8d4e6] italic text-center mb-2 sm:mb-4">
-              "O Método ATO nasceu da minha trajetória e da mentoria 'A Travessia', que já ajudou mais de 500 pessoas a transformar suas vidas. Depois de anos aplicando e refinando esse processo, organizei tudo em um método validado para que mais pessoas consigam alcançar os mesmos resultados!"
+          <div className="bg-[#16202d] p-2 sm:p-8 rounded-lg border border-[#e19d24]/20">
+            <p className="text-2xs sm:text-lg text-[#c8d4e6] italic text-center mb-1 sm:mb-4">
+              "O Método ATO nasceu da minha trajetória e já ajudou +500 pessoas a transformar suas vidas, organizando tudo em um método validado para resultados!"
             </p>
-            <div className="flex items-center justify-center gap-2 sm:gap-3">
-              <Award className="text-[#e19d24]" size={isMobile ? 18 : 24} />
-              <span className="text-xs sm:text-base text-[#c8d4e6]">
+            <div className="flex items-center justify-center gap-1 sm:gap-3">
+              <Award className="text-[#e19d24]" size={isMobile ? 12 : 22} />
+              <span className="text-3xs sm:text-base text-[#c8d4e6]">
                 Cristofer Leone, Fundador do Método ATO
               </span>
             </div>
@@ -159,45 +210,70 @@ const CristoferLeoneSectionn = forwardRef(({ noBackground = false, profileImage 
         </motion.div>
       </div>
   
-      {/* Responsive Styles */}
+      {/* Estilos ultra-otimizados */}
       <style jsx>{`
+        /* Tamanhos de fonte extras */
+        .text-2xs { font-size: 0.65rem; }
+        .text-3xs { font-size: 0.55rem; }
+        
         @media (max-width: 768px) {
           .cristofer-section {
-            margin-top: 0;
-            padding: 1rem 0;
-            z-index: 30;
-            min-height: auto !important;
+            padding: 1rem 0 !important;
+            margin-top: -1px !important;
+            margin-bottom: -1px !important;
           }
           
-          .cristofer-section .grid {
-            grid-template-columns: 1fr !important;
+          h2 {
+            font-size: 1.25rem !important;
+            margin-bottom: 0 !important;
           }
           
-          .cristofer-section h2 {
-            line-height: 1.2;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+          h2 + div span {
+            font-size: 1.6rem !important;
+            letter-spacing: -0.5px;
           }
           
-          .cristofer-section p {
-            margin-top: 0.25rem;
-            font-size: 0.75rem;
+          p { 
+            font-size: 0.7rem !important; 
+            line-height: 1.3 !important;
+            margin-top: 0 !important;
           }
           
-          .cristofer-section .inline-mobile {
-            display: inline;
-            margin-left: 0.25rem;
+          /* Ultra otimização para mobile */
+          .container { 
+            padding: 0 0.5rem !important; 
+            width: 98% !important;
           }
           
-          .text-2xs {
-            font-size: 0.65rem;
+          /* Ajustes de dimensões e espaços */
+          .mb-3 { margin-bottom: 0.5rem !important; }
+          .space-y-3 > * { margin-top: 0.5rem !important; }
+          .rounded-xl { border-radius: 0.5rem !important; }
+          .shadow-lg { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important; }
+          
+          /* Otimização para a grid de credenciais */
+          .grid { gap: 0.4rem !important; }
+          .bg-[#16202d] {
+            padding: 0.4rem !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
           }
+          
+          /* Ajustes específicos para textos */
+          .text-3xs { 
+            line-height: 1.1 !important;
+            display: block !important;
+          }
+          
+          ul { padding: 0 !important; margin: 0 !important; }
+          li { margin-bottom: 0.1rem !important; }
         }
       `}</style>
     </section>
   );
 });
 
-CristoferLeoneSectionn.displayName = 'CristoferLeoneSectionn';
+CristoferLeoneSection.displayName = 'CristoferLeoneSection';
 
-export default CristoferLeoneSectionn;
+export default CristoferLeoneSection;
