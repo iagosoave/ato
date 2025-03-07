@@ -1,8 +1,9 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { Award, Star, Globe, Book } from 'lucide-react';
+import { Award, Star, Globe, Book, Target, TrendingUp } from 'lucide-react';
+import cristofer from './cristofer-about.jpeg';
 
-const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
+const CristoferLeoneSection = forwardRef(({ profileImage = cristofer }, ref) => {
   // State para detecção de dispositivos
   const [isMobile, setIsMobile] = useState(false);
   const [isSmallMobile, setIsSmallMobile] = useState(false);
@@ -53,112 +54,112 @@ const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Credenciais otimizadas - textos mais curtos para mobile
-  const credentials = [
+  // Detalhes de Cristofer
+  const cristoferDetails = [
     {
-      icon: <Globe className="text-[#e19d24]" size={isMobile ? 12 : 20} />,
-      title: "Formações",
+      icon: <Globe className="text-[#e19d24]" size={isMobile ? 14 : 28} />,
+      title: "Formação Acadêmica",
       description: [
-        "Imperial College London",
-        "Harvard & UC Berkeley"
+        "Pós-graduado em Liderança",
+        "Especialista em Desenvolvimento Humano",
+        "Certificações Internacionais"
       ]
     },
     {
-      icon: <Book className="text-[#e19d24]" size={isMobile ? 12 : 20} />,
-      title: "Certificações",
+      icon: <Target className="text-[#e19d24]" size={isMobile ? 14 : 28} />,
+      title: "Método ATO",
       description: [
-        "Análise DISC",
-        "Terapia Cognitiva",
-        "Liderança - Harvard"
+        "Metodologia Exclusiva",
+        "Transformação Pessoal e Profissional",
+        "Resultados Comprovados"
       ]
     },
     {
-      icon: <Star className="text-[#e19d24]" size={isMobile ? 12 : 20} />,
-      title: "Experiência",
+      icon: <TrendingUp className="text-[#e19d24]" size={isMobile ? 14 : 28} />,
+      title: "Impacto",
       description: [
-        "+20 anos em negócios",
-        "Múltiplos empreendimentos",
-        "Mentor de +500 pessoas"
+        "+500 Pessoas Mentoriadas",
+        "Desenvolvimento de Líderes",
+        "Consultoria em Alta Performance"
       ]
     }
   ];
 
   // Animações ultra-otimizadas para performance
   const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: isMobile ? 0.2 : 0.4 } }
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: isMobile ? 0.3 : 0.5,
+        ease: "easeOut"
+      } 
+    }
   };
 
   return (
     <section 
       ref={ref} 
-      className="relative w-full py-4 sm:py-16 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-screen cristofer-section"
+      className="relative w-full py-4 md:py-16 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] md:min-h-screen cristofer-section"
     >
-      <div className="container mx-auto px-2 sm:px-4 z-10 relative">
-        {/* Título compacto */}
+      <div className="container mx-auto px-2 md:px-4 z-10 relative max-w-6xl">
+        {/* Título */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
-          className="text-center mb-3 sm:mb-12"
+          className="text-center mb-6 md:mb-12"
         >
-          <h2 className="text-xl sm:text-3xl font-bold text-gray-100 mb-0 leading-tight">
-            Quem é
-          </h2>
-          <div className="mb-1 sm:mb-6">
-            <span className="text-2xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d]">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-100 mb-2">Quem é</h2>
+          <div className="mb-2 md:mb-4">
+            <span className="text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d]">
               Cristofer Leone
             </span>
           </div>
-          <p className="text-xs sm:text-lg text-[#c8d4e6] max-w-xl mx-auto">
-            O mentor que transforma conhecimento em impacto
+          <p className="text-xs md:text-base text-[#c8d4e6] max-w-xl mx-auto">
+            Mentor de Alta Performance e Fundador do Método ATO
           </p>
         </motion.div>
 
         {/* Layout otimizado */}
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-3 sm:gap-8 max-w-6xl mx-auto">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12">
           {/* Imagem de perfil */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
-            className="w-full rounded-xl overflow-hidden shadow-lg relative mb-3 md:mb-0"
+            className="w-full h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl relative group"
           >
-            {profileImage ? (
-              <img 
-                src={profileImage} 
-                alt="Cristofer Leone" 
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-40 sm:h-80 bg-[#16202d] flex items-center justify-center text-[#c8d4e6]">
-                Imagem de Cristofer Leone
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
-            <div className="absolute bottom-2 left-2 text-white">
-              <h3 className="text-base sm:text-2xl font-bold">Cristofer Leone</h3>
-              <p className="text-2xs sm:text-base">Especialista em Desenvolvimento Humano</p>
+            <img 
+              src={profileImage}
+              alt="Cristofer Leone" 
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
+            <div className="absolute bottom-4 left-4 text-white">
+              <h3 className="text-base md:text-2xl font-bold">Cristofer Leone</h3>
+              <p className="text-2xs md:text-base opacity-80">Mentor de Alta Performance</p>
             </div>
           </motion.div>
 
           {/* Detalhes do perfil */}
-          <div className="space-y-3 sm:space-y-6">
+          <div className="space-y-6 md:space-y-8">
             <motion.p 
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeIn}
-              className="text-2xs sm:text-base text-[#c8d4e6] leading-relaxed text-center md:text-left"
+              className="text-2xs md:text-base text-[#c8d4e6] leading-relaxed text-center md:text-left"
             >
-              Especialista em desenvolvimento humano, gestão de equipes de alta performance e neurociência aplicada à aprendizagem. Com trajetória marcada por transformações e múltiplos negócios, estrutura conhecimento em modelos escaláveis.
+              Com mais de duas décadas de experiência, Cristofer Leone é reconhecido como um dos principais mentores de desenvolvimento humano e liderança no Brasil. Sua metodologia única, o Método ATO, tem transformado a vida de mais de 500 profissionais e empreendedores.
             </motion.p>
 
-            {/* Grid de credenciais ultra-compacto */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4">
-              {credentials.map((credential, index) => (
+            {/* Grid de detalhes */}
+            <div className="grid grid-cols-3 gap-3 md:gap-6">
+              {cristoferDetails.map((detail, index) => (
                 <motion.div 
                   key={index}
                   initial="hidden"
@@ -166,19 +167,22 @@ const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
                   viewport={{ once: true }}
                   variants={fadeIn}
                   transition={{ delay: isMobile ? 0.05 * index : 0.1 * index }}
-                  className="bg-[#16202d] p-1.5 sm:p-4 rounded-lg border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all"
+                  className="bg-[#16202d] p-2 md:p-4 rounded-xl border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all group"
                 >
-                  <div className="flex items-center gap-1 mb-1 justify-center md:justify-start">
-                    {credential.icon}
-                    <h4 className="text-3xs sm:text-base font-semibold text-gray-100 whitespace-nowrap">
-                      {credential.title}
+                  <div className="flex items-center gap-2 mb-2 justify-center md:justify-start">
+                    {detail.icon}
+                    <h4 className="text-3xs md:text-base font-semibold text-gray-100 group-hover:text-[#e19d24] transition-colors">
+                      {detail.title}
                     </h4>
                   </div>
-                  <ul className="text-3xs sm:text-sm text-[#c8d4e6] space-y-0.5 text-center md:text-left">
-                    {credential.description.map((item, itemIndex) => (
-                      <li key={itemIndex} className="flex items-start gap-1 justify-center md:justify-start">
-                        <span className="w-0.5 h-0.5 sm:w-1.5 sm:h-1.5 bg-[#e19d24] rounded-full mt-1 flex-shrink-0"></span>
-                        <span>{item}</span>
+                  <ul className="text-3xs md:text-xs text-[#c8d4e6] space-y-1 text-center md:text-left">
+                    {detail.description.map((item, itemIndex) => (
+                      <li 
+                        key={itemIndex} 
+                        className="flex items-center gap-1.5 justify-center md:justify-start"
+                      >
+                        <span className="w-1.5 h-1.5 bg-[#e19d24] rounded-full flex-shrink-0"></span>
+                        {item}
                       </li>
                     ))}
                   </ul>
@@ -187,27 +191,6 @@ const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
             </div>
           </div>
         </div>
-
-        {/* Citação compacta */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          className="mt-3 sm:mt-12 max-w-xs sm:max-w-3xl mx-auto"
-        >
-          <div className="bg-[#16202d] p-2 sm:p-8 rounded-lg border border-[#e19d24]/20">
-            <p className="text-2xs sm:text-lg text-[#c8d4e6] italic text-center mb-1 sm:mb-4">
-              "O Método ATO nasceu da minha trajetória e já ajudou +500 pessoas a transformar suas vidas, organizando tudo em um método validado para resultados!"
-            </p>
-            <div className="flex items-center justify-center gap-1 sm:gap-3">
-              <Award className="text-[#e19d24]" size={isMobile ? 12 : 22} />
-              <span className="text-3xs sm:text-base text-[#c8d4e6]">
-                Cristofer Leone, Fundador do Método ATO
-              </span>
-            </div>
-          </div>
-        </motion.div>
       </div>
   
       {/* Estilos ultra-otimizados */}
@@ -224,12 +207,12 @@ const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
           }
           
           h2 {
-            font-size: 1.25rem !important;
-            margin-bottom: 0 !important;
+            font-size: 2rem !important; /* Increased mobile font size for "Quem é" */
+            margin-bottom: 0.5rem !important;
           }
           
           h2 + div span {
-            font-size: 1.6rem !important;
+            font-size: 2.5rem !important; /* Increased mobile font size for name */
             letter-spacing: -0.5px;
           }
           
@@ -247,9 +230,7 @@ const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
           
           /* Ajustes de dimensões e espaços */
           .mb-3 { margin-bottom: 0.5rem !important; }
-          .space-y-3 > * { margin-top: 0.5rem !important; }
           .rounded-xl { border-radius: 0.5rem !important; }
-          .shadow-lg { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important; }
           
           /* Otimização para a grid de credenciais */
           .grid { gap: 0.4rem !important; }
@@ -265,9 +246,6 @@ const CristoferLeoneSection = forwardRef(({ profileImage = null }, ref) => {
             line-height: 1.1 !important;
             display: block !important;
           }
-          
-          ul { padding: 0 !important; margin: 0 !important; }
-          li { margin-bottom: 0.1rem !important; }
         }
       `}</style>
     </section>

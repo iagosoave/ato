@@ -1,6 +1,7 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Clock } from 'lucide-react';
+import mind from './mind.png'; // Corrected import statement
 
 const EventDetailsSection = forwardRef(({ noBackground = false, venueImage = null, deviceType = 'desktop' }, ref) => {
   // State for detecting mobile
@@ -185,14 +186,16 @@ const EventDetailsSection = forwardRef(({ noBackground = false, venueImage = nul
           >
             {venueImage ? (
               <img 
-                src={venueImage} 
+                src={venueImage} // Use the venueImage prop
                 alt="Espaço Mind" 
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-48 sm:h-64 md:h-80 lg:h-96 bg-[#16202d] flex items-center justify-center text-[#c8d4e6]">
-                Imagem do Espaço Mind em breve
-              </div>
+              <img 
+                src={mind} // Fallback to the imported image
+                alt="Espaço Mind" 
+                className="w-full h-full object-cover"
+              />
             )}
           </motion.div>
 
@@ -218,7 +221,7 @@ const EventDetailsSection = forwardRef(({ noBackground = false, venueImage = nul
               {
                 icon: <MapPin className="text-[#e19d24]" size={isMobile ? 16 : 24} />,
                 title: "Endereço",
-                description: "Espaço Mind - [Endereço completo a ser inserido]"
+                description: "Espaço Mind - R. Abílio Soares, 607 - Paraíso, São Paulo - SP, 04005-002"
               }
             ].map((detail, index) => (
               <div 
