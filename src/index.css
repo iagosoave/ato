@@ -1145,94 +1145,164 @@ footer {
   margin-top: 0 !important;
   border-top: none !important;
 }
+/* Correção mínima para evitar sobreposições em mobile */
 
-/* Fix EXCLUSIVAMENTE para dispositivos móveis - não afeta desktop de forma alguma */
-
-/* Esta abordagem usa várias condições específicas para garantir que apenas dispositivos móveis sejam afetados */
-@media only screen and (max-width: 767px) {
-  /* ----- BEGIN MOBILE ONLY FIX ----- */
-  body.mobile-device .app-container section,
-  html.touch .app-container section,
-  .device-type-mobile .app-container section,
-  .device-type-small .app-container section {
-    /* Evitar sobreposição em mobile */
+@media (max-width: 767px) {
+  /* Forçar cada seção a respeitar seu próprio espaço */
+  .method-journey-section,
+  .event-logistics-section,
+  .pricing-section,
+  .testimonials-section,
+  .cristofer-section,
+  .final-cta-section,
+  .faq-section {
     position: relative !important;
-    overflow: visible !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    clear: both !important;
+    display: block !important;
+    overflow: visible !important;
   }
   
-  /* Aplicar correções apenas quando detectado como dispositivo móvel */
-  @supports (touch-action: pan-y) {
-    .device-type-mobile .section-gap-fix,
-    .device-type-small .section-gap-fix,
-    .device-type-mobile [class*="section-"][class*="-fix"],
-    .device-type-small [class*="section-"][class*="-fix"],
-    .device-type-mobile .audience-bottom-fix,
-    .device-type-small .audience-bottom-fix,
-    .device-type-mobile .method-top-fix,
-    .device-type-small .method-top-fix,
-    .device-type-mobile .faq-to-black-footer,
-    .device-type-small .faq-to-black-footer,
-    .device-type-mobile .footer-top-fix,
-    .device-type-small .footer-top-fix {
-      display: none !important;
+  /* Remover elementos de correção que podem estar causando problemas */
+  [id*="section-gap-fix"],
+  [class*="-fix"],
+  [class*="fix-"] {
+    display: none !important;
+  }
+  
+  /* Garantir que não haja margens negativas */
+  section + section {
+    margin-top: 0 !important;
+  }
+  
+  /* Adicionar espaçamento sutil entre seções */
+  .method-journey-section,
+  .event-logistics-section,
+  .pricing-section,
+  .testimonials-section,
+  .cristofer-section,
+  .final-cta-section {
+    padding-bottom: 15px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  }
+}
+
+/* Correção específica para PricingSection e garantia contra sobreposições */
+
+  /* Garantir que todas as seções no mobile respeitem seus espaços */
+  .method-journey-section,
+  .event-logistics-section,
+  .pricing-section,
+  .testimonials-section,
+  .cristofer-section,
+  .final-cta-section,
+  .faq-section {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 0 !important;
+    clear: both !important;
+    float: none !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+  
+  /* Remover todos os elementos de correção anteriores */
+  [id*="fix"],
+  [class*="-fix"],
+  [class*="fix-"],
+  [class*="section-gap-fix"],
+  [class*="audience-bottom-fix"],
+  [class*="method-top-fix"],
+  [class*="faq-to-black-footer"],
+  [class*="footer-top-fix"] {
+    display: none !important;
+  }
+  
+  /* Remover quaisquer margens negativas */
+  section + section {
+    margin-top: 0 !important;
+  }
+  
+  /* Tratar elementos posicionados absolutamente dentro das seções */
+  section [style*="position: absolute"] {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    right: auto !important;
+  }
+  
+  /* Específico para elementos posicionados absolutamente na PricingSection */
+  .pricing-section [style*="position: absolute"] {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+  }
+  
+  /* Assegurar compatibilidade com todos os dispositivos móveis */
+  @media (max-width: 576px) {
+    .pricing-section {
+      padding-top: 15px !important;
+      padding-bottom: 15px !important;
     }
   }
   
-  /* Sistema de correções de Z-index específico para mobile */
-  .device-type-mobile .app-container section.hero-section,
-  .device-type-small .app-container section.hero-section {
-    z-index: 50 !important;
+  @media (max-width: 375px) {
+    .pricing-section {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
   }
-  
-  .device-type-mobile .app-container section.audience-section,
-  .device-type-small .app-container section.audience-section {
-    z-index: 49 !important;
-  }
-  
-  .device-type-mobile .app-container section.method-journey-section,
-  .device-type-small .app-container section.method-journey-section {
-    z-index: 48 !important;
-  }
-  
-  .device-type-mobile .app-container section.event-logistics-section,
-  .device-type-small .app-container section.event-logistics-section {
-    z-index: 47 !important;
-  }
-  
-  .device-type-mobile .app-container section.pricing-section,
-  .device-type-small .app-container section.pricing-section {
-    z-index: 46 !important;
-  }
-  
-  .device-type-mobile .app-container section.testimonials-section,
-  .device-type-small .app-container section.testimonials-section {
-    z-index: 45 !important;
-  }
-  
-  .device-type-mobile .app-container section.cristofer-section,
-  .device-type-small .app-container section.cristofer-section {
-    z-index: 44 !important;
-  }
-  
-  .device-type-mobile .app-container section.final-cta-section,
-  .device-type-small .app-container section.final-cta-section {
-    z-index: 43 !important;
-  }
-  
-  .device-type-mobile .app-container section.faq-section,
-  .device-type-small .app-container section.faq-section {
-    z-index: 42 !important;
-  }
-  
-  .device-type-mobile footer,
-  .device-type-small footer,
-  .device-type-mobile [style*="backgroundColor: '#000000'"],
-  .device-type-small [style*="backgroundColor: '#000000'"] {
-    z-index: 41 !important;
+
+  /* Correção específica para os cards no final da PricingSection */
+
+@media (max-width: 767px) {
+  /* Ajuste principal para a PricingSection */
+  .pricing-section {
+    padding-bottom: 30px !important; /* Adiciona mais espaço no final da seção */
+    overflow: visible !important;
     position: relative !important;
-    margin-top: 0 !important;
+    z-index: 1 !important;
   }
-  /* ----- END MOBILE ONLY FIX ----- */
+  
+  /* Correção específica para os cards/elementos no final da seção */
+  .pricing-section [class*="card"],
+  .pricing-section [class*="price"],
+  .pricing-section [class*="plan"],
+  .pricing-section [class*="item"],
+  .pricing-section > div > div:last-child,
+  .pricing-section .container > div:last-child {
+    margin-bottom: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+  
+  /* Garantir que a próxima seção não sobreponha */
+  .pricing-section + .testimonials-section {
+    margin-top: 0 !important;
+    padding-top: 20px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    clear: both !important;
+  }
+  
+  /* Remover qualquer elemento posicionado absolutamente no final da PricingSection */
+  .pricing-section > [style*="position: absolute"],
+  .pricing-section [style*="position: fixed"],
+  .pricing-section [style*="position: sticky"] {
+    position: relative !important;
+  }
+  
+  /* Garantir que elementos com z-index alto não causem sobreposição */
+  .pricing-section [style*="z-index:"] {
+    z-index: 1 !important;
+  }
 }
