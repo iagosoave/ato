@@ -1145,3 +1145,94 @@ footer {
   margin-top: 0 !important;
   border-top: none !important;
 }
+
+/* Fix EXCLUSIVAMENTE para dispositivos móveis - não afeta desktop de forma alguma */
+
+/* Esta abordagem usa várias condições específicas para garantir que apenas dispositivos móveis sejam afetados */
+@media only screen and (max-width: 767px) {
+  /* ----- BEGIN MOBILE ONLY FIX ----- */
+  body.mobile-device .app-container section,
+  html.touch .app-container section,
+  .device-type-mobile .app-container section,
+  .device-type-small .app-container section {
+    /* Evitar sobreposição em mobile */
+    position: relative !important;
+    overflow: visible !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Aplicar correções apenas quando detectado como dispositivo móvel */
+  @supports (touch-action: pan-y) {
+    .device-type-mobile .section-gap-fix,
+    .device-type-small .section-gap-fix,
+    .device-type-mobile [class*="section-"][class*="-fix"],
+    .device-type-small [class*="section-"][class*="-fix"],
+    .device-type-mobile .audience-bottom-fix,
+    .device-type-small .audience-bottom-fix,
+    .device-type-mobile .method-top-fix,
+    .device-type-small .method-top-fix,
+    .device-type-mobile .faq-to-black-footer,
+    .device-type-small .faq-to-black-footer,
+    .device-type-mobile .footer-top-fix,
+    .device-type-small .footer-top-fix {
+      display: none !important;
+    }
+  }
+  
+  /* Sistema de correções de Z-index específico para mobile */
+  .device-type-mobile .app-container section.hero-section,
+  .device-type-small .app-container section.hero-section {
+    z-index: 50 !important;
+  }
+  
+  .device-type-mobile .app-container section.audience-section,
+  .device-type-small .app-container section.audience-section {
+    z-index: 49 !important;
+  }
+  
+  .device-type-mobile .app-container section.method-journey-section,
+  .device-type-small .app-container section.method-journey-section {
+    z-index: 48 !important;
+  }
+  
+  .device-type-mobile .app-container section.event-logistics-section,
+  .device-type-small .app-container section.event-logistics-section {
+    z-index: 47 !important;
+  }
+  
+  .device-type-mobile .app-container section.pricing-section,
+  .device-type-small .app-container section.pricing-section {
+    z-index: 46 !important;
+  }
+  
+  .device-type-mobile .app-container section.testimonials-section,
+  .device-type-small .app-container section.testimonials-section {
+    z-index: 45 !important;
+  }
+  
+  .device-type-mobile .app-container section.cristofer-section,
+  .device-type-small .app-container section.cristofer-section {
+    z-index: 44 !important;
+  }
+  
+  .device-type-mobile .app-container section.final-cta-section,
+  .device-type-small .app-container section.final-cta-section {
+    z-index: 43 !important;
+  }
+  
+  .device-type-mobile .app-container section.faq-section,
+  .device-type-small .app-container section.faq-section {
+    z-index: 42 !important;
+  }
+  
+  .device-type-mobile footer,
+  .device-type-small footer,
+  .device-type-mobile [style*="backgroundColor: '#000000'"],
+  .device-type-small [style*="backgroundColor: '#000000'"] {
+    z-index: 41 !important;
+    position: relative !important;
+    margin-top: 0 !important;
+  }
+  /* ----- END MOBILE ONLY FIX ----- */
+}
