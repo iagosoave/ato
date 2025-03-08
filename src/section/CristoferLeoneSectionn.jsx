@@ -98,6 +98,27 @@ const CristoferLeoneSection = forwardRef(({ profileImage = cristofer }, ref) => 
     }
   };
 
+  // Componente de biografia minimalista
+  const CristoferBioMinimalista = () => {
+    return (
+      <div className="w-full border-l-2 border-[#e19d24] pl-4 md:pl-6">
+        <p className="text-sm md:text-xl lg:text-2xl text-white leading-relaxed">
+          <span className="text-[#e19d24] font-medium">Com mais de duas décadas de experiência</span>, 
+          Cristofer Leone é reconhecido como um dos 
+          <span className="text-[#e19d24] font-medium"> principais mentores de desenvolvimento humano e liderança </span> 
+          no Brasil.
+        </p>
+        
+        <p className="mt-3 md:mt-4 text-sm md:text-xl text-[#c8d4e6] leading-relaxed">
+          Sua metodologia única, o <span className="text-[#e19d24] font-medium">Método ATO</span>, 
+          tem transformado a vida de 
+          <span className="ml-1 text-white font-bold text-base md:text-2xl"> +500 </span> 
+          profissionais e empreendedores.
+        </p>
+      </div>
+    );
+  };
+
   return (
     <section 
       ref={ref} 
@@ -141,21 +162,21 @@ const CristoferLeoneSection = forwardRef(({ profileImage = cristofer }, ref) => 
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
             <div className="absolute bottom-4 left-4 text-white">
               <h3 className="text-base md:text-2xl font-bold">Cristofer Leone</h3>
-              <p className="text-2xs md:text-base opacity-80">Mentor de Alta Performance</p>
+              <p className="text-2xs md:text-base opacity-80">Mentor de Mentores</p>
             </div>
           </motion.div>
 
           {/* Detalhes do perfil */}
           <div className="space-y-6 md:space-y-8">
-            <motion.p 
+            {/* Bio minimalista - SUBSTITUÍDA PELO NOVO COMPONENTE */}
+            <motion.div 
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeIn}
-              className="text-2xs md:text-base text-[#c8d4e6] leading-relaxed text-center md:text-left"
             >
-              Com mais de duas décadas de experiência, Cristofer Leone é reconhecido como um dos principais mentores de desenvolvimento humano e liderança no Brasil. Sua metodologia única, o Método ATO, tem transformado a vida de mais de 500 profissionais e empreendedores.
-            </motion.p>
+              <CristoferBioMinimalista />
+            </motion.div>
 
             {/* Grid de detalhes */}
             <div className="grid grid-cols-3 gap-3 md:gap-6">

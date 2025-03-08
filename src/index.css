@@ -308,3 +308,840 @@ html {
     scroll-behavior: auto;
   }
 }
+
+/* Adicione este código no final do seu index.css */
+
+/* ===== AJUSTE TAMANHO NOME CRISTOFER EM MOBILE ===== */
+@media (max-width: 767px) {
+  .app-container section.cristofer-section .text-transparent.bg-clip-text {
+    font-size: 3.25rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: inline-block !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Ajuste para evitar qualquer sobreposição potencial */
+  .app-container section.cristofer-section .text-center {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Fixa a altura da seção para evitar que o conteúdo aumente demais */
+  .app-container section.cristofer-section {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    margin-top: -1px !important;
+    margin-bottom: -1px !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+/* ===== AJUSTE ESPECIAL PARA DISPOSITIVOS MENORES ===== */
+@media (max-width: 374px) {
+  .app-container section.cristofer-section .text-transparent.bg-clip-text {
+    font-size: 2.75rem !important;
+  }
+}
+
+/* ===== AJUSTE TEXTO EXCELÊNCIA EDUCACIONAL EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte do "Excelência Educacional" */
+  .hero-section h1 .text-transparent.bg-clip-text {
+    font-size: 2.8rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    margin-top: 0.25rem !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-height: 667px) {
+    .hero-section h1 .text-transparent.bg-clip-text {
+      font-size: 2.5rem !important;
+    }
+  }
+  
+  /* Ajuste para dispositivos extremamente pequenos */
+  @media (max-height: 568px) {
+    .hero-section h1 .text-transparent.bg-clip-text {
+      font-size: 2.2rem !important;
+    }
+  }
+}
+
+/* Ajuste para dispositivos com larguras menores */
+@media (max-width: 374px) {
+  .hero-section h1 .text-transparent.bg-clip-text {
+    font-size: 2.4rem !important;
+  }
+}
+
+/* ===== AJUSTE TEXTO FORMAÇÃO MÉTODO ATO EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte do título "Formação Método ATO?" */
+  .audience-section h2 .text-transparent.bg-clip-text {
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important; 
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  /* Ajustar o layout para dispositivos móveis */
+  .audience-section h2 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  /* Remover margem esquerda que existia quando era inline */
+  .audience-section h2 .inline-mobile {
+    margin-left: 0 !important;
+    margin-top: 0.25rem !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-width: 374px) {
+    .audience-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.2rem !important;
+    }
+  }
+  
+  /* Ajuste para altura da seção caso necessário */
+  .audience-section {
+    padding-top: 2.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+}
+
+/* ===== AJUSTE TEXTO MÉTODO ATO EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte do "Método ATO" */
+  .method-journey-section div span.text-transparent.bg-clip-text {
+    font-size: 3rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-bottom: 0.75rem !important;
+    font-weight: 800 !important;
+  }
+  
+  /* Ajuste para o container */
+  .method-journey-section h2 + div {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Ajuste para o subtítulo */
+  .method-journey-section h2 + div + p {
+    margin-top: 0.5rem !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-width: 374px) {
+    .method-journey-section div span.text-transparent.bg-clip-text {
+      font-size: 2.6rem !important;
+    }
+  }
+}
+
+/* ===== AJUSTE TEXTO DETALHES DO EVENTO EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte "Detalhes do Evento" */
+  .event-details-section h2 .text-transparent.bg-clip-text {
+    font-size: 2.7rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  /* Remove a classe inline-mobile para garantir que o texto fique em uma linha separada */
+  .event-details-section h2 .inline-mobile {
+    display: block !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-width: 374px) {
+    .event-details-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.4rem !important;
+    }
+  }
+  
+  /* Ajuste para telas extremamente pequenas */
+  @media (max-width: 320px) {
+    .event-details-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.1rem !important;
+    }
+  }
+}
+
+/* ===== AJUSTE TEXTO MÉTODO ATO NA SEÇÃO DE PREÇO EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte do "Método ATO" na seção de preço */
+  .pricing-section h2 .text-transparent.bg-clip-text {
+    font-size: 2.8rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  /* Remove a classe inline-mobile para garantir que o texto fique em uma linha separada */
+  .pricing-section h2 .inline-mobile {
+    display: block !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Ajustes de margem para o container do título */
+  .pricing-section h2 {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-width: 374px) {
+    .pricing-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.5rem !important;
+    }
+  }
+  
+  /* Ajuste para telas extremamente pequenas */
+  @media (max-width: 320px) {
+    .pricing-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.2rem !important;
+    }
+  }
+}
+
+/* ===== OTIMIZAÇÃO DA SEÇÃO DE PREÇO PARA MOBILE ===== */
+@media (max-width: 767px) {
+  /* Ajusta texto principal */
+  .pricing-section h2 {
+    font-size: 1.4rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Aumenta o tamanho da fonte da chamada principal */
+  .pricing-section h2 .text-transparent.bg-clip-text {
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  /* Ajustes para estrutura da seção */
+  .pricing-section {
+    position: relative !important;
+    z-index: 25 !important;
+    margin-top: -1px !important;
+    margin-bottom: -1px !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    overflow: hidden !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  
+  /* Correção para prevenir sobreposições */
+  .pricing-section::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-color: var(--bg-dark) !important;
+    z-index: 100 !important;
+  }
+  
+  .pricing-section::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-color: var(--bg-dark) !important;
+    z-index: 100 !important;
+  }
+  
+  /* Ajustes para card de preço */
+  .pricing-section .price-highlight {
+    width: 90% !important;
+    max-width: 330px !important;
+    margin: 0 auto 1.5rem !important;
+  }
+  
+  .pricing-section .price-highlight > div {
+    padding: 1rem !important;
+    padding-top: 2rem !important;
+  }
+  
+  /* Badge de urgência */
+  .pricing-section .price-highlight .absolute.top-0.right-0 {
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+  
+  /* Destaque ao parcelamento */
+  .pricing-section .price-label,
+  .pricing-section .price-amount {
+    font-size: 0.8rem !important;
+  }
+  
+  .pricing-section .price-installment {
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+  }
+  
+  /* Badges e botão */
+  .pricing-section .flex.items-center {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .pricing-section .flex.items-center svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  
+  .pricing-section .flex.items-center span {
+    font-size: 0.7rem !important;
+  }
+  
+  .pricing-section button {
+    font-size: 0.75rem !important;
+    padding: 0.6rem 0.8rem !important;
+    white-space: normal !important;
+    height: auto !important;
+  }
+  
+  /* Grid de opções */
+  .pricing-section .options-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    width: 90% !important;
+    max-width: 330px !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Aviso de próximo lote */
+  .pricing-section .inline-flex.items-center {
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.6rem !important;
+  }
+  
+  /* Dispositivos muito pequenos */
+  @media (max-width: 374px) {
+    .pricing-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.2rem !important;
+    }
+    
+    .pricing-section .price-installment {
+      font-size: 2.2rem !important;
+    }
+    
+    .pricing-section button {
+      font-size: 0.7rem !important;
+      padding: 0.5rem 0.7rem !important;
+    }
+  }
+}
+
+/* ===== AJUSTE TEXTO FREQUENTES EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte do "Frequentes" */
+  .faq-section h2 .text-transparent.bg-clip-text {
+    font-size: 2.8rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Remove a classe inline-mobile para garantir que o texto fique em uma linha separada */
+  .faq-section h2 .inline-mobile {
+    display: block !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Ajustes para o container do título */
+  .faq-section h2 {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  /* Ajustes para estrutura da seção */
+  .faq-section {
+    position: relative !important;
+    z-index: 15 !important;
+    margin-top: -1px !important;
+    margin-bottom: -1px !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    overflow: hidden !important;
+  }
+  
+  /* Correção para prevenir sobreposições */
+  .faq-section::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-color: var(--bg-dark) !important;
+    z-index: 100 !important;
+  }
+  
+  .faq-section::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-color: var(--bg-dark) !important;
+    z-index: 100 !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-width: 374px) {
+    .faq-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.5rem !important;
+    }
+  }
+  
+  /* Ajuste para telas extremamente pequenas */
+  @media (max-width: 320px) {
+    .faq-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.2rem !important;
+    }
+  }
+}
+
+/* ===== AJUSTE TEXTO COMEÇA AGORA EM MOBILE ===== */
+@media (max-width: 767px) {
+  /* Aumenta o tamanho da fonte do "Começa Agora" */
+  .final-cta-section h2 .text-transparent.bg-clip-text {
+    font-size: 2.8rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    display: block !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  /* Ajustes para o container do título */
+  .final-cta-section h2 {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  /* Ajustes para estrutura da seção */
+  .final-cta-section {
+    position: relative !important;
+    z-index: 20 !important;
+    margin-top: -1px !important;
+    margin-bottom: -1px !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    overflow: hidden !important;
+  }
+  
+  /* Correção para prevenir sobreposições */
+  .final-cta-section::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-color: var(--bg-dark) !important;
+    z-index: 100 !important;
+  }
+  
+  .final-cta-section::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-color: var(--bg-dark) !important;
+    z-index: 100 !important;
+  }
+  
+  /* Ajustes para key benefits */
+  .final-cta-section .flex-col.sm\:flex-row {
+    gap: 0.75rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .final-cta-section .flex-col.sm\:flex-row > div {
+    padding: 0.5rem 0.75rem !important;
+  }
+  
+  .final-cta-section .flex-col.sm\:flex-row span {
+    font-size: 0.75rem !important;
+  }
+  
+  /* Ajustes para o CTA box */
+  .final-cta-section .max-w-xs.sm\:max-w-3xl {
+    padding: 1.25rem !important;
+  }
+  
+  .final-cta-section h3 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  @media (max-width: 374px) {
+    .final-cta-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.5rem !important;
+    }
+    
+    .final-cta-section h3 {
+      font-size: 1.25rem !important;
+    }
+  }
+  
+  /* Ajuste para telas extremamente pequenas */
+  @media (max-width: 320px) {
+    .final-cta-section h2 .text-transparent.bg-clip-text {
+      font-size: 2.2rem !important;
+    }
+  }
+}
+
+/* Fundo consistente para todas as seções */
+body, html, .app-container, .app-container section {
+  background-color: #0c1220 !important;
+}
+
+/* Garantir que nenhum container ou div interna tenha um fundo diferente */
+.container, .container > div, section > div {
+  background-color: #0c1220 !important;
+}
+
+/* Adicione isso ao final do seu index.css */
+
+
+
+/* Ajuste do gradiente de fundo na imagem */
+.cristofer-section .absolute.inset-0.bg-gradient-to-b {
+  bottom: 0 !important;
+  height: 30% !important;
+  top: auto !important;
+}
+
+/* ===== CORREÇÃO DE CORES DE FUNDO INCONSISTENTES ===== */
+/* Força cor de fundo em cada seção individual */
+section.hero-section,
+section.audience-section,
+section.method-journey-section,
+section.event-details-section,
+section.pricing-section,
+section.testimonials-section,
+section.cristofer-section,
+section.final-cta-section,
+section.faq-section {
+  background-color: #0c1220 !important;
+}
+
+/* Correção para as seções problemáticas */
+.final-cta-section,
+.faq-section {
+  background-color: #0c1220 !important;
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Forçar cor de fundo em elementos específicos */
+.final-cta-section div,
+.faq-section div {
+  background-color: transparent !important;
+}
+
+/* Remove qualquer gradiente de fundo nas seções com problemas */
+.final-cta-section:before,
+.final-cta-section:after,
+.faq-section:before,
+.faq-section:after {
+  display: none !important;
+}
+
+/* ===== PRESERVAÇÃO DE ESTILOS ESPECÍFICOS ===== */
+/* Preservar gradientes em botões */
+button.bg-gradient-to-r,
+button.bg-gradient-to-br,
+button.bg-\[\#e19d24\],
+button.from-\[\#e19d24\],
+button.to-\[\#d3891a\] {
+  background: linear-gradient(to right, #e19d24, #d3891a) !important;
+  color: white !important;
+}
+
+/* Preservar cor dos cartões de fundo */
+.bg-\[\#16202d\] {
+  background-color: #16202d !important;
+}
+
+/* Preservar textos com gradiente */
+.text-transparent.bg-clip-text.bg-gradient-to-r {
+  background: linear-gradient(to right, #e19d24, #f8c56d) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Preservar cores de ícones */
+.text-\[\#e19d24\] svg {
+  color: #e19d24 !important;
+}
+
+svg.text-\[\#e19d24\] {
+  color: #e19d24 !important;
+}
+
+svg.fill-\[\#e19d24\] {
+  fill: #e19d24 !important;
+}
+
+/* ===== AJUSTES PARA DISPOSITIVOS MUITO PEQUENOS ===== */
+@media (max-width: 375px) {
+  .cristofer-section .w-full.h-\[300px\] {
+    min-height: 250px !important;
+  }
+  
+  .cristofer-section .absolute.inset-0.w-full.h-full.object-cover {
+    max-height: 250px !important;
+  }
+}
+
+/* Adicione isso ao final do seu index.css */
+
+/* Correção para o posicionamento da imagem do Cristofer */
+
+/* Ajuste principal para a imagem */
+
+/* Ajuste para o contêiner da imagem em tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .device-type-ipad-pro .cristofer-image,
+  .device-type-ipad-air .cristofer-image,
+  .device-type-ipad-mini .cristofer-image {
+    transform: scale(0.92) translateY(25px) !important;
+    object-position: center 20% !important;
+  }
+}
+
+/* Ajustes para melhor enquadramento da imagem de Cristofer na seção "Quem é" */
+
+/* Ajustes para a imagem da seção "Quem é Cristofer Leone" */
+.cristofer-section img {
+  object-position: center 15% !important; /* Move o foco da imagem um pouco mais para o rosto */
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Ajuste do contêiner da imagem */
+.cristofer-section .rounded-2xl {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -5px rgba(225, 157, 36, 0.15) !important;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Efeito de hover refinado */
+.cristofer-section .group:hover .object-cover {
+  transform: scale(1.03) !important;
+}
+
+/* Gradiente de sobreposição mais suave */
+.cristofer-section .bg-gradient-to-b {
+  background: linear-gradient(to bottom, 
+    rgba(12, 18, 32, 0) 50%, 
+    rgba(12, 18, 32, 0.7) 80%, 
+    rgba(12, 18, 32, 0.85) 100%) !important;
+}
+
+/* Ajustes específicos para mobile */
+@media (max-width: 768px) {
+  .cristofer-section img {
+    object-position: center 20% !important; /* Ajuste mais acentuado em mobile */
+  }
+  
+  .cristofer-section .w-full.h-\[300px\] {
+    height: 320px !important; /* Um pouco mais alto para mostrar melhor o rosto */
+    margin-bottom: 15px !important;
+  }
+  
+  /* Ajuste da informação na imagem */
+  .cristofer-section .absolute.bottom-4.left-4 {
+    bottom: 8px !important;
+    left: 8px !important;
+  }
+  
+  /* Melhorar o texto na imagem */
+  .cristofer-section .absolute.bottom-4.left-4 h3 {
+    font-size: 1.2rem !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  .cristofer-section .absolute.bottom-4.left-4 p {
+    font-size: 0.75rem !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  }
+}
+
+/* Ajustes para dispositivos muito pequenos */
+@media (max-width: 375px) {
+  .cristofer-section img {
+    object-position: center 25% !important; /* Foco ainda mais no rosto */
+  }
+  
+  .cristofer-section .w-full.h-\[300px\] {
+    height: 280px !important; /* Um pouco menor para manter proporcionalidade */
+  }
+}
+
+/* Melhoria na transição para todos os dispositivos */
+.cristofer-section .transition-transform {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Ajustes específicos para o encaixe lateral da imagem em mobile */
+
+@media (max-width: 768px) {
+  /* Imagem do Cristofer - foco no encaixe lateral */
+  .cristofer-image {
+    width: 100vw !important; /* Forçar largura para a viewport completa */
+    max-width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: absolute !important;
+    object-fit: cover !important;
+    object-position: top center !important;
+    
+    /* Remover qualquer clip-path que poderia estar cortando as laterais */
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    
+    /* Usar transform apenas para ajuste vertical, não para escala horizontal */
+    transform: translateY(20px) !important;
+    
+    /* Ajustar transição na parte inferior */
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%) !important;
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%) !important;
+  }
+  
+  /* Contêiner direto da imagem */
+  .cristofer-image-container {
+    position: relative !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  /* Contêiner superior */
+  .hero-section .w-full.lg\:w-7\/12 {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* Remover qualquer padding do body ou html que possa afetar */
+  body, html {
+    overflow-x: hidden !important;
+  }
+  
+  /* Remover círculos decorativos que possam estar causando problemas */
+  .hero-section .absolute.-left-10,
+  .hero-section .absolute.-right-10,
+  .hero-section .absolute.left-1\/4.-bottom-10 {
+    display: none !important;
+  }
+}
+
+/* Ajustes para iPhones */
+@media (max-width: 390px) {
+  .cristofer-image {
+    transform: translateY(30px) !important;
+  }
+}
+
+/* CSS para garantir que o rodapé tenha fundo completamente preto */
+
+/* Força o fundo preto em todo o rodapé e seus elementos */
+footer, 
+footer div, 
+footer p, 
+footer span,
+footer::before,
+footer::after {
+  background-color: #000 !important;
+  background: #000 !important;
+  background-image: none !important;
+}
+
+/* Estilo do texto e link */
+footer {
+  color: white !important;
+  padding: 1rem 0 !important;
+  border-top: none !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+footer p {
+  color: white !important;
+  opacity: 0.9 !important;
+}
+
+footer a {
+  color: #e19d24 !important;
+  transition: color 0.3s ease !important;
+}
+
+footer a:hover {
+  color: #f8c56d !important;
+}
+
+/* Garantir que não haja elementos com fundo diferente */
+footer *:not(a) {
+  background-color: #000 !important;
+}
+
+/* Remover quaisquer sombras, bordas ou gradientes */
+footer *::before,
+footer *::after {
+  display: none !important;
+}
+
+/* Fix para a transição da última seção azul para o footer preto */
+.faq-section {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+}
+
+footer {
+  margin-top: 0 !important;
+  border-top: none !important;
+}

@@ -7,19 +7,19 @@ const AudienceSection = ({ deviceType = 'desktop', id }) => {
   const isMobile = ['mobile', 'small'].includes(deviceType);
   const isTablet = ['tablet', 'ipad-pro', 'ipad-air', 'ipad-mini', 'surface', 'foldable'].includes(deviceType);
   
-  // Dados da seção
+  // Dados da seção - ordem reorganizada
   const targetAudience = [
     {
       title: "Profissionais com Experiência",
       description: "Que querem utilizar sua expertise para ensinar e impactar vidas"
     },
     {
-      title: "Empreendedores Visionários",
-      description: "Que desejam transformar seus negócios em uma mentoria estruturada"
-    },
-    {
       title: "Educadores Natos",
       description: "Que já compartilham conhecimento mas querem monetizar de forma estratégica"
+    },
+    {
+      title: "Empreendedores Visionários",
+      description: "Que desejam transformar seus negócios em uma mentoria estruturada"
     },
     {
       title: "Agentes de Transformação",

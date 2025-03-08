@@ -4,10 +4,11 @@ import AudienceSection from './section/AudienceSection';
 import MethodJourneySection from './section/MethodJourneySection';
 import EventDetailsSection from './section/EventDetailsSection';
 import PricingSection from './section/PricingSection';
+import TestimonialsSection from './section/TestimonialsSection';
 import CristoferLeoneSectionn from './section/CristoferLeoneSectionn';
 import FinalCtaSection from './section/FinalCtaSection';
 import FAQSection from './section/FAQSection';
-import UnifiedBackground from './components/UnifiedBackground';
+import Footer from './section/Footer'; // Importação do componente Footer
 
 const App = () => {
   const [viewportHeight, setViewportHeight] = useState(0);
@@ -118,9 +119,11 @@ const App = () => {
             document.querySelector('.historical-mentors-section'),
             document.querySelector('.event-logistics-section'),
             document.querySelector('.pricing-section'),
+            document.querySelector('.testimonials-section'),
             document.querySelector('.cristofer-section'),
             document.querySelector('.final-cta-section'),
             document.querySelector('.faq-section')
+            // Footer não incluído aqui pois tem background preto
           ];
           
           // Garantir que todas as seções tenham a mesma cor de fundo
@@ -171,7 +174,7 @@ const App = () => {
           }
           
           // Adicionar um z-index específico para cada seção, com valores decrescentes
-          const baseZIndex = 40;
+          const baseZIndex = 50; // Aumentado para acomodar mais seções
           sections.forEach((section, index) => {
             if (section) {
               section.style.zIndex = (baseZIndex - index).toString();
@@ -212,6 +215,29 @@ const App = () => {
               topFix.style.backgroundColor = '#0c1220';
               topFix.style.zIndex = '10';
               methodSection.insertBefore(topFix, methodSection.firstChild);
+            }
+          }
+          
+          // Ajuste para a transição entre a última seção e o rodapé preto
+          const faqSection = document.querySelector('.faq-section');
+          const footerElement = document.querySelector('footer');
+          
+          if (faqSection && footerElement) {
+            faqSection.style.marginBottom = '-1px';
+            footerElement.style.marginTop = '-1px';
+            
+            // Fixar transição para o footer preto
+            if (!faqSection.querySelector('.faq-to-black-footer')) {
+              const transitionElement = document.createElement('div');
+              transitionElement.className = 'faq-to-black-footer';
+              transitionElement.style.position = 'absolute';
+              transitionElement.style.bottom = '0';
+              transitionElement.style.left = '0';
+              transitionElement.style.width = '100%';
+              transitionElement.style.height = '4px';
+              transitionElement.style.background = 'linear-gradient(to bottom, #0c1220, #000)';
+              transitionElement.style.zIndex = '5';
+              faqSection.appendChild(transitionElement);
             }
           }
         };
@@ -337,11 +363,24 @@ const App = () => {
           display: block;
         }
         
+        /* Estilos para o footer */
+        footer {
+          position: relative;
+          z-index: 5;
+          background-color: #000 !important;
+          border-top: 1px solid #111;
+        }
+        
         /* Otimizações específicas para mobile que não afetam o layout original */
         @media (max-width: 768px) {
           /* Garantir que todas as seções tenham cor de fundo consistente */
           .app-container, .app-container section, body, html {
             background-color: #0c1220 !important;
+          }
+          
+          /* Footer sempre preto */
+          footer {
+            background-color: #000 !important;
           }
           
           /* Container principal */
@@ -369,7 +408,7 @@ const App = () => {
             z-index: 45;
           }
           
-          /* Outras seções */
+          /* Outras seções - Ajustado para incluir TestimonialsSection */
           .app-container section.method-journey-section {
             z-index: 40;
           }
@@ -386,6 +425,10 @@ const App = () => {
             z-index: 25;
           }
           
+          .app-container section.testimonials-section {
+            z-index: 22;
+          }
+          
           .app-container section.cristofer-section {
             z-index: 20;
           }
@@ -396,6 +439,10 @@ const App = () => {
           
           .app-container section.faq-section {
             z-index: 10;
+          }
+          
+          footer {
+            z-index: 5;
           }
           
           /* Evitar que elementos quebrem o layout */
@@ -413,14 +460,17 @@ const App = () => {
           .section-4-bottom-fix,
           .section-5-bottom-fix,
           .section-6-bottom-fix,
+          .section-7-bottom-fix,
           .section-1-top-fix,
           .section-2-top-fix,
           .section-3-top-fix,
           .section-4-top-fix,
           .section-5-top-fix,
           .section-6-top-fix,
+          .section-7-top-fix,
           .audience-bottom-fix,
-          .method-top-fix {
+          .method-top-fix,
+          .faq-to-black-footer {
             display: block !important;
           }
         }
@@ -460,18 +510,17 @@ const App = () => {
         }
       `}</style>
       
-      {/* Unified background component */}
-      <UnifiedBackground currentSection={currentSection} />
-      
       {/* Section components with refs */}
       <Hero ref={heroSectionRef} noBackground={true} deviceType={deviceType} />
       <AudienceSection ref={audienceSectionRef} noBackground={true} deviceType={deviceType} />
       <MethodJourneySection noBackground={true} deviceType={deviceType} />
       <EventDetailsSection noBackground={true} deviceType={deviceType} />
       <PricingSection noBackground={true} deviceType={deviceType} />
+      <TestimonialsSection noBackground={true} deviceType={deviceType} />
       <CristoferLeoneSectionn noBackground={true} deviceType={deviceType} />
       <FinalCtaSection noBackground={true} deviceType={deviceType} />
       <FAQSection noBackground={true} deviceType={deviceType} />
+      <Footer />
     </main>
   );
 };

@@ -1,15 +1,37 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { Tag, CreditCard, Percent, Gift, ArrowRight, Star, Shield, Zap } from 'lucide-react';
+import { Tag, CreditCard, Percent, Gift, ArrowRight, Star, Shield, Zap, Clock, AlertTriangle } from 'lucide-react';
 
 const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
   // State for detecting mobile
   const [isMobile, setIsMobile] = useState(false);
+  
+  // State para countdown
+  const [timeLeft, setTimeLeft] = useState({
+    hours: 23,
+    minutes: 59,
+    seconds: 59
+  });
     
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+    
+    // Countdown timer
+    const timer = setInterval(() => {
+      setTimeLeft(prevTime => {
+        if (prevTime.seconds > 0) {
+          return { ...prevTime, seconds: prevTime.seconds - 1 };
+        } else if (prevTime.minutes > 0) {
+          return { ...prevTime, minutes: prevTime.minutes - 1, seconds: 59 };
+        } else if (prevTime.hours > 0) {
+          return { hours: prevTime.hours - 1, minutes: 59, seconds: 59 };
+        } else {
+          return { hours: 0, minutes: 0, seconds: 0 };
+        }
+      });
+    }, 1000);
     
     // Função crucial para garantir que a seção respeite seu espaço
     const ensureSectionBoundaries = () => {
@@ -189,8 +211,13 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
     return () => {
       window.removeEventListener('resize', checkMobile);
       window.removeEventListener('resize', ensureSectionBoundaries);
+      clearInterval(timer);
     };
   }, []);
+
+  const formatTimeUnit = (unit) => {
+    return unit < 10 ? `0${unit}` : unit;
+  };
 
   return (
     <section ref={ref} className="relative w-full py-5 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen pricing-section">
@@ -204,9 +231,9 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
           className="text-center mb-6 sm:mb-12 md:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 mb-2 sm:mb-6">
-            Investimento 
+            VOCÊ JÁ TEM CONHECIMENTO.
             <span className="inline-mobile text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] sm:block sm:mt-2">
-              Método ATO
+              AGORA É HORA DE MONETIZÁ-LO!
             </span>
           </h2>
           <p className="text-sm sm:text-lg md:text-xl text-[#c8d4e6] max-w-2xl mx-auto px-2">
@@ -226,26 +253,32 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
             {/* Background Glow Effect */}
             <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,rgba(225,157,36,0.1)_0%,transparent_70%)] opacity-50 pointer-events-none"></div>
             
+            {/* Urgency Badge */}
+            <div className="absolute top-0 right-0 bg-[#e19d24] text-[#0c1220] font-bold py-1 px-4 text-xs sm:text-sm md:text-base rounded-bl-xl">
+              2º LOTE - TERMINA EM {formatTimeUnit(timeLeft.hours)}:{formatTimeUnit(timeLeft.minutes)}:{formatTimeUnit(timeLeft.seconds)}
+            </div>
+            
             {/* Price Highlight */}
             <div className="relative z-10">
+              {/* Ênfase no parcelamento */}
               <div className="mb-4">
-                <span className="text-sm sm:text-base text-[#c8d4e6] block mb-2 price-label">
-                  Investimento Total
+                <span className="text-sm sm:text-base text-[#c8d4e6] block mb-1 price-label">
+                  Aproveite enquanto está disponível
                 </span>
-                <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] price-amount">
-                  R$ 1.697,00
+                <h3 className="text-5xl sm:text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] price-installment mb-1">
+                  10x R$ 169,70
                 </h3>
-                <span className="text-sm sm:text-base text-[#c8d4e6] block mt-2 price-installment">
-                  ou 10x de R$ 169,70 sem juros
+                <span className="text-sm sm:text-base text-[#c8d4e6] block price-amount">
+                  ou R$ 1.697,00 à vista
                 </span>
               </div>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5">
-                <div className="flex items-center gap-2 text-[#c8d4e6]">
-                  <Star className="text-[#e19d24]" size={isMobile ? 15 : 20} />
-                  <span className="text-sm sm:text-base">2º Lote</span>
+                <div className="flex items-center gap-2 text-[#c8d4e6] bg-[#0c1220]/80 py-1 px-3 rounded-full">
+                  <AlertTriangle className="text-[#e19d24]" size={isMobile ? 15 : 20} />
+                  <span className="text-sm sm:text-base">VAGAS LIMITADAS</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#c8d4e6]">
+                <div className="flex items-center gap-2 text-[#c8d4e6] bg-[#0c1220]/80 py-1 px-3 rounded-full">
                   <Shield className="text-[#e19d24]" size={isMobile ? 15 : 20} />
                   <span className="text-sm sm:text-base">Garantia Total</span>
                 </div>
@@ -253,12 +286,28 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
 
               <button className="group relative px-6 sm:px-12 py-2 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold text-sm sm:text-lg rounded-lg hover:scale-105 transition-transform shadow-xl">
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  GARANTIR MINHA VAGA AGORA
+                  GARANTIR MINHA VAGA ANTES DO AUMENTO
                   <ArrowRight className="group-hover:translate-x-1 transition-transform" size={isMobile ? 15 : 20} />
                 </span>
                 <span className="absolute inset-0 bg-gradient-to-r from-[#e19d24]/20 to-[#d3891a]/20 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity"></span>
               </button>
             </div>
+          </div>
+        </motion.div>
+        
+        {/* Aviso de próximo lote */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true, margin: "-10%" }}
+          className="text-center mb-8 sm:mb-12"
+        >
+          <div className="inline-flex items-center gap-2 bg-[#16202d] py-2 px-4 rounded-full border border-[#e19d24]/20">
+            <Clock className="text-[#e19d24]" size={isMobile ? 12 : 18} />
+            <span className="text-xs sm:text-sm text-[#c8d4e6]">
+              Próximo lote: <span className="text-[#e19d24] font-bold">R$ 2.987,00</span> (aumento de 76%)
+            </span>
           </div>
         </motion.div>
 
@@ -364,20 +413,28 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
           
           .price-highlight > div {
             padding: 1rem !important;
+            padding-top: 2rem !important; /* Espaço para o badge de urgência */
           }
           
           .price-label,
-          .price-installment {
+          .price-amount {
             font-size: 0.8rem !important;
           }
           
-          .price-amount {
+          .price-installment {
             font-size: 2.5rem !important;
+          }
+          
+          /* Estilo do badge de urgência */
+          .price-highlight .absolute.top-0.right-0 {
+            font-size: 0.65rem !important;
+            padding: 0.25rem 0.5rem !important;
           }
           
           /* Otimização para badges */
           .flex.items-center {
             gap: 0.5rem !important;
+            margin-bottom: 0.5rem !important;
           }
           
           .flex.items-center svg {
@@ -454,6 +511,15 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
             font-size: 0.8rem !important;
             margin-bottom: 1rem !important;
           }
+          
+          /* Aviso de próximo lote */
+          .inline-flex.items-center {
+            padding: 0.3rem 0.6rem !important;
+          }
+          
+          .inline-flex.items-center span {
+            font-size: 0.7rem !important;
+          }
         }
         
         /* Ajustes para dispositivos muito pequenos */
@@ -462,7 +528,7 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
             padding: 0.5rem !important;
           }
           
-          .price-amount {
+          .price-installment {
             font-size: 2.2rem !important;
           }
           

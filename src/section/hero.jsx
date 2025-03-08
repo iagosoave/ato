@@ -5,7 +5,6 @@ import cristofer from './cristofer.png';
 import logo from './logo.png';
 
 const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
-  // State para detecção de viewport
   const [screenHeight, setScreenHeight] = useState(0);
   const [screenWidth, setScreenWidth] = useState(0);
     
@@ -27,19 +26,16 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
     };
   }, []);
 
-  // Determinar se é mobile para layout
   const isMobile = deviceType === 'mobile' || deviceType === 'small';
   
-  // Determinar tamanho do ícone com base no dispositivo
   const getIconSize = () => {
     if (deviceType === 'small') return 16;
     if (deviceType === 'mobile') return 18;
     if (deviceType === 'ipad-pro') return 24;
     if (deviceType === 'ipad-air' || deviceType === 'ipad-mini' || deviceType === 'tablet' || deviceType === 'surface' || deviceType === 'foldable') return 22;
-    return 20; // default para desktop
+    return 20;
   };
   
-  // Ajustar posição do texto com base no dispositivo
   const getTextMarginTop = () => {
     if (deviceType === 'small' || deviceType === 'mobile') return '0';
     if (deviceType === 'ipad-pro') return '-50px';
@@ -48,10 +44,9 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
     if (deviceType === 'surface') return '-90px';
     if (deviceType === 'foldable') return '-40px';
     if (deviceType === 'tablet') return '-100px';
-    return '-200px'; // default para desktop
+    return '-200px';
   };
 
-  // Ajustar a altura da imagem com base no dispositivo
   const getImageHeight = () => {
     if (deviceType === 'small' || deviceType === 'mobile') return 'auto';
     if (deviceType === 'ipad-pro') return '85vh';
@@ -60,12 +55,45 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
     if (deviceType === 'surface') return '80vh';
     if (deviceType === 'foldable') return '75vh';
     if (deviceType === 'tablet') return '85vh';
-    return '700px'; // default para desktop
+    return '700px';
   };
 
   return (
-    <section ref={ref} className={`relative w-full min-h-screen bg-transparent overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0 hero-section device-type-${deviceType}`}>
-      {/* Logo for mobile only */}
+    <section ref={ref} className={`relative w-full min-h-screen overflow-hidden flex items-center lg:items-end justify-center pt-24 lg:pt-0 hero-section device-type-${deviceType}`}>
+      <div className="absolute inset-0 bg-gradient-radial from-[#0a1428] via-[#0a1428] to-[#0d1b33] z-0"></div>
+      
+      <div className="absolute inset-0 z-0 bg-blend-overlay opacity-40">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,#e19d2425_0%,transparent_70%)] blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-full h-1/3 bg-[radial-gradient(ellipse_at_top,#e19d2415_0%,transparent_80%)] blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[radial-gradient(ellipse_at_bottom,#e19d2420_0%,transparent_70%)] blur-3xl"></div>
+        <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-[radial-gradient(ellipse_at_left,#e19d2418_0%,transparent_80%)] blur-3xl"></div>
+        <div className="absolute top-1/3 right-0 w-1/2 h-1/2 bg-[radial-gradient(ellipse_at_right,#e19d2418_0%,transparent_80%)] blur-3xl"></div>
+      </div>
+      
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-10">
+        <div className="absolute top-0 left-0 w-full h-full">
+          {Array.from({ length: 30 }).map((_, index) => (
+            <div 
+              key={index} 
+              className="particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${Math.random() * 3 + 1}px`,
+                height: `${Math.random() * 3 + 1}px`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 10 + 15}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+      
+      <div className="absolute inset-0 z-5">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,#e19d2410_0%,transparent_50%)] mist-animation"></div>
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_bottom_right,#e19d2410_0%,transparent_50%)] mist-animation-reverse"></div>
+      </div>
+      
       <div className="absolute top-0 left-0 w-full py-5 z-50 md:hidden flex justify-center content-absolute">
         <img 
           src={logo} 
@@ -74,16 +102,14 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
         />
       </div>
 
-      {/* Main Content */}
       <div className="container mx-auto px-4 z-20 relative max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           
-          {/* Text column */}
           <div 
             className="w-full lg:w-5/12 xl:w-1/2 space-y-8 relative px-4 hero-text-column" 
             style={{ marginTop: getTextMarginTop() }}
           >
-            {/* Logo for desktop */}
+            {/* Logo modificado - sem fundo */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -98,7 +124,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                   deviceType === 'tablet' || deviceType === 'surface' || deviceType === 'foldable' ? 'h-24' : ''
                 }`}
               />
-              <div className="absolute inset-0 bg-[#e19d24] blur-2xl opacity-20 -z-1" />
             </motion.div>
 
             <motion.div
@@ -117,9 +142,9 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <span className="block text-gray-100">Torne-se um</span>
+                <span className="block text-gray-100">Potencialize sua</span>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d]">
-                  Mentor de Elite
+                  Excelência Educacional
                 </span>
               </motion.h1>
 
@@ -133,7 +158,7 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Domine as estratégias de mentoria de alta performance com o método comprovado de Cristofer Leone
+                Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o método Cristofer Leone
               </motion.p>
 
               <motion.div
@@ -147,7 +172,7 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                 transition={{ delay: 0.4 }}
               >
                 <motion.button
-                  className={`flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold text-white hover:shadow-xl transition-all duration-300 hover:gap-4 ${
+                  className={`flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold text-white hover:shadow-xl transition-all duration-300 hover:gap-4 relative overflow-hidden ${
                     deviceType === 'ipad-pro' ? 'px-10 py-5 text-xl rounded-xl gap-4' : 
                     deviceType === 'ipad-air' || deviceType === 'surface' ? 'px-9 py-4 text-lg rounded-xl' : 
                     deviceType === 'ipad-mini' || deviceType === 'foldable' ? 'px-8 py-4 text-base' : ''
@@ -155,14 +180,14 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Iniciar Jornada
-                  <ArrowRight className="transition-all" size={getIconSize()} />
+                  <span className="relative z-10">Iniciar Transformação</span>
+                  <ArrowRight className="transition-all relative z-10" size={getIconSize()} />
+                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#e19d24] to-[#d3891a] opacity-0 hover:opacity-20 transition-all duration-300 golden-shine"></div>
                 </motion.button>
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Image column (adjusted) */}
           <div className={`w-full lg:w-7/12 xl:w-1/2 relative mt-8 sm:mt-10 md:mt-12 lg:mt-0 ${
             deviceType === 'ipad-pro' || deviceType === 'ipad-air' || deviceType === 'ipad-mini' || 
             deviceType === 'tablet' || deviceType === 'surface' || deviceType === 'foldable' 
@@ -200,7 +225,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                 }}
               />
               
-              {/* Highlight efeito para tablets */}
               {(deviceType === 'tablet' || deviceType === 'ipad-pro' || deviceType === 'ipad-air' || 
                 deviceType === 'ipad-mini' || deviceType === 'surface' || deviceType === 'foldable') && (
                 <div 
@@ -211,22 +235,78 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                   }}
                 />
               )}
+              
+              <div className="absolute -left-10 top-1/4 w-20 h-20 rounded-full border border-[#e19d2430] opacity-40"></div>
+              <div className="absolute -right-10 top-1/3 w-16 h-16 rounded-full border border-[#e19d2430] opacity-40"></div>
+              <div className="absolute left-1/4 -bottom-10 w-24 h-24 rounded-full border border-[#e19d2430] opacity-40"></div>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Styles */}
       <style jsx>{`
+        @keyframes floatParticle {
+          0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+          25% { opacity: 0.8; }
+          50% { transform: translate(20px, -20px) rotate(180deg); opacity: 0.4; }
+          75% { opacity: 0.6; }
+          100% { transform: translate(0, 0) rotate(360deg); opacity: 0; }
+        }
+        
+        .particle {
+          position: absolute;
+          background-color: #e19d24;
+          border-radius: 50%;
+          animation: floatParticle linear infinite;
+          opacity: 0;
+          box-shadow: 0 0 10px 2px rgba(225, 157, 36, 0.3);
+        }
+        
+        @keyframes mistAnimation {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+          50% { transform: translate(30px, -20px) scale(1.1); opacity: 0.5; }
+          100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+        }
+        
+        @keyframes mistAnimationReverse {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+          50% { transform: translate(-20px, 10px) scale(1.05); opacity: 0.4; }
+          100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+        }
+        
+        .mist-animation {
+          animation: mistAnimation 20s ease-in-out infinite;
+        }
+        
+        .mist-animation-reverse {
+          animation: mistAnimationReverse 15s ease-in-out infinite;
+        }
+        
+        @keyframes goldenShine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        .golden-shine:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -75%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.3) 50%, transparent 100%);
+          transform: skewX(-25deg);
+          animation: goldenShine 3s infinite;
+        }
+        
         @media (max-width: 768px) {
-          /* Base structure */
           section {
-            background: transparent;
+            background: #0a1428 !important;
             min-height: auto;
             height: ${screenHeight < 700 ? '100vh' : '95vh'};
             max-height: 100vh;
             position: relative;
-            overflow: visible; /* Changed to visible to allow content outside the section */
+            overflow: visible;
             display: flex;
             flex-direction: column;
             padding-bottom: env(safe-area-inset-bottom, 0);
@@ -241,19 +321,17 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             flex: 1;
           }
           
-          /* Cristofer's image */
           .w-full.lg\\:w-7\\/12 {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70%; /* Reduced to avoid overlapping with other sections */
+            height: 70%;
             margin-top: 0 !important;
             overflow: hidden;
             z-index: 10;
           }
 
-          /* Add smooth gradient at the bottom for transition with text */
           .cristofer-image {
             width: 100%;
             height: 100%;
@@ -265,20 +343,18 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             position: absolute !important;
           }
 
-          /* Highlight effect around the image */
           .w-full.lg\\:w-7\\/12:after {
             content: '';
             position: absolute;
             bottom: 10%;
             left: 0;
             right: 0;
-            height: 30%; /* Adjusted */
+            height: 30%;
             background: radial-gradient(ellipse at bottom, rgba(225, 157, 36, 0.15), transparent 70%);
             z-index: 5;
             pointer-events: none;
           }
 
-          /* Text column */
           .w-full.lg\\:w-5\\/12 {
             position: absolute;
             bottom: 0;
@@ -291,7 +367,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             text-align: center;
           }
 
-          /* Semi-transparent background behind text */
           .w-full.lg\\:w-5\\/12:before {
             content: '';
             position: absolute;
@@ -299,7 +374,9 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to top, rgba(15, 20, 30, 0.98), rgba(15, 20, 30, 0.92) 85%);
+            background: linear-gradient(to top, 
+              rgba(10, 20, 40, 0.92), 
+              rgba(10, 20, 40, 0.85) 85%);
             backdrop-filter: blur(10px);
             border-top-left-radius: 35px;
             border-top-right-radius: 35px;
@@ -307,7 +384,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.2);
           }
           
-          /* Glowing border effect for text component */
           .w-full.lg\\:w-5\\/12:after {
             content: '';
             position: absolute;
@@ -321,7 +397,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             z-index: 2;
           }
 
-          /* Adjustments for smaller screens */
           @media (max-height: 667px) {
             section {
               height: 100vh;
@@ -329,12 +404,11 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             }
             
             .w-full.lg\\:w-7\\/12 {
-              height: 65%; /* Further reduced for small iPhones */
+              height: 65%;
             }
             
             .cristofer-image {
-              height: 100%;
-              object-position: 50% 15%; /* Adjustment to ensure face is visible */
+              object-position: 50% 15%;
             }
             
             .w-full.lg\\:w-5\\/12 {
@@ -342,7 +416,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             }
           }
           
-          /* Specific adjustments for very small devices */
           @media (max-height: 568px) {
             section {
               padding-top: 8px;
@@ -376,9 +449,7 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
           }
         }
         
-        /* Tablets e dispositivos dobráveis */
         @media (min-width: 768px) and (max-width: 1366px) {
-          /* iPad Pro */
           .device-type-ipad-pro .hero-section {
             height: 100vh !important;
           }
@@ -387,7 +458,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             object-position: center 5% !important;
           }
           
-          /* iPad Air, iPad Mini */
           .device-type-ipad-air .hero-section,
           .device-type-ipad-mini .hero-section {
             height: 100vh !important;
@@ -398,7 +468,6 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             object-position: center 10% !important;
           }
           
-          /* Surface Pro */
           .device-type-surface .hero-section {
             height: 100vh !important;
           }
@@ -407,25 +476,12 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
             object-position: center 15% !important;
           }
           
-          /* Dispositivos dobráveis */
           .device-type-foldable .hero-section {
             height: 100vh !important;
           }
           
           .device-type-foldable .cristofer-image {
             object-position: center 10% !important;
-          }
-          
-          /* Ajustes comuns para todos os tablets */
-          .device-type-ipad-pro .hero-section button,
-          .device-type-ipad-air .hero-section button,
-          .device-type-ipad-mini .hero-section button,
-          .device-type-surface .hero-section button,
-          .device-type-foldable .hero-section button,
-          .device-type-tablet .hero-section button {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
           }
           
           .device-type-ipad-pro .hero-section button:after,
