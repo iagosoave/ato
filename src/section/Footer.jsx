@@ -45,7 +45,7 @@ const Footer = () => {
         }}>
           Desenvolvido por{" "}
           <a 
-            href="https://www.instagram.com/webbraze/" 
+            href="https://www.instagram.com/webbrazee/" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
