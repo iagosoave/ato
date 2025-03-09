@@ -158,7 +158,7 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o método Cristofer Leone
+                Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o Método de Cristofer Leone
               </motion.p>
 
               <motion.div

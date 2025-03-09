@@ -1,5 +1,9 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { Quote, Star } from 'lucide-react';
+import carlos from './carlos.png'
+import juliana from './juliana.png'
+import ana from './ana.png'
+import rafael from './rafael.png';
 
 const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
   // State básicos
@@ -26,31 +30,35 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     };
   }, []);
 
-  // Dados dos depoimentos
+  // Dados dos depoimentos com fotos adicionadas
   const testimonials = [
     {
       name: "Carlos Menezes",
       role: "Executivo e Mentor de Negócios",
       quote: "Trabalhei anos em empresas e acumulei muito conhecimento, mas nunca soube como transformar isso em um ativo financeiro para mim mesmo. O Cris mostrou exatamente como estruturar meu conhecimento e criar um modelo de mentoria que faz sentido para o mercado. Hoje, já estou fechando contratos como mentor e, além da renda extra, descobri um propósito incrível ajudando outros profissionais a crescerem.",
-      stars: 5
+      stars: 5,
+      photo: carlos // Imagem importada
     },
     {
       name: "Ana Paula Souza",
       role: "Especialista em Educação e Mentora",
       quote: "Eu sempre amei ensinar, mas sentia que estava preso a um sistema que limitava meu crescimento financeiro. Com o Cris, aprendi como estruturar mentorias sem precisar depender de instituições. Consegui criar um programa próprio e atrair alunos de forma independente. Hoje, gero mais impacto, tenho liberdade e transformei meu conhecimento em um negócio lucrativo sem precisar sair da área que eu amo.",
-      stars: 5
+      stars: 5,
+      photo: ana // Imagem importada
     },
     {
       name: "Rafael Lima",
       role: "Consultor e Mentor Estratégico",
       quote: "Eu já trabalhava como consultor, mas sempre senti que poderia entregar mais para meus clientes. O problema era que eu não sabia como estruturar isso de forma escalável. Com o Cris, aprendi a diferenciar mentoria de consultoria e como criar um programa contínuo que gera transformação real para meus mentorados. Meu faturamento aumentou, meu trabalho ficou mais estratégico e meus clientes valorizam muito mais o que eu entrego.",
-      stars: 5
+      stars: 5,
+      photo: rafael // Imagem importada
     },
     {
       name: "Juliana Castro",
       role: "Mentora de Desenvolvimento Pessoal",
       quote: "Eu sempre consumi muito conteúdo sobre autoconhecimento e desenvolvimento humano, mas não sabia como monetizar esse conhecimento sem parecer apenas mais uma. Agora, tenho clareza sobre como estruturar uma mentoria real e como gerar transformação nos meus clientes, sem precisar inventar fórmulas mirabolantes.",
-      stars: 5
+      stars: 5,
+      photo: juliana // Imagem importada
     }
   ];
 
@@ -81,8 +89,24 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           </p>
         </div>
         
-        {/* Container do depoimento - sem animações ou badges */}
+        {/* Container do depoimento - agora com foto */}
         <div className="max-w-4xl mx-auto bg-[#16202d] p-6 rounded-xl border border-[#e19d24]/20 mb-6 relative">
+          {/* Foto circular melhor centralizada */}
+          <div className="flex items-center justify-center mb-4">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24]">
+              <img 
+                src={currentTestimonial.photo} 
+                alt={`Foto de ${currentTestimonial.name}`} 
+                className="w-full h-full object-cover object-center"
+                style={{ 
+                  objectPosition: currentTestimonial.name === "Ana Paula Souza" || currentTestimonial.name === "Juliana Castro" 
+                    ? "center 30%" 
+                    : "center center" 
+                }}
+              />
+            </div>
+          </div>
+          
           {/* Ícone de citação */}
           <div className="flex justify-center mb-4">
             <Quote className="text-[#e19d24]" size={isMobile ? 24 : 32} />
@@ -105,7 +129,7 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           </div>
         </div>
         
-        {/* Indicadores simples */}
+        {/* Indicadores simples (pontos) */}
         <div className="flex justify-center gap-2 mb-10">
           {testimonials.map((_, index) => (
             <button

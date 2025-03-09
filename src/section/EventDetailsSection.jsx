@@ -257,8 +257,7 @@ const EventDetailsSection = forwardRef(({ noBackground = false, venueImage = nul
               Prepare-se para a Transformação
             </h3>
             <p className="text-sm sm:text-base text-[#c8d4e6] mb-6">
-              Recomendamos chegar com 30 minutos de antecedência. Traga um notebook, 
-              material para anotações e muita energia para transformar sua jornada como mentor.
+            Recomendamos chegar com 30 minutos de antecedência e muita energia para transformar sua jornada como mentor.
             </p>
             <button className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:scale-105 transition-transform text-sm sm:text-base">
               QUERO PARTICIPAR DO EVENTO

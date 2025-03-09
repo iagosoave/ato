@@ -1190,90 +1190,228 @@ footer {
 
 /* Correção específica para PricingSection e garantia contra sobreposições */
 
-  /* CORREÇÃO DE SOBREPOSIÇÃO PARA MOBILE - NÃO AFETA DESKTOP */
+  /* INICIO -- CORREÇÃO DE SOBREPOSIÇÃO PARA MOBILE - NÃO AFETA DESKTOP */
 
+  @media (max-width: 767px) {
+    /* Reset para todas as seções exceto hero */
+    section:not(.hero-section) {
+      position: static !important;
+      z-index: 1 !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      margin: 0 !important;
+      border: none !important;
+      padding: 2rem 0 !important;
+      transform: none !important;
+    }
+    
+    /* Remover elementos de correção antigos que podem estar causando conflito */
+    [id*="section-gap-fix"],
+    [class*="-fix"],
+    [class*="fix-"],
+    [class*="barrier"] {
+      display: none !important;
+    }
+    
+    /* Adicionar pequena separação entre seções */
+    section:not(.hero-section) {
+      border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    }
+    
+    /* Corrigir efeito de hover problemático */
+    .group:hover .absolute.inset-0 {
+      display: none !important;
+    }
+    
+    /* Garantir que elementos não vazem para outras seções */
+    section:not(.hero-section) {
+      clear: both !important;
+      margin-top: 0 !important;
+    }
+    
+    /* Ajuste para a seção de pricing */
+    .pricing-section .price-highlight {
+      margin-bottom: 1.5rem !important;
+    }
+    
+    /* Garantir espaçamento apropriado entre seções específicas */
+    .audience-section {
+      z-index: 45 !important;
+      clear: both !important;
+    }
+    
+    .method-journey-section {
+      z-index: 40 !important;
+      clear: both !important;
+    }
+    
+    .event-details-section {
+      z-index: 35 !important;
+      clear: both !important;
+    }
+    
+    .pricing-section {
+      z-index: 30 !important;
+      clear: both !important;
+    }
+    
+    .testimonials-section {
+      z-index: 25 !important;
+      clear: both !important;
+    }
+    
+    /* Adicionando a seção de diferenciais */
+    .diferenciais-section {
+      z-index: 23 !important;
+      clear: both !important;
+    }
+    
+    .cristofer-section {
+      z-index: 20 !important;
+      clear: both !important;
+    }
+    
+    .final-cta-section {
+      z-index: 15 !important;
+      clear: both !important;
+    }
+    
+    .faq-section {
+      z-index: 10 !important;
+      clear: both !important;
+    }
+  }
+/* FINAL -- a parte de cima é a mais importante do codigo */
+
+
+
+/* MethodJourney.css - Estilos EXCLUSIVAMENTE para mobile */
+
+/* Aplicando estilos APENAS para dispositivos mobile */
+@media (max-width: 768px) {
+  /* Container de cards em mobile */
+  .method-journey-section .journey-cards-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    grid-template-columns: unset !important; /* Remove o grid da versão desktop */
+  }
+
+  /* Cards na versão mobile */
+  .method-journey-section .journey-day-card {
+    width: 90% !important;
+    max-width: 250px !important;
+    margin: 0 auto 0.75rem auto !important;
+    padding: 0.7rem !important;
+    border-radius: 0.625rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* Cabeçalho do card na versão mobile */
+  .method-journey-section .card-header {
+    align-items: center !important;
+    gap: 0.625rem !important;
+    margin-bottom: 0.625rem !important;
+  }
+  
+  /* Container do ícone na versão mobile */
+  .method-journey-section .icon-container {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    min-width: 1.75rem !important;
+    padding: 0.3rem !important;
+  }
+  
+  /* Título "Dia X" na versão mobile */
+  .method-journey-section .day-title {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.125rem !important;
+  }
+  
+  /* Título principal do card na versão mobile */
+  .method-journey-section .card-title {
+    font-size: 0.65rem !important;
+  }
+  
+  /* Subtítulo do card na versão mobile */
+  .method-journey-section .card-subtitle {
+    font-size: 0.6rem !important;
+  }
+  
+  /* Lista de destaques na versão mobile */
+  .method-journey-section .highlight-list {
+    margin-top: 0.25rem !important;
+  }
+  
+  /* Itens da lista na versão mobile */
+  .method-journey-section .highlight-item {
+    font-size: 0.65rem !important;
+    margin-bottom: 0.375rem !important;
+    gap: 0.375rem !important;
+  }
+  
+  /* Ícone de destaque na versão mobile */
+  .method-journey-section .highlight-icon {
+    margin-top: 0.125rem !important;
+  }
+}
+
+/* Ajustes específicos para dispositivos muito pequenos */
+@media (max-width: 375px) {
+  .method-journey-section .journey-day-card {
+    max-width: 230px !important;
+    padding: 0.625rem !important;
+  }
+  
+  .method-journey-section .icon-container {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    min-width: 1.5rem !important;
+  }
+  
+  .method-journey-section .day-title {
+    font-size: 0.8rem !important;
+  }
+  
+  .method-journey-section .card-title {
+    font-size: 0.6rem !important;
+  }
+  
+  .method-journey-section .card-subtitle {
+    font-size: 0.55rem !important;
+  }
+  
+  .method-journey-section .highlight-item {
+    font-size: 0.6rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+}
+
+/* Adicione essas regras ao seu index.css para corrigir o espaçamento do botão */
 @media (max-width: 767px) {
-  /* Reset para todas as seções exceto hero */
-  section:not(.hero-section) {
-    position: static !important;
-    z-index: 1 !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    margin: 0 !important;
-    border: none !important;
-    padding: 2rem 0 !important;
-    transform: none !important;
+  /* Garantir espaço adequado em torno do botão na seção de diferenciais */
+  .diferenciais-section button {
+    margin-bottom: 1rem !important;
   }
   
-  /* Remover elementos de correção antigos que podem estar causando conflito */
-  [id*="section-gap-fix"],
-  [class*="-fix"],
-  [class*="fix-"],
-  [class*="barrier"] {
-    display: none !important;
+  .diferenciais-section p {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
   }
   
-  /* Adicionar pequena separação entre seções */
-  section:not(.hero-section) {
-    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  /* Corrigir a tabela de comparação */
+  .diferenciais-section table {
+    width: 100% !important;
+    table-layout: fixed !important;
   }
   
-  /* Corrigir efeito de hover problemático */
-  .group:hover .absolute.inset-0 {
-    display: none !important;
-  }
-  
-  /* Garantir que elementos não vazem para outras seções */
-  section:not(.hero-section) {
-    clear: both !important;
-    margin-top: 0 !important;
-  }
-  
-  /* Ajuste para a seção de pricing */
-  .pricing-section .price-highlight {
-    margin-bottom: 1.5rem !important;
-  }
-  
-  /* Garantir espaçamento apropriado entre seções específicas */
-  .audience-section {
-    z-index: 45 !important;
-    clear: both !important;
-  }
-  
-  .method-journey-section {
-    z-index: 40 !important;
-    clear: both !important;
-  }
-  
-  .event-details-section {
-    z-index: 35 !important;
-    clear: both !important;
-  }
-  
-  .pricing-section {
-    z-index: 30 !important;
-    clear: both !important;
-  }
-  
-  .testimonials-section {
-    z-index: 25 !important;
-    clear: both !important;
-  }
-  
-  .cristofer-section {
-    z-index: 20 !important;
-    clear: both !important;
-  }
-  
-  .final-cta-section {
-    z-index: 15 !important;
-    clear: both !important;
-  }
-  
-  .faq-section {
-    z-index: 10 !important;
-    clear: both !important;
+  /* Garantir que o CTA tenha espaço suficiente */
+  .diferenciais-section .text-center {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
 }

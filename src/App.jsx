@@ -5,6 +5,7 @@ import MethodJourneySection from './section/MethodJourneySection';
 import EventDetailsSection from './section/EventDetailsSection';
 import PricingSection from './section/PricingSection';
 import TestimonialsSection from './section/TestimonialsSection';
+import DiferenciaisSection from './section/DiferenciaisSection'; // Nova importação
 import CristoferLeoneSectionn from './section/CristoferLeoneSectionn';
 import FinalCtaSection from './section/FinalCtaSection';
 import FAQSection from './section/FAQSection';
@@ -120,6 +121,7 @@ const App = () => {
             document.querySelector('.event-logistics-section'),
             document.querySelector('.pricing-section'),
             document.querySelector('.testimonials-section'),
+            document.querySelector('.diferenciais-section'), // Adicionando a nova seção
             document.querySelector('.cristofer-section'),
             document.querySelector('.final-cta-section'),
             document.querySelector('.faq-section')
@@ -408,7 +410,7 @@ const App = () => {
             z-index: 45;
           }
           
-          /* Outras seções - Ajustado para incluir TestimonialsSection */
+          /* Outras seções - Ajustado para incluir DiferenciaisSection */
           .app-container section.method-journey-section {
             z-index: 40;
           }
@@ -426,6 +428,10 @@ const App = () => {
           }
           
           .app-container section.testimonials-section {
+            z-index: 23;
+          }
+          
+          .app-container section.diferenciais-section {
             z-index: 22;
           }
           
@@ -461,6 +467,7 @@ const App = () => {
           .section-5-bottom-fix,
           .section-6-bottom-fix,
           .section-7-bottom-fix,
+          .section-8-bottom-fix,
           .section-1-top-fix,
           .section-2-top-fix,
           .section-3-top-fix,
@@ -468,6 +475,7 @@ const App = () => {
           .section-5-top-fix,
           .section-6-top-fix,
           .section-7-top-fix,
+          .section-8-top-fix,
           .audience-bottom-fix,
           .method-top-fix,
           .faq-to-black-footer {
@@ -517,6 +525,7 @@ const App = () => {
       <EventDetailsSection noBackground={true} deviceType={deviceType} />
       <PricingSection noBackground={true} deviceType={deviceType} />
       <TestimonialsSection noBackground={true} deviceType={deviceType} />
+      <DiferenciaisSection noBackground={true} deviceType={deviceType} /> {/* Nova seção adicionada */}
       <CristoferLeoneSectionn noBackground={true} deviceType={deviceType} />
       <FinalCtaSection noBackground={true} deviceType={deviceType} />
       <FAQSection noBackground={true} deviceType={deviceType} />

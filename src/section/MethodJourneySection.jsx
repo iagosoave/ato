@@ -56,13 +56,36 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
           }
         }
       }
+      
+      // Fix para tamanho igual dos cards apenas no mobile
+      if (window.innerWidth < 768) {
+        setTimeout(() => {
+          const cards = document.querySelectorAll('.journey-day-card');
+          if (cards.length > 0) {
+            // Encontrar a altura máxima
+            let maxHeight = 0;
+            cards.forEach(card => {
+              card.style.height = 'auto'; // Reset para medir a altura natural
+              const height = card.scrollHeight;
+              if (height > maxHeight) maxHeight = height;
+            });
+            
+            // Aplicar a mesma altura a todos os cards
+            cards.forEach(card => {
+              card.style.height = `${maxHeight}px`;
+            });
+          }
+        }, 300);
+      }
     };
     
     fixSectionGaps();
     setTimeout(fixSectionGaps, 100);
+    window.addEventListener('resize', fixSectionGaps);
     
     return () => {
       window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('resize', fixSectionGaps);
     };
   }, []);
 
@@ -72,7 +95,7 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
       day: 1,
       title: "AUTOCONHECIMENTO",
       subtitle: "Despertando seu mentor interior",
-      icon: <CheckCircle className="text-white" size={isMobile ? 12 : 16} />,
+      icon: <CheckCircle className="text-white" size={isMobile ? (isSmallMobile ? 12 : 14) : 16} />,
       highlights: [
         "Mapa da Essência – Exercício para definir seus pontos fortes",
         "Ressignificação de Experiências",
@@ -84,7 +107,7 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
       day: 2,
       title: "TRANSFORMAÇÃO",
       subtitle: "Estruture seu método e posicionamento",
-      icon: <Star className="text-white" size={isMobile ? 12 : 16} />,
+      icon: <Star className="text-white" size={isMobile ? (isSmallMobile ? 12 : 14) : 16} />,
       highlights: [
         "Framework do Método ATO",
         "Construção da Jornada do Mentorando",
@@ -96,7 +119,7 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
       day: 3,
       title: "ORIENTAÇÃO",
       subtitle: "Monetize sua mentoria e escale seu impacto",
-      icon: <TrendingUp className="text-white" size={isMobile ? 12 : 16} />,
+      icon: <TrendingUp className="text-white" size={isMobile ? (isSmallMobile ? 12 : 14) : 16} />,
       highlights: [
         "Precificação e Modelos de Monetização",
         "Construção da Oferta Irresistível",
@@ -119,7 +142,7 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
   return (
     <section 
       ref={ref} 
-      className="relative w-full py-5 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen method-journey-section"
+      className="method-journey-section relative w-full py-5 sm:py-16 md:py-20 lg:py-28 bg-[#0c1220] overflow-hidden flex items-center justify-center min-h-[auto] sm:min-h-[90vh] md:min-h-screen"
     >
       {/* Main Content */}
       <div className="container mx-auto px-3 sm:px-4 z-10 relative">
@@ -143,8 +166,8 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
           </p>
         </motion.div>
   
-        {/* Journey Days - Layout otimizado para mobile */}
-        <div className="flex flex-col sm:grid sm:grid-cols-3 gap-3 sm:gap-5 md:gap-8 max-w-md sm:max-w-6xl mx-auto">
+        {/* Journey Days */}
+        <div className="journey-cards-container grid grid-cols-3 gap-3 sm:gap-5 md:gap-8 max-w-md sm:max-w-6xl mx-auto">
           {journeyDays.map((item, index) => (
             <motion.div
               key={index}
@@ -157,34 +180,29 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
             >
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#e19d2405_0%,transparent_70%)] rounded-lg sm:rounded-xl md:rounded-2xl" />
               
-              {/* Cabeçalho do Card - Layout otimizado para mobile */}
-              <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-4 mb-2 sm:mb-4">
-                <div className="p-1.5 sm:p-3 md:p-4 bg-gradient-to-br from-[#e19d24] to-[#d3891a] rounded-lg md:rounded-xl shadow-lg flex-shrink-0">
+              {/* Cabeçalho do Card */}
+              <div className="card-header flex items-center gap-2 sm:gap-4 mb-2 sm:mb-4">
+                <div className="icon-container p-1.5 sm:p-3 md:p-4 bg-gradient-to-br from-[#e19d24] to-[#d3891a] rounded-lg md:rounded-xl shadow-lg flex-shrink-0">
                   {item.icon}
                 </div>
-                <div className="text-center sm:text-left">
-                  <h3 className="text-base sm:text-xl md:text-2xl font-semibold text-gray-100 mb-0 sm:mb-1">
+                <div className="card-title-group text-left">
+                  <h3 className="day-title text-base sm:text-xl md:text-2xl font-semibold text-gray-100 mb-0 sm:mb-1">
                     Dia {item.day}
                   </h3>
-                  <div className="flex flex-col">
-                    <p className="text-xs sm:text-sm md:text-base text-[#e19d24] font-bold uppercase tracking-wide">
-                      {item.title}
-                    </p>
-                    <p className="text-2xs sm:text-xs text-[#c8d4e6] font-medium">
-                      {item.subtitle}
-                    </p>
-                  </div>
+                  <p className="card-title text-xs sm:text-sm md:text-base text-[#e19d24] font-bold uppercase tracking-wide">
+                    {item.title}
+                  </p>
+                  <p className="card-subtitle text-xs sm:text-xs text-[#c8d4e6] font-medium">
+                    {item.subtitle}
+                  </p>
                 </div>
               </div>
               
-              {/* Lista de destaques - Layout compacto para mobile */}
-              <ul className="space-y-0.5 sm:space-y-2 mt-2 sm:mt-0">
+              {/* Lista de destaques */}
+              <ul className="highlight-list space-y-0.5 sm:space-y-2 mt-2 sm:mt-0">
                 {item.highlights.map((highlight, hlIndex) => (
-                  <li 
-                    key={hlIndex} 
-                    className="text-2xs sm:text-xs md:text-sm text-[#c8d4e6]/80 flex items-start gap-1 sm:gap-2"
-                  >
-                    <CheckCircle className="text-[#e19d24] flex-shrink-0 mt-0.5" size={isMobile ? 10 : 14} />
+                  <li key={hlIndex} className="highlight-item text-xs sm:text-xs md:text-sm text-[#c8d4e6]/80 flex items-start gap-1 sm:gap-2">
+                    <CheckCircle className="highlight-icon text-[#e19d24] flex-shrink-0 mt-0.5" size={isMobile ? 10 : 14} />
                     <span className="leading-tight">{highlight}</span>
                   </li>
                 ))}
@@ -196,91 +214,6 @@ const MethodJourneySection = forwardRef(({ deviceType = 'desktop' }, ref) => {
           ))}
         </div>
       </div>
-  
-      {/* Estilos responsivos otimizados */}
-      <style jsx>{`
-        /* Definição para tamanho de fonte extra pequeno */
-        .text-2xs {
-          font-size: 0.65rem;
-        }
-        
-        @media (max-width: 768px) {
-          /* Ajustes gerais para a seção */
-          .method-journey-section {
-            padding: 1.5rem 0 !important;
-            margin-top: -1px !important;
-            margin-bottom: -1px !important;
-          }
-          
-          /* Otimização de título no mobile */
-          h2 {
-            font-size: 1.4rem !important;
-            line-height: 1.2 !important;
-            margin-bottom: 0.25rem !important;
-          }
-          
-          /* Estilo especial para o "Método ATO" */
-          h2 + div span {
-            font-size: 1.9rem !important;
-            font-weight: 800 !important;
-            letter-spacing: -0.5px;
-          }
-          
-          p {
-            font-size: 0.8rem !important;
-            margin-top: 0.75rem !important;
-          }
-          
-          /* Redimensionamento e centralização dos cards */
-          .journey-day-card {
-            width: 90% !important;
-            max-width: 320px !important;
-            margin: 0 auto 0.75rem auto !important;
-            padding: 0.75rem !important;
-            text-align: center !important;
-          }
-          
-          /* Ajuste para o layout de highlights */
-          .journey-day-card ul {
-            text-align: left !important;
-            margin: 0.5rem auto 0 auto !important;
-            max-width: 280px !important;
-          }
-          
-          .journey-day-card ul li {
-            margin-bottom: 0.25rem !important;
-          }
-        }
-        
-        /* Ajustes específicos para dispositivos muito pequenos */
-        @media (max-width: 375px) {
-          .method-journey-section {
-            padding: 1.25rem 0 !important;
-          }
-          
-          h2 {
-            font-size: 1.25rem !important;
-          }
-          
-          /* Mesmo em telas muito pequenas, mantém "Método ATO" grande */
-          h2 + div span {
-            font-size: 1.7rem !important;
-          }
-          
-          p {
-            font-size: 0.7rem !important;
-          }
-          
-          .journey-day-card {
-            padding: 0.6rem !important;
-            max-width: 280px !important;
-          }
-          
-          .journey-day-card h3 {
-            font-size: 0.9rem !important;
-          }
-        }
-      `}</style>
     </section>
   );
 });
