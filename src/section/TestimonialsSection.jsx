@@ -91,13 +91,21 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
         
         {/* Container do depoimento */}
         <div className="max-w-4xl mx-auto bg-[#16202d] p-6 rounded-xl border border-[#e19d24]/20 mb-6 relative">
-          {/* Foto circular */}
+          {/* Foto circular - Centralizada */}
           <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24]">
+            <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24] flex items-center justify-center">
               <img 
                 src={currentTestimonial.photo} 
                 alt={`Foto de ${currentTestimonial.name}`} 
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover"
+                style={{ 
+                  objectPosition: 
+                    currentTestimonial.name === "Ana Paula Souza" 
+                      ? "center top" 
+                      : currentTestimonial.name === "Juliana Castro"
+                        ? "center 30%"
+                        : "center"
+                }}
               />
             </div>
           </div>
@@ -143,7 +151,7 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
         {/* CTA simples */}
         <div className="text-center">
           <button className="px-6 py-3 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:bg-[#d3891a] transition-colors">
-            QUERO ME TRANSFORMAR EM MENTOR DE ELITE
+          QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
           </button>
         </div>
       </div>

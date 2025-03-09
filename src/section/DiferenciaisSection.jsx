@@ -37,7 +37,7 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
     {
       icon: <Clock />,
       titulo: "Sessão Estratégica Exclusiva",
-      descricao: "Você recebe um envio personalizado para não trabalhar na implementação."
+      descricao: "Você recebe uma sessão personalizada de implementação."
     },
     {
       icon: <Users />,
@@ -246,7 +246,7 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
         {/* CTA Final */}
         <div className="text-center">
           <button className="px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:from-[#d3891a] hover:to-[#c27b15] transform transition-all hover:scale-105 shadow-lg shadow-[#e19d24]/10">
-            QUERO ME TORNAR UM MENTOR NATO
+            QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
           </button>
         </div>
       </div>
