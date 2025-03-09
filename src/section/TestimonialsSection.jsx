@@ -1,14 +1,20 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, useState, forwardRef, useRef } from 'react';
 import { Quote, Star } from 'lucide-react';
-import carlos from './carlos.png';
-import juliana from './juliana.png';
-import ana from './ana.png';
-import rafael from './rafael.png';
 
 const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
   // State básicos
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const sectionRef = useRef(null);
+  
+  // Referência para as imagens que serão carregadas sob demanda
+  const [testimonialImages, setTestimonialImages] = useState({
+    carlos: null,
+    juliana: null,
+    ana: null,
+    rafael: null
+  });
   
   useEffect(() => {
     // Detectar mobile
@@ -24,41 +30,81 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
       setActiveIndex(prev => (prev + 1) % testimonials.length);
     }, 5000);
     
+    // Setup Intersection Observer para carregar imagens quando a seção estiver visível
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !imagesLoaded) {
+          loadImages();
+          setImagesLoaded(true);
+          observer.disconnect(); // Desconecta após carregar as imagens uma vez
+        }
+      });
+    }, { threshold: 0.1 }); // Carrega quando pelo menos 10% da seção está visível
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
     return () => {
       window.removeEventListener('resize', checkMobile);
       clearInterval(timer);
+      observer.disconnect();
     };
-  }, []);
+  }, [imagesLoaded]);
+  
+  // Função para carregar as imagens dinamicamente
+  const loadImages = async () => {
+    try {
+      // Importações dinâmicas que só executam quando a função é chamada
+      const [carlosImg, julianaImg, anaImg, rafaelImg] = await Promise.all([
+        import('./carlos.avif'),
+        import('./juliana.avif'),
+        import('./ana.avif'),
+        import('./rafael.avif')
+      ]);
+      
+      setTestimonialImages({
+        carlos: carlosImg.default,
+        juliana: julianaImg.default,
+        ana: anaImg.default,
+        rafael: rafaelImg.default
+      });
+      
+      console.log('Imagens carregadas com sucesso!');
+    } catch (error) {
+      console.error('Erro ao carregar imagens:', error);
+    }
+  };
 
-  // Dados dos depoimentos com fotos adicionadas
+  // Dados dos depoimentos - as fotos serão adicionadas dinamicamente
   const testimonials = [
     {
       name: "Carlos Menezes",
       role: "Executivo e Mentor de Negócios",
       quote: "Trabalhei anos em empresas e acumulei muito conhecimento, mas nunca soube como transformar isso em um ativo financeiro para mim mesmo. O Cris mostrou exatamente como estruturar meu conhecimento e criar um modelo de mentoria que faz sentido para o mercado. Hoje, já estou fechando contratos como mentor e, além da renda extra, descobri um propósito incrível ajudando outros profissionais a crescerem.",
       stars: 5,
-      photo: carlos
+      photoKey: 'carlos'
     },
     {
       name: "Ana Paula Souza",
       role: "Especialista em Educação e Mentora",
       quote: "Eu sempre amei ensinar, mas sentia que estava preso a um sistema que limitava meu crescimento financeiro. Com o Cris, aprendi como estruturar mentorias sem precisar depender de instituições. Consegui criar um programa próprio e atrair alunos de forma independente. Hoje, gero mais impacto, tenho liberdade e transformei meu conhecimento em um negócio lucrativo sem precisar sair da área que eu amo.",
       stars: 5,
-      photo: ana
+      photoKey: 'ana'
     },
     {
       name: "Rafael Lima",
       role: "Consultor e Mentor Estratégico",
       quote: "Eu já trabalhava como consultor, mas sempre senti que poderia entregar mais para meus clientes. O problema era que eu não sabia como estruturar isso de forma escalável. Com o Cris, aprendi a diferenciar mentoria de consultoria e como criar um programa contínuo que gera transformação real para meus mentorados. Meu faturamento aumentou, meu trabalho ficou mais estratégico e meus clientes valorizam muito mais o que eu entrego.",
       stars: 5,
-      photo: rafael
+      photoKey: 'rafael'
     },
     {
       name: "Juliana Castro",
       role: "Mentora de Desenvolvimento Pessoal",
       quote: "Eu sempre consumi muito conteúdo sobre autoconhecimento e desenvolvimento humano, mas não sabia como monetizar esse conhecimento sem parecer apenas mais uma. Agora, tenho clareza sobre como estruturar uma mentoria real e como gerar transformação nos meus clientes, sem precisar inventar fórmulas mirabolantes.",
       stars: 5,
-      photo: juliana
+      photoKey: 'juliana'
     }
   ];
 
@@ -72,7 +118,12 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
 
   return (
     <section 
-      ref={ref} 
+      ref={(node) => {
+        // Para manter ambas as referências
+        sectionRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      }} 
       className="relative w-full py-10 bg-[#0c1220] testimonials-section"
     >
       <div className="container mx-auto px-4">
@@ -94,19 +145,26 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           {/* Foto circular - Centralizada */}
           <div className="flex items-center justify-center mb-4">
             <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24] flex items-center justify-center">
-              <img 
-                src={currentTestimonial.photo} 
-                alt={`Foto de ${currentTestimonial.name}`} 
-                className="w-full h-full object-cover"
-                style={{ 
-                  objectPosition: 
-                    currentTestimonial.name === "Ana Paula Souza" 
-                      ? "center top" 
-                      : currentTestimonial.name === "Juliana Castro"
-                        ? "center 30%"
-                        : "center"
-                }}
-              />
+              {testimonialImages[currentTestimonial.photoKey] ? (
+                <img 
+                  src={testimonialImages[currentTestimonial.photoKey]} 
+                  alt={`Foto de ${currentTestimonial.name}`} 
+                  className="w-full h-full object-cover"
+                  style={{ 
+                    objectPosition: 
+                      currentTestimonial.name === "Ana Paula Souza" 
+                        ? "center top" 
+                        : currentTestimonial.name === "Juliana Castro"
+                          ? "center 30%"
+                          : "center"
+                  }}
+                />
+              ) : (
+                // Placeholder enquanto a imagem não carregou
+                <div className="w-full h-full bg-gray-600 flex items-center justify-center">
+                  <span className="text-white text-xs">{currentTestimonial.name.split(' ').map(n => n[0]).join('')}</span>
+                </div>
+              )}
             </div>
           </div>
           
