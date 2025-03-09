@@ -17,61 +17,56 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  // Dados dos diferenciais
+  // Dados dos diferenciais - ATUALIZADO conforme a imagem 2
   const diferenciais = [
     {
       icon: <Award />,
       titulo: "Aprendizado 100% aplicado",
-      descricao: "Transforme teoria em prática imediatamente com modelos prontos para implementação."
+      descricao: "Você não sai apenas com teoria – sai com sua mentoria pronta para vender."
     },
     {
       icon: <Zap />,
       titulo: "Estratégia validada no mercado",
-      descricao: "Método criado e testado por profissionais que já alcançaram resultados expressivos."
+      descricao: "Método criado por quem já aplicou e teve resultados reais."
     },
     {
       icon: <Sparkles />,
-      titulo: "Mentoria real, não coaching genérico",
-      descricao: "Aprenda a estruturar e vender suas mentorias com estratégias comprovadas e específicas."
+      titulo: "Mentoria prática, não coaching genérico",
+      descricao: "Você aprende a estruturar e vender, não apenas a inspirar."
     },
     {
       icon: <Clock />,
       titulo: "Sessão Estratégica Exclusiva",
-      descricao: "Acompanhamento personalizado para garantir sua implementação e primeiros resultados."
+      descricao: "Você recebe um envio personalizado para não trabalhar na implementação."
     },
     {
       icon: <Users />,
       titulo: "Comunidade exclusiva de mentores",
-      descricao: "Conexões valiosas, networking estratégico e oportunidades de parcerias."
+      descricao: "Troca de experiências, parcerias e aprendizado contínuo."
     }
   ];
 
-  // Dados da comparação
+  // Dados da comparação - ATUALIZADO conforme a imagem 1
   const comparacoes = [
     {
-      aspecto: "Foco em Resultados Práticos",
-      metodoAto: "Você termina com sua mentoria estruturada e pronta para vender",
-      outrasFormacoes: "Apenas conceitos teóricos sem aplicação real"
+      aspecto: "Foco em Aplicação Real",
+      metodoAto: "Sim, você sai com seu modelo pronto",
+      outrasFormacoes: "Muitas formações ficam na teoria"
     },
     {
-      aspecto: "Velocidade de Monetização",
-      metodoAto: "Estratégia de validação acelerada para gerar receita rapidamente",
-      outrasFormacoes: "Foco apenas em acúmulo de conhecimento sem retorno financeiro"
+      aspecto: "Monetização Rápida",
+      metodoAto: "Estratégia de validação rápida",
+      outrasFormacoes: "Foco apenas em conhecimento, sem ação prática"
     },
     {
-      aspecto: "Suporte de Mentores Experientes",
-      metodoAto: "Acompanhamento de profissionais que já conquistaram o que você busca",
-      outrasFormacoes: "Professores sem experiência prática no mercado"
+      aspecto: "Mentores Líderes",
+      metodoAto: "Você pode se tornar um e gerar renda extra",
+      outrasFormacoes: "Sem suporte pós-formação"
     },
     {
-      aspecto: "Comunidade e Networking",
-      metodoAto: "Acesso a uma rede exclusiva de profissionais de alto nível",
-      outrasFormacoes: "Jornada solitária sem conexões estratégicas"
-    },
-    {
-      aspecto: "Material Exclusivo",
-      metodoAto: "Frameworks proprietários testados e validados no mercado",
-      outrasFormacoes: "Conteúdo genérico facilmente encontrado em outras fontes"
+      aspecto: "Acompanhamento Pós-Formação",
+      metodoAto: "Sim, suporte e networking contínuo",
+      outrasFormacoes: "Você fica sozinho após o curso"
     }
   ];
 
@@ -96,7 +91,7 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        {/* Título principal com animação sutíl */}
+        {/* Título principal com animação sutil */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 relative inline-block">
             Por Que Escolher o
@@ -143,22 +138,39 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
           
           {/* Conteúdo da aba de diferenciais */}
           {activeTab === 'diferenciais' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {diferenciais.map((item, index) => (
-                <div 
-                  key={index}
-                  className="bg-[#16202d] p-5 rounded-lg border border-[#e19d24]/10 transform transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[#e19d24]/5"
-                  style={cardStyle(index)}
-                >
-                  <div className="flex items-center mb-3">
-                    <div className="mr-3 text-[#e19d24]">
-                      {item.icon}
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {diferenciais.map((item, index) => (
+                  <div 
+                    key={index}
+                    className="bg-[#16202d] p-5 rounded-lg border border-[#e19d24]/10 transform transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[#e19d24]/5"
+                    style={cardStyle(index)}
+                  >
+                    <div className="flex items-center mb-3">
+                      <div className="mr-3 text-[#e19d24]">
+                        {item.icon}
+                      </div>
+                      <h3 className="text-white font-semibold text-base md:text-lg">{item.titulo}</h3>
                     </div>
-                    <h3 className="text-white font-semibold text-base md:text-lg">{item.titulo}</h3>
+                    <p className="text-[#c8d4e6] text-sm">{item.descricao}</p>
                   </div>
-                  <p className="text-[#c8d4e6] text-sm">{item.descricao}</p>
+                ))}
+              </div>
+              
+              {/* Nota especial sobre a sessão estratégica */}
+              <div className="max-w-3xl mx-auto bg-[#16202d] rounded-lg p-5 border border-[#e19d24]/20 mt-8">
+                <div className="flex items-start">
+                  <div className="text-[#e19d24] mr-4 mt-1">
+                    <ArrowUpRight size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-medium mb-2">Sessão Estratégica Garantida</h4>
+                    <p className="text-[#c8d4e6] text-sm">
+                      Você tem direito garantido a 1 sessão estratégica com um Mentor Líder para garantir a implementação.
+                    </p>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
           )}
           
@@ -195,7 +207,7 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
                 ))}
               </div>
               
-              {/* Versão desktop - tabela simplificada com larguras fixas */}
+              {/* Versão desktop - tabela */}
               <table className="hidden md:table w-full border-collapse">
                 <thead className="bg-[#16202d]">
                   <tr>
@@ -230,29 +242,12 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
             </div>
           )}
         </div>
-        
-        {/* Nota especial sobre a sessão estratégica */}
-        <div className="max-w-3xl mx-auto bg-[#16202d] rounded-lg p-5 border border-[#e19d24]/20 mb-10">
-          <div className="flex items-start">
-            <div className="text-[#e19d24] mr-4 mt-1">
-              <ArrowUpRight size={20} />
-            </div>
-            <div>
-              <h4 className="text-white font-medium mb-2">Sessão Estratégica Garantida</h4>
-              <p className="text-[#c8d4e6] text-sm">
-                Você tem direito garantido a 1 sessão estratégica exclusiva com um Mentor Líder para 
-                assegurar que sua implementação seja perfeita e adaptada ao seu contexto específico.
-              </p>
-            </div>
-          </div>
-        </div>
 
         {/* CTA Final */}
         <div className="text-center">
           <button className="px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:from-[#d3891a] hover:to-[#c27b15] transform transition-all hover:scale-105 shadow-lg shadow-[#e19d24]/10">
-            QUERO ME TORNAR UM MENTOR DE ELITE
+            QUERO ME TORNAR UM MENTOR NATO
           </button>
-          <p className="text-[#c8d4e6] text-xs mt-5 md:mt-4 mb-2">Vagas limitadas para garantir atendimento de qualidade</p>
         </div>
       </div>
     </section>

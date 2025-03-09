@@ -1391,27 +1391,3 @@ footer {
   }
 }
 
-/* Adicione essas regras ao seu index.css para corrigir o espaçamento do botão */
-@media (max-width: 767px) {
-  /* Garantir espaço adequado em torno do botão na seção de diferenciais */
-  .diferenciais-section button {
-    margin-bottom: 1rem !important;
-  }
-  
-  .diferenciais-section p {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-  
-  /* Corrigir a tabela de comparação */
-  .diferenciais-section table {
-    width: 100% !important;
-    table-layout: fixed !important;
-  }
-  
-  /* Garantir que o CTA tenha espaço suficiente */
-  .diferenciais-section .text-center {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-  }
-}

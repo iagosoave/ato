@@ -1,14 +1,29 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { Quote, Star } from 'lucide-react';
-import carlos from './carlos.png'
-import juliana from './juliana.png'
-import ana from './ana.png'
+import carlos from './carlos.png';
+import juliana from './juliana.png';
+import ana from './ana.png';
 import rafael from './rafael.png';
 
 const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
   // State básicos
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // Pré-carregamento das imagens para evitar bugs durante a transição
+  useEffect(() => {
+    // Pré-carregar todas as imagens
+    const preloadImages = () => {
+      const images = [carlos, juliana, ana, rafael];
+      images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+    
+    preloadImages();
+  }, []);
   
   useEffect(() => {
     // Detectar mobile
@@ -19,16 +34,16 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // Rotação básica de depoimentos
+    // Rotação básica de depoimentos com animação suave
     const timer = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % testimonials.length);
+      handleTestimonialChange((activeIndex + 1) % testimonials.length);
     }, 5000);
     
     return () => {
       window.removeEventListener('resize', checkMobile);
       clearInterval(timer);
     };
-  }, []);
+  }, [activeIndex]);
 
   // Dados dos depoimentos com fotos adicionadas
   const testimonials = [
@@ -37,34 +52,46 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
       role: "Executivo e Mentor de Negócios",
       quote: "Trabalhei anos em empresas e acumulei muito conhecimento, mas nunca soube como transformar isso em um ativo financeiro para mim mesmo. O Cris mostrou exatamente como estruturar meu conhecimento e criar um modelo de mentoria que faz sentido para o mercado. Hoje, já estou fechando contratos como mentor e, além da renda extra, descobri um propósito incrível ajudando outros profissionais a crescerem.",
       stars: 5,
-      photo: carlos // Imagem importada
+      photo: carlos
     },
     {
       name: "Ana Paula Souza",
       role: "Especialista em Educação e Mentora",
       quote: "Eu sempre amei ensinar, mas sentia que estava preso a um sistema que limitava meu crescimento financeiro. Com o Cris, aprendi como estruturar mentorias sem precisar depender de instituições. Consegui criar um programa próprio e atrair alunos de forma independente. Hoje, gero mais impacto, tenho liberdade e transformei meu conhecimento em um negócio lucrativo sem precisar sair da área que eu amo.",
       stars: 5,
-      photo: ana // Imagem importada
+      photo: ana
     },
     {
       name: "Rafael Lima",
       role: "Consultor e Mentor Estratégico",
       quote: "Eu já trabalhava como consultor, mas sempre senti que poderia entregar mais para meus clientes. O problema era que eu não sabia como estruturar isso de forma escalável. Com o Cris, aprendi a diferenciar mentoria de consultoria e como criar um programa contínuo que gera transformação real para meus mentorados. Meu faturamento aumentou, meu trabalho ficou mais estratégico e meus clientes valorizam muito mais o que eu entrego.",
       stars: 5,
-      photo: rafael // Imagem importada
+      photo: rafael
     },
     {
       name: "Juliana Castro",
       role: "Mentora de Desenvolvimento Pessoal",
       quote: "Eu sempre consumi muito conteúdo sobre autoconhecimento e desenvolvimento humano, mas não sabia como monetizar esse conhecimento sem parecer apenas mais uma. Agora, tenho clareza sobre como estruturar uma mentoria real e como gerar transformação nos meus clientes, sem precisar inventar fórmulas mirabolantes.",
       stars: 5,
-      photo: juliana // Imagem importada
+      photo: juliana
     }
   ];
 
-  // Troca de depoimento
-  const setTestimonial = (index) => {
-    setActiveIndex(index);
+  // Função melhorada para troca de depoimento com transição
+  const handleTestimonialChange = (index) => {
+    if (isTransitioning || index === activeIndex) return;
+    
+    setIsTransitioning(true);
+    
+    // Aplicar a transição após um pequeno delay
+    setTimeout(() => {
+      setActiveIndex(index);
+      
+      // Remover o estado de transição após a mudança
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 500); // Duração da transição
+    }, 50);
   };
 
   // Depoimento atual
@@ -89,21 +116,37 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           </p>
         </div>
         
-        {/* Container do depoimento - agora com foto */}
-        <div className="max-w-4xl mx-auto bg-[#16202d] p-6 rounded-xl border border-[#e19d24]/20 mb-6 relative">
-          {/* Foto circular melhor centralizada */}
+        {/* Container do depoimento - com transição suave */}
+        <div 
+          className={`max-w-4xl mx-auto bg-[#16202d] p-6 rounded-xl border border-[#e19d24]/20 mb-6 relative transition-opacity duration-500 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
+        >
+          {/* Foto circular com melhor precarregamento */}
           <div className="flex items-center justify-center mb-4">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24]">
-              <img 
-                src={currentTestimonial.photo} 
-                alt={`Foto de ${currentTestimonial.name}`} 
-                className="w-full h-full object-cover object-center"
-                style={{ 
-                  objectPosition: currentTestimonial.name === "Ana Paula Souza" || currentTestimonial.name === "Juliana Castro" 
-                    ? "center 30%" 
-                    : "center center" 
-                }}
-              />
+            <div 
+              className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24] bg-[#0f1825]"
+              style={{ position: 'relative' }}
+            >
+              {testimonials.map((testimonial, index) => (
+                <div 
+                  key={index}
+                  className="absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out"
+                  style={{ 
+                    opacity: activeIndex === index ? 1 : 0,
+                    zIndex: activeIndex === index ? 10 : 1
+                  }}
+                >
+                  <img 
+                    src={testimonial.photo} 
+                    alt={`Foto de ${testimonial.name}`} 
+                    className="w-full h-full object-cover"
+                    style={{ 
+                      objectPosition: testimonial.name === "Ana Paula Souza" || testimonial.name === "Juliana Castro" 
+                        ? "center 30%" 
+                        : "center center" 
+                    }}
+                  />
+                </div>
+              ))}
             </div>
           </div>
           
@@ -113,7 +156,7 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           </div>
           
           {/* Texto do depoimento */}
-          <p className="text-sm md:text-base text-[#c8d4e6] mb-6 text-center italic">
+          <p className="text-sm md:text-base text-[#c8d4e6] mb-6 text-center italic min-h-[120px] md:min-h-[100px]">
             "{currentTestimonial.quote}"
           </p>
           
@@ -129,16 +172,19 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           </div>
         </div>
         
-        {/* Indicadores simples (pontos) */}
+        {/* Indicadores aprimorados com feedback visual */}
         <div className="flex justify-center gap-2 mb-10">
           {testimonials.map((_, index) => (
             <button
               key={index}
-              onClick={() => setTestimonial(index)}
-              className={`w-3 h-3 rounded-full ${
-                activeIndex === index ? 'bg-[#e19d24]' : 'bg-[#c8d4e6]/30'
-              }`}
+              onClick={() => handleTestimonialChange(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                activeIndex === index 
+                  ? 'bg-[#e19d24] scale-110' 
+                  : 'bg-[#c8d4e6]/30 hover:bg-[#c8d4e6]/50'
+              } ${isTransitioning ? 'pointer-events-none' : ''}`}
               aria-label={`Ver depoimento ${index + 1}`}
+              disabled={isTransitioning}
             />
           ))}
         </div>
