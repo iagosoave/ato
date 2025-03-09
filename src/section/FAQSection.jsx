@@ -131,9 +131,16 @@ const FAQSection = forwardRef(({ noBackground = false }, ref) => {
           <p className="text-xs sm:text-lg text-[#c8d4e6] max-w-2xl mx-auto mb-4 sm:mb-6">
             Ainda tem alguma dúvida? Nossa equipe está pronta para ajudar você a dar o próximo passo.
           </p>
-          <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:scale-105 transition-transform">
-            FALAR COM NOSSA EQUIPE
-          </button>
+          <a 
+  href="https://wa.me/5511993200188"
+  target="_blank"
+  rel="noopener noreferrer" 
+  className="inline-block"
+>
+  <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:scale-105 transition-transform">
+    FALAR COM NOSSA EQUIPE
+  </button>
+</a>
         </motion.div>
       </div>
   

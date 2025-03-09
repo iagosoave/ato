@@ -245,9 +245,16 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
 
         {/* CTA Final */}
         <div className="text-center">
-          <button className="px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:from-[#d3891a] hover:to-[#c27b15] transform transition-all hover:scale-105 shadow-lg shadow-[#e19d24]/10">
-            QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
-          </button>
+        <a 
+  href="https://pay.hotmart.com/D98067996F?_hi=eyJjaWQiOiIxNzM5NjU1NjQwNDExNjI4MzUzMDQ4MjMyOTUxODAwIiwiYmlkIjoiMTczOTY1NTY0MDQxMTYyODM1MzA0ODIzMjk1MTgwMCIsInNpZCI6Ijc4NjE1YWEzM2I4MDQwYWNhODg4MTZlZDNlMDY5MzhiIn0=.1741553142689&bid=1741553148353"
+  target="_blank"
+  rel="noopener noreferrer" 
+  className="inline-block"
+>
+  <button className="px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:from-[#d3891a] hover:to-[#c27b15] transform transition-all hover:scale-105 shadow-lg shadow-[#e19d24]/10">
+    QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
+  </button>
+</a>
         </div>
       </div>
     </section>

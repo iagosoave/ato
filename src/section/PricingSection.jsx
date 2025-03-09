@@ -284,13 +284,20 @@ const PricingSection = forwardRef(({ noBackground = false, deviceType = 'desktop
                 </div>
               </div>
 
-              <button className="group relative px-6 sm:px-12 py-2 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold text-sm sm:text-lg rounded-lg hover:scale-105 transition-transform shadow-xl">
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  GARANTIR MINHA VAGA ANTES DO AUMENTO
-                  <ArrowRight className="group-hover:translate-x-1 transition-transform" size={isMobile ? 15 : 20} />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-[#e19d24]/20 to-[#d3891a]/20 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity"></span>
-              </button>
+              <a 
+  href="https://pay.hotmart.com/D98067996F?_hi=eyJjaWQiOiIxNzM5NjU1NjQwNDExNjI4MzUzMDQ4MjMyOTUxODAwIiwiYmlkIjoiMTczOTY1NTY0MDQxMTYyODM1MzA0ODIzMjk1MTgwMCIsInNpZCI6Ijc4NjE1YWEzM2I4MDQwYWNhODg4MTZlZDNlMDY5MzhiIn0=.1741553142689&bid=1741553148353"
+  target="_blank"
+  rel="noopener noreferrer" 
+  className="inline-block"
+>
+  <button className="group relative px-6 sm:px-12 py-2 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold text-sm sm:text-lg rounded-lg hover:scale-105 transition-transform shadow-xl">
+    <span className="relative z-10 flex items-center justify-center gap-2">
+      GARANTIR MINHA VAGA ANTES DO AUMENTO
+      <ArrowRight className="group-hover:translate-x-1 transition-transform" size={isMobile ? 15 : 20} />
+    </span>
+    <span className="absolute inset-0 bg-gradient-to-r from-[#e19d24]/20 to-[#d3891a]/20 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity"></span>
+  </button>
+</a>
             </div>
           </div>
         </motion.div>

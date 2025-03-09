@@ -1,82 +1,27 @@
 import React, { useEffect, useState, forwardRef, useRef } from 'react';
 import { Quote, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+// Importações estáticas das imagens, mas sem carregá-las imediatamente
+// Com importações dinâmicas, mantemos as referências às imagens
+const imageImports = {
+  carlos: () => import('./carlos.avif'),
+  juliana: () => import('./juliana.avif'),
+  ana: () => import('./ana.avif'),
+  rafael: () => import('./rafael.avif')
+};
 
 const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
   // State básicos
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [imageCache, setImageCache] = useState({});
   const sectionRef = useRef(null);
+  const timerRef = useRef(null);
+  const observerRef = useRef(null);
   
-  // Referência para as imagens que serão carregadas sob demanda
-  const [testimonialImages, setTestimonialImages] = useState({
-    carlos: null,
-    juliana: null,
-    ana: null,
-    rafael: null
-  });
-  
-  useEffect(() => {
-    // Detectar mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    // Rotação básica de depoimentos
-    const timer = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % testimonials.length);
-    }, 5000);
-    
-    // Setup Intersection Observer para carregar imagens quando a seção estiver visível
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !imagesLoaded) {
-          loadImages();
-          setImagesLoaded(true);
-          observer.disconnect(); // Desconecta após carregar as imagens uma vez
-        }
-      });
-    }, { threshold: 0.1 }); // Carrega quando pelo menos 10% da seção está visível
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      clearInterval(timer);
-      observer.disconnect();
-    };
-  }, [imagesLoaded]);
-  
-  // Função para carregar as imagens dinamicamente
-  const loadImages = async () => {
-    try {
-      // Importações dinâmicas que só executam quando a função é chamada
-      const [carlosImg, julianaImg, anaImg, rafaelImg] = await Promise.all([
-        import('./carlos.avif'),
-        import('./juliana.avif'),
-        import('./ana.avif'),
-        import('./rafael.avif')
-      ]);
-      
-      setTestimonialImages({
-        carlos: carlosImg.default,
-        juliana: julianaImg.default,
-        ana: anaImg.default,
-        rafael: rafaelImg.default
-      });
-      
-      console.log('Imagens carregadas com sucesso!');
-    } catch (error) {
-      console.error('Erro ao carregar imagens:', error);
-    }
-  };
-
-  // Dados dos depoimentos - as fotos serão adicionadas dinamicamente
+  // Dados dos depoimentos
   const testimonials = [
     {
       name: "Carlos Menezes",
@@ -108,7 +53,93 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     }
   ];
 
-  // Troca de depoimento
+  // Função para carregar imagens quando necessário
+  const loadImages = async () => {
+    if (!isVisible) return;
+    
+    try {
+      // Carrega apenas as imagens que ainda não estão em cache
+      const imagesToLoad = testimonials
+        .map(t => t.photoKey)
+        .filter(key => !imageCache[key]);
+      
+      if (imagesToLoad.length === 0) return;
+      
+      // Carrega as imagens em paralelo
+      const loadedImages = {};
+      await Promise.all(
+        imagesToLoad.map(async (key) => {
+          try {
+            // Importa a imagem dinâmicamente
+            const imageModule = await imageImports[key]();
+            loadedImages[key] = imageModule.default;
+          } catch (error) {
+            console.error(`Erro ao carregar imagem ${key}:`, error);
+          }
+        })
+      );
+      
+      // Atualiza o cache com as novas imagens
+      setImageCache(prev => ({
+        ...prev,
+        ...loadedImages
+      }));
+    } catch (error) {
+      console.error("Erro ao carregar imagens:", error);
+    }
+  };
+
+  // Efeito para detectar visibilidade da seção
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect(); // Desconecta após detectar
+      }
+    }, { threshold: 0.1 });
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  
+  // Efeito para carregar imagens quando a seção ficar visível
+  useEffect(() => {
+    if (isVisible) {
+      loadImages();
+    }
+  }, [isVisible]);
+  
+  // Efeito para detectar mobile e configurar o timer
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    // Configurar timer para rotação automática
+    if (isVisible) {
+      timerRef.current = setInterval(() => {
+        setActiveIndex(prev => (prev + 1) % testimonials.length);
+      }, 5000);
+    }
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [isVisible]);
+
+  // Troca de depoimento manual
   const setTestimonial = (index) => {
     setActiveIndex(index);
   };
@@ -123,7 +154,7 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
         sectionRef.current = node;
         if (typeof ref === 'function') ref(node);
         else if (ref) ref.current = node;
-      }} 
+      }}
       className="relative w-full py-10 bg-[#0c1220] testimonials-section"
     >
       <div className="container mx-auto px-4">
@@ -145,9 +176,9 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           {/* Foto circular - Centralizada */}
           <div className="flex items-center justify-center mb-4">
             <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24] flex items-center justify-center">
-              {testimonialImages[currentTestimonial.photoKey] ? (
+              {imageCache[currentTestimonial.photoKey] ? (
                 <img 
-                  src={testimonialImages[currentTestimonial.photoKey]} 
+                  src={imageCache[currentTestimonial.photoKey]} 
                   alt={`Foto de ${currentTestimonial.name}`} 
                   className="w-full h-full object-cover"
                   style={{ 
@@ -206,11 +237,23 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
           ))}
         </div>
         
-        {/* CTA simples */}
+        {/* CTA com efeito super simples */}
         <div className="text-center">
-          <button className="px-6 py-3 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:bg-[#d3891a] transition-colors">
-          QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
-          </button>
+          <motion.a 
+            href="https://pay.hotmart.com/D98067996F?_hi=eyJjaWQiOiIxNzM5NjU1NjQwNDExNjI4MzUzMDQ4MjMyOTUxODAwIiwiYmlkIjoiMTczOTY1NTY0MDQxMTYyODM1MzA0ODIzMjk1MTgwMCIsInNpZCI6Ijc4NjE1YWEzM2I4MDQwYWNhODg4MTZlZDNlMDY5MzhiIn0=.1741553142689&bid=1741553148353" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-block"
+          >
+            <motion.button 
+              className="px-6 py-3 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
+            </motion.button>
+          </motion.a>
         </div>
       </div>
     </section>

@@ -171,7 +171,10 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                <motion.button
+                <motion.a
+                  href="https://pay.hotmart.com/D98067996F?_hi=eyJjaWQiOiIxNzM5NjU1NjQwNDExNjI4MzUzMDQ4MjMyOTUxODAwIiwiYmlkIjoiMTczOTY1NTY0MDQxMTYyODM1MzA0ODIzMjk1MTgwMCIsInNpZCI6Ijc4NjE1YWEzM2I4MDQwYWNhODg4MTZlZDNlMDY5MzhiIn0=.1741553142689&bid=1741553148353"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold text-white hover:shadow-xl transition-all duration-300 hover:gap-4 relative overflow-hidden ${
                     deviceType === 'ipad-pro' ? 'px-10 py-5 text-xl rounded-xl gap-4' : 
                     deviceType === 'ipad-air' || deviceType === 'surface' ? 'px-9 py-4 text-lg rounded-xl' : 
@@ -183,7 +186,7 @@ const Hero = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) 
                   <span className="relative z-10">Iniciar Transformação</span>
                   <ArrowRight className="transition-all relative z-10" size={getIconSize()} />
                   <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#e19d24] to-[#d3891a] opacity-0 hover:opacity-20 transition-all duration-300 golden-shine"></div>
-                </motion.button>
+                </motion.a>
               </motion.div>
             </motion.div>
           </div>
