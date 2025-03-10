@@ -2,41 +2,143 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Método ATO - Cristofer Leone</title>
-
-  <!-- SEO -->
-  <meta name="description" content="O Método ATO é a principal formação de mentores no Brasil, com um formato presencial e imersivo, foco em monetização e suporte pós-formação. Inscreva-se agora!" />
-  <meta name="keywords" content="Método ATO, Cristofer Leone, mentoria, formação de mentores, sucesso, monetização, alta performance, imersão" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Método ATO - Cristofer Leone</title>
+  
+  <!-- Core SEO -->
+  <meta name="description" content="Método ATO: Formação imersiva presencial de Mentores com foco em alta rentabilidade. Conheça nossa metodologia exclusiva para transformar seu conhecimento em um negócio lucrativo!" />
+  <meta name="keywords" content="Método ATO, Cristofer Leone, formação de mentores, mentoria lucrativa, alta performance, mentorias rentáveis, monetização de conhecimento, imersão presencial, mentoria profissional, método comprovado, negócio digital, escalabilidade, mentoria sem investimento em ads" />
   <meta name="author" content="Cristofer Leone" />
-
-  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
-  <meta property="og:title" content="Método ATO - A Melhor Formação de Mentores no Brasil" />
-  <meta property="og:description" content="O Método ATO se destaca pela sua imersão presencial, foco em monetização e suporte pós-formação. Transforme seu conhecimento em um negócio lucrativo!" />
-  <meta property="og:image" content="capa.png" />
-  <meta property="og:url" content="https://metodoato.com.br" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://metodoato.com.br/" />
+  
+  <!-- Performance -->
+  <link rel="preload" href="/src/main.jsx" as="script" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" as="style" />
+  
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:title" content="Método ATO: A Formação de Mentores para Resultados no Brasil | Cristofer Leone" />
+  <meta property="og:description" content="Transforme seu conhecimento em um negócio de mentoria lucrativo com o Método ATO. Formação imersiva presencial com metodologia comprovada e suporte contínuo para escalabilidade." />
+  <meta property="og:image" content="https://metodoato.com.br/capa.png" />
+  <meta property="og:image:alt" content="Método ATO - Formação de Mentores com Cristofer Leone" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://metodoato.com.br/" />
   <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Método ATO - A Melhor Formação de Mentores no Brasil" />
-  <meta name="twitter:description" content="O Método ATO se destaca pela sua imersão presencial, foco em monetização e suporte pós-formação. Transforme seu conhecimento em um negócio lucrativo!" />
-  <meta name="twitter:image" content="capa.png" />
-
-  <!-- Favicon AVIF (com fallback para ICO) -->
-  <link rel="icon" href="logo-icon.avif" sizes="192x192">
-  <link rel="icon" href="logo-icon.ico" sizes="16x16">
-
-  <!-- Fonte Montserrat -->
+  <meta property="og:site_name" content="Método ATO por Cristofer Leone" />
+  <meta property="og:locale" content="pt_BR" />
+  
+  <!-- Twitter Card removido -->
+  
+  <!-- Favicon e App Icons -->
+  <link rel="icon" href="logo-icon.avif" type="image/avif" sizes="192x192">
+  <link rel="apple-touch-icon" href="logo-icon.avif" type="image/avif">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="logo-icon.avif">
+  
+  <!-- Fonte Montserrat com display swap para melhor performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <!-- Alternate Languages (se aplicável) -->
+  <link rel="alternate" hreflang="pt-br" href="https://metodoato.com.br/" />
+  <link rel="alternate" hreflang="x-default" href="https://metodoato.com.br/" />
 
+  <!-- Estrutura de dados Schema.org - Curso -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Método ATO - Formação Profissional de Mentores",
+    "description": "O Método ATO é a formação imersiva presencial para transformar seu conhecimento em um negócio de mentoria lucrativo e escalável. Aprenda a monetizar seu conhecimento sem depender de anúncios pagos.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Cristofer Leone",
+      "url": "https://metodoato.com.br/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://metodoato.com.br/logo.png",
+        "width": "512",
+        "height": "512"
+      }
+    },
+    "offers": {
+      "@type": "Offer",
+      "category": "Formação Profissional",
+      "url": "https://metodoato.com.br/",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/LimitedAvailability"
+    }
+  }
+  </script>
+
+  <!-- Estrutura de dados Schema.org - Organização -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Método ATO",
+    "url": "https://metodoato.com.br/",
+    "logo": "https://metodoato.com.br/logo.png",
+    "sameAs": [
+      "https://www.instagram.com/cristofer.leone/"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+5511993200188",
+      "contactType": "customer service",
+      "availableLanguage": "Portuguese",
+      "url": "https://api.whatsapp.com/send/?phone=5511993200188&text&type=phone_number&app_absent=0"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Cristofer Leone"
+    }
+  }
+  </script>
+
+  <!-- Estrutura de dados Schema.org - FAQ (se aplicável) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "O que é o Método ATO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O Método ATO é a formação imersiva presencial de mentores desenvolvida por Cristofer Leone para transformar seu conhecimento em um negócio de mentoria lucrativo e escalável."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona a formação do Método ATO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A formação acontece de forma imersiva e presencial, onde você aprenderá todas as estratégias necessárias para criar, lançar e escalar seu negócio de mentoria."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso investir em anúncios para monetizar minha mentoria?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não. O Método ATO ensina estratégias de captação orgânica que eliminam a necessidade de grandes investimentos em anúncios pagos."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- O conteúdo do React vai ser renderizado aqui -->
   <div id="root"></div>
-
+  
   <!-- A aplicação React será carregada aqui -->
   <script type="module" src="/src/main.jsx"></script>
 </body>
