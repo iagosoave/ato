@@ -2,8 +2,8 @@ import React, { useEffect, useState, forwardRef, useRef } from 'react';
 import { Quote, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Importações estáticas das imagens, mas sem carregá-las imediatamente
-// Com importações dinâmicas, mantemos as referências às imagens
+// Importações dinâmicas das imagens - voltando ao formato original
+// mas com uma estrutura que evita carregamentos repetidos
 const imageImports = {
   carlos: () => import('./carlos.avif'),
   juliana: () => import('./juliana.avif'),
@@ -11,15 +11,24 @@ const imageImports = {
   rafael: () => import('./rafael.avif')
 };
 
+// Variável global para evitar carregamentos repetidos
+const globalLoaded = {
+  isLoading: false,
+  hasLoaded: false,
+  images: {}
+};
+
 const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'desktop' }, ref) => {
   // State básicos
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [imageCache, setImageCache] = useState({});
+  const [isPaused, setIsPaused] = useState(false);
+  const [localImages, setLocalImages] = useState(globalLoaded.images);
+  
   const sectionRef = useRef(null);
   const timerRef = useRef(null);
-  const observerRef = useRef(null);
+  const hasInitiatedLoadingRef = useRef(false);
   
   // Dados dos depoimentos
   const testimonials = [
@@ -53,49 +62,58 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     }
   ];
 
-  // Função para carregar imagens quando necessário
-  const loadImages = async () => {
-    if (!isVisible) return;
+  // Função simplificada para carregar as imagens uma única vez globalmente
+  const loadAllImages = async () => {
+    // Evita iniciar o carregamento mais de uma vez
+    if (globalLoaded.isLoading || globalLoaded.hasLoaded || hasInitiatedLoadingRef.current) {
+      return;
+    }
+    
+    // Marca que o carregamento foi iniciado
+    globalLoaded.isLoading = true;
+    hasInitiatedLoadingRef.current = true;
     
     try {
-      // Carrega apenas as imagens que ainda não estão em cache
-      const imagesToLoad = testimonials
-        .map(t => t.photoKey)
-        .filter(key => !imageCache[key]);
+      // Carrega todas as imagens em paralelo
+      const imagePromises = Object.entries(imageImports).map(async ([key, importFn]) => {
+        try {
+          const imageModule = await importFn();
+          return { key, url: imageModule.default };
+        } catch (error) {
+          console.error(`Erro ao carregar imagem ${key}:`, error);
+          return { key, error };
+        }
+      });
       
-      if (imagesToLoad.length === 0) return;
+      // Aguarda todas as imagens carregarem
+      const results = await Promise.all(imagePromises);
       
-      // Carrega as imagens em paralelo
-      const loadedImages = {};
-      await Promise.all(
-        imagesToLoad.map(async (key) => {
-          try {
-            // Importa a imagem dinâmicamente
-            const imageModule = await imageImports[key]();
-            loadedImages[key] = imageModule.default;
-          } catch (error) {
-            console.error(`Erro ao carregar imagem ${key}:`, error);
-          }
-        })
-      );
+      // Atualiza o cache global
+      results.forEach(result => {
+        if (result.url) {
+          globalLoaded.images[result.key] = result.url;
+        }
+      });
       
-      // Atualiza o cache com as novas imagens
-      setImageCache(prev => ({
-        ...prev,
-        ...loadedImages
-      }));
+      // Marca que o carregamento foi concluído
+      globalLoaded.hasLoaded = true;
+      globalLoaded.isLoading = false;
+      
+      // Atualiza o estado local com as imagens carregadas
+      setLocalImages({...globalLoaded.images});
     } catch (error) {
       console.error("Erro ao carregar imagens:", error);
+      globalLoaded.isLoading = false;
     }
   };
-
+  
   // Efeito para detectar visibilidade da seção
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       if (entry.isIntersecting) {
         setIsVisible(true);
-        observer.disconnect(); // Desconecta após detectar
+        observer.disconnect();
       }
     }, { threshold: 0.1 });
     
@@ -104,18 +122,40 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     }
     
     return () => {
-      observer.disconnect();
+      if (observer) {
+        observer.disconnect();
+      }
     };
   }, []);
   
-  // Efeito para carregar imagens quando a seção ficar visível
+  // Efeito para carregar imagens quando a seção for visível
   useEffect(() => {
     if (isVisible) {
-      loadImages();
+      // Se as imagens já foram carregadas, apenas atualiza o estado local
+      if (globalLoaded.hasLoaded) {
+        setLocalImages({...globalLoaded.images});
+      } else {
+        // Caso contrário, inicia o carregamento
+        loadAllImages();
+      }
     }
   }, [isVisible]);
   
-  // Efeito para detectar mobile e configurar o timer
+  // Polling para verificar se as imagens foram carregadas por outra instância
+  useEffect(() => {
+    if (!globalLoaded.hasLoaded) {
+      const checkInterval = setInterval(() => {
+        if (globalLoaded.hasLoaded) {
+          setLocalImages({...globalLoaded.images});
+          clearInterval(checkInterval);
+        }
+      }, 200);
+      
+      return () => clearInterval(checkInterval);
+    }
+  }, []);
+
+  // Efeito para detectar mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -124,22 +164,35 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // Configurar timer para rotação automática
-    if (isVisible) {
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  // Efeito para gerenciar o timer de rotação automática
+  useEffect(() => {
+    // Limpa o timer anterior
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    
+    // Só cria novo timer se estiver visível e não estiver pausado
+    if (isVisible && !isPaused) {
       timerRef.current = setInterval(() => {
         setActiveIndex(prev => (prev + 1) % testimonials.length);
       }, 5000);
     }
     
     return () => {
-      window.removeEventListener('resize', checkMobile);
       if (timerRef.current) {
         clearInterval(timerRef.current);
+        timerRef.current = null;
       }
     };
-  }, [isVisible]);
+  }, [isVisible, isPaused, testimonials.length]);
 
-  // Troca de depoimento manual
+  // Troca de depoimento manual - apenas muda o índice sem pausar
   const setTestimonial = (index) => {
     setActiveIndex(index);
   };
@@ -172,13 +225,19 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
         </div>
         
         {/* Container do depoimento */}
-        <div className="max-w-4xl mx-auto bg-[#16202d] p-6 rounded-xl border border-[#e19d24]/20 mb-6 relative">
+        <div 
+          className="max-w-4xl mx-auto bg-[#16202d] p-6 rounded-xl border border-[#e19d24]/20 mb-6 relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
           {/* Foto circular - Centralizada */}
           <div className="flex items-center justify-center mb-4">
             <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#e19d24] flex items-center justify-center">
-              {imageCache[currentTestimonial.photoKey] ? (
+              {localImages[currentTestimonial.photoKey] ? (
                 <img 
-                  src={imageCache[currentTestimonial.photoKey]} 
+                  src={localImages[currentTestimonial.photoKey]} 
                   alt={`Foto de ${currentTestimonial.name}`} 
                   className="w-full h-full object-cover"
                   style={{ 
