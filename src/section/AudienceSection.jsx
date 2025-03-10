@@ -58,7 +58,7 @@ const AudienceSection = ({ deviceType = 'desktop', id }) => {
             isTablet ? 'text-lg' :
             'text-base sm:text-lg md:text-xl'
           } text-[#c8d4e6] max-w-2xl mx-auto px-2`}>
-            Descubra se você se encaixa no perfil dos profissionais que transformamos em mentores de elite
+            Descubra se você se encaixa no perfil dos profissionais que transformamos em mentores atômicos
           </p>
         </motion.div>
   

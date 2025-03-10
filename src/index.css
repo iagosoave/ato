@@ -1391,3 +1391,281 @@ footer {
   }
 }
 
+
+/* CSS para aumentar APENAS os parágrafos principais em mobile, sem afetar cards */
+
+/* Seletor mais específico para parágrafos principais em cada seção */
+@media (max-width: 767px) {
+  /* Aumentar apenas parágrafos diretos das seções (não dentro de cards ou outros containers) */
+  .app-container section > p,
+  .app-container section > div > p,
+  .app-container section > .container > p,
+  .app-container section > .container > div > p,
+  .app-container section > .container > .row > div > p,
+  .app-container section > .section-content > p,
+  .app-container section > .section-wrapper > p,
+  .app-container section > .content-wrapper > p,
+  
+  /* Seletores específicos para a seção Hero */
+  .hero-section p,
+  .hero-section > div p,
+  .hero-section .hero-content p,
+  .hero-section .hero-text p,
+  .hero-section .hero-text-column p,
+  .hero-section .hero-description p,
+  .hero-section .container p,
+  .hero-section .container > div p,
+  .hero-section .row p,
+  .hero-section .col p {
+    font-size: 1.2rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 1.2rem !important;
+  }
+  
+  /* Garantir que parágrafos dentro de cards, boxes e outros elementos específicos não sejam afetados */
+  .app-container section .card p,
+  .app-container section .mobile-card p,
+  .app-container section .journey-day-card p,
+  .app-container section .price-highlight p,
+  .app-container section .testimonial-card p,
+  .app-container section .card-body p,
+  .app-container section .diferencial-card p,
+  .app-container section .accordion-content p,
+  .app-container section .accordion-item p,
+  .app-container section .option-card p,
+  .app-container section .feature-box p,
+  .app-container section .highlight-item p,
+  .app-container section .icon-box p {
+    /* Mantém o tamanho original, não alterando nada em cards */
+    font-size: initial;
+    line-height: initial;
+    margin-bottom: initial;
+  }
+}
+
+/* Ajuste para dispositivos muito pequenos */
+@media (max-width: 374px) {
+  /* Parágrafos principais ligeiramente menores para dispositivos muito pequenos */
+  .app-container section > p,
+  .app-container section > div > p,
+  .app-container section > .container > p,
+  .app-container section > .container > div > p,
+  .app-container section > .container > .row > div > p,
+  .app-container section > .section-content > p,
+  .app-container section > .section-wrapper > p,
+  .app-container section > .content-wrapper > p,
+  
+  /* Seletores específicos para a seção Hero */
+  .hero-section p,
+  .hero-section > div p,
+  .hero-section .hero-content p, 
+  .hero-section .hero-text p,
+  .hero-section .hero-text-column p,
+  .hero-section .hero-description p,
+  .hero-section .container p,
+  .hero-section .container > div p,
+  .hero-section .row p,
+  .hero-section .col p {
+    font-size: 1.15rem !important;
+  }
+}
+
+/* Formatação aprimorada para texto da seção Hero em mobile */
+
+@media (max-width: 767px) {
+  /* Estilo melhorado para parágrafos no Hero */
+  .hero-section p {
+    font-size: 1.25rem !important;
+    line-height: 1.75 !important;
+    margin-bottom: 1.3rem !important;
+    letter-spacing: 0.01em !important;
+    font-weight: 400 !important;
+    color: var(--text-light) !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+  }
+
+  /* Espaçamento melhorado entre elementos */
+  .hero-section .hero-text-column > div,
+  .hero-section .hero-content {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Destaque para texto principal */
+  .hero-section p strong,
+  .hero-section p b {
+    color: var(--text-white) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Último parágrafo antes de um botão/CTA */
+  .hero-section p:last-of-type {
+    margin-bottom: 1.8rem !important;
+  }
+
+  /* Estilo especial para texto destacado ou descrição principal */
+  .hero-section .hero-description p,
+  .hero-section p.lead,
+  .hero-section .lead p {
+    font-size: 1.35rem !important;
+    line-height: 1.8 !important;
+    color: var(--text-white) !important;
+    font-weight: 500 !important;
+  }
+
+  /* Para garantir melhor legibilidade quando há imagem de fundo */
+  .hero-section.has-bg-image p {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+  }
+}
+
+/* Ajustes para dispositivos menores */
+@media (max-width: 374px) {
+  .hero-section p {
+    font-size: 1.2rem !important;
+    line-height: 1.7 !important;
+  }
+  
+  .hero-section .hero-description p,
+  .hero-section p.lead,
+  .hero-section .lead p {
+    font-size: 1.25rem !important;
+    line-height: 1.7 !important;
+  }
+}
+
+/* Otimização para telas muito pequenas e modo paisagem */
+@media (max-width: 767px) and (max-height: 600px), 
+       (max-width: 767px) and (orientation: landscape) {
+  .hero-section p {
+    margin-bottom: 1rem !important;
+    font-size: 1.15rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .hero-section .hero-description p,
+  .hero-section p.lead,
+  .hero-section .lead p {
+    font-size: 1.2rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .hero-section p:last-of-type {
+    margin-bottom: 1.3rem !important; 
+  }
+}
+
+/* Correção simplificada para a seção Cristofer Leone */
+
+/* Fix para imagem piscando e problemas de layout */
+.cristofer-section img,
+.cristofer-section .object-cover {
+  -webkit-transition: none !important;
+  transition: none !important;
+  -webkit-transform: none !important;
+  transform: none !important;
+  object-fit: cover !important;
+  object-position: center 15% !important;
+}
+
+/* Parar todas as animações que podem causar o bug */
+.cristofer-section .group:hover .object-cover,
+.cristofer-section .group-hover\:scale-105,
+.cristofer-section .transition-transform {
+  -webkit-transform: none !important;
+  transform: none !important;
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
+/* Alinhar cards com ícones à esquerda */
+.cristofer-section .grid-cols-3 > div {
+  text-align: left !important;
+}
+
+.cristofer-section .flex.items-center.gap-2 {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+.cristofer-section .flex.items-center.gap-2 svg {
+  margin-right: 0.25rem !important;
+}
+
+/* Alinhar texto e listas à esquerda */
+.cristofer-section .text-3xs.md\:text-base,
+.cristofer-section ul.text-3xs {
+  text-align: left !important;
+}
+
+.cristofer-section ul.text-3xs li {
+  display: flex !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+/* CSS crítico para evitar o bug de renderização */
+.cristofer-section img,
+.cristofer-section .rounded-2xl,
+.cristofer-section .object-cover {
+  will-change: auto !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+}
+
+/* Solução para o bug da imagem - adicione ao final do index.css */
+
+/* Desabilita interação e efeitos de hover na imagem */
+.cristofer-section .rounded-2xl {
+  pointer-events: none !important;
+}
+
+.cristofer-section img,
+.cristofer-section .object-cover {
+  pointer-events: none !important;
+  transition: none !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Reseta qualquer transformação em hover */
+.cristofer-section .group:hover .object-cover,
+.cristofer-section .group-hover\:scale-105,
+.cristofer-section .transition-transform {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Força a permanência do gradiente */
+.cristofer-section .absolute.inset-0.bg-gradient-to-b {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ícones alinhados à esquerda nos cards */
+.cristofer-section .grid-cols-3 > div {
+  text-align: left !important;
+}
+
+.cristofer-section .flex.items-center.gap-2 {
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+.cristofer-section .text-3xs.md\:text-base {
+  text-align: left !important;
+}
+
+.cristofer-section ul.text-3xs {
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+
+.cristofer-section ul.text-3xs li {
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
