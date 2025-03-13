@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Método ATO - Cristofer Leone</title>
-  
-  <!-- Google tag (gtag.js) -->
+
+  <!-- Google tag (gtag.js) - SCRIPT ÚNICO CORRIGIDO -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2E0C0VFKM7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -143,14 +143,90 @@
     ]
   }
   </script>
-  <script type="module" crossorigin src="/assets/index-CTVaASi4.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-_VKpUPuE.css">
+  <script type="module" crossorigin src="/assets/index-DFLcBRKy.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DJ6lfV73.css">
 </head>
 <body>
   <!-- O conteúdo do React vai ser renderizado aqui -->
   <div id="root"></div>
   
-  <!-- A aplicação React será carregada aqui -->
-
+  <!-- A aplicação React será carregada aqui -->
+  
+  <!-- Script de rastreamento automático de cliques para Google Analytics -->
+  <script>
+    // Espera o documento carregar completamente
+    document.addEventListener('DOMContentLoaded', function() {
+      // Função para adicionar rastreamento a todos os links
+      function addTracking() {
+        // Selecionar todos os links no documento
+        const allLinks = document.querySelectorAll('a');
+        
+        allLinks.forEach(link => {
+          // Verificar se o link já tem rastreamento
+          if (!link.hasAttribute('data-ga-tracked')) {
+            // Marcar o link como rastreado
+            link.setAttribute('data-ga-tracked', 'true');
+            
+            // Adicionar evento de clique
+            link.addEventListener('click', function(event) {
+              // Determinar a categoria com base no URL
+              let category = 'link';
+              let href = link.getAttribute('href') || '';
+              
+              if (href.includes('hotmart.com')) {
+                category = 'compra';
+              } else if (href.includes('wa.me') || href.includes('whatsapp')) {
+                category = 'contato';
+              }
+              
+              // Obter o texto do botão
+              let buttonText = '';
+              const button = link.querySelector('button');
+              if (button) {
+                buttonText = button.textContent.trim();
+              } else {
+                buttonText = link.textContent.trim();
+              }
+              
+              // Se o texto for muito longo, abreviar
+              if (buttonText.length > 50) {
+                buttonText = buttonText.substring(0, 47) + '...';
+              }
+              
+              // Enviar o evento para o Google Analytics
+              if (typeof gtag === 'function') {
+                gtag('event', 'click', {
+                  'event_category': category,
+                  'event_label': buttonText,
+                  'destination': href
+                });
+                
+                // Log para debugging (opcional, remover em produção)
+                console.log('GA Event:', {
+                  'event_category': category,
+                  'event_label': buttonText,
+                  'destination': href
+                });
+              }
+            });
+          }
+        });
+      }
+      
+      // Executar inicialmente
+      addTracking();
+      
+      // Configurar um observador para capturar elementos adicionados dinamicamente
+      const observer = new MutationObserver(function(mutations) {
+        addTracking();
+      });
+      
+      // Observar todo o documento para mudanças no DOM
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    });
+  </script>
 </body>
 </html>

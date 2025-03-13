@@ -42,7 +42,7 @@ const TestimonialsSection = forwardRef(({ noBackground = false, deviceType = 'de
     {
       name: "Ana Paula Souza",
       role: "Especialista em Educação e Mentora",
-      quote: "Eu sempre amei ensinar, mas sentia que estava preso a um sistema que limitava meu crescimento financeiro. Com o Cris, aprendi como estruturar mentorias sem precisar depender de instituições. Consegui criar um programa próprio e atrair alunos de forma independente. Hoje, gero mais impacto, tenho liberdade e transformei meu conhecimento em um negócio lucrativo sem precisar sair da área que eu amo.",
+      quote: "Eu sempre amei ensinar, mas sentia que estava presa a um sistema que limitava meu crescimento financeiro. Com o Cris, aprendi como estruturar mentorias sem precisar depender de instituições. Consegui criar um programa próprio e atrair alunos de forma independente. Hoje, gero mais impacto, tenho liberdade e transformei meu conhecimento em um negócio lucrativo sem precisar sair da área que eu amo.",
       stars: 5,
       photoKey: 'ana'
     },

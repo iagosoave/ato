@@ -1,6 +1,6 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { Award, Star, Globe, Book, Target, TrendingUp } from 'lucide-react';
+import { Award, Star, Globe, Book, Target, TrendingUp, Instagram, Facebook, Linkedin } from 'lucide-react';
 import cristofer from './cristofer-about.jpeg';
 
 const CristoferLeoneSection = forwardRef(({ profileImage = cristofer }, ref) => {
@@ -82,6 +82,25 @@ const CristoferLeoneSection = forwardRef(({ profileImage = cristofer }, ref) => 
         "Desenvolvimento de Líderes",
         "Consultoria em Alta Performance"
       ]
+    }
+  ];
+
+  // Links das redes sociais
+  const socialLinks = [
+    {
+      icon: <Instagram size={isMobile ? 16 : 20} />,
+      url: "https://www.instagram.com/cristofer.leone/",
+      label: "Instagram"
+    },
+    {
+      icon: <Facebook size={isMobile ? 16 : 20} />,
+      url: "https://www.facebook.com/cristoferleone",
+      label: "Facebook"
+    },
+    {
+      icon: <Linkedin size={isMobile ? 16 : 20} />,
+      url: "https://www.linkedin.com/in/cristofer-leone-721816123/",
+      label: "LinkedIn"
     }
   ];
 
@@ -210,6 +229,37 @@ const CristoferLeoneSection = forwardRef(({ profileImage = cristofer }, ref) => 
                 </motion.div>
               ))}
             </div>
+            
+            {/* Ícones das redes sociais para todos os dispositivos */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+              className="flex gap-4 pt-2 justify-center md:justify-start"
+            >
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#16202d] p-2 rounded-full hover:bg-[#e19d24]/20 text-white hover:text-[#e19d24] transition-all flex items-center justify-center"
+                  aria-label={social.label}
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                      window.gtag('event', 'click', {
+                        'event_category': 'social',
+                        'event_label': social.label,
+                        'destination': social.url
+                      });
+                    }
+                  }}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </motion.div>
           </div>
         </div>
       </div>
