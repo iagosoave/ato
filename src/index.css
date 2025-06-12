@@ -1669,3 +1669,31 @@ footer {
   justify-content: flex-start !important;
   text-align: left !important;
 }
+
+/* Adicione ao seu index.css */
+
+@media (max-width: 768px) {
+  /* Fix para o texto "Para Quem é a" no fim da section */
+  .absolute.bottom-4 {
+    position: relative !important; /* Muda para posicionamento relativo */
+    bottom: 0 !important; /* Posiciona no fim natural da section */
+    margin-bottom: 15px !important; /* Espaço acima do botão */
+    margin-top: 15px !important; /* Espaço abaixo do conteúdo anterior */
+    background: none !important; /* Remove qualquer background */
+  }
+  
+  /* Garante que o texto seja visível */
+  .absolute.bottom-4 p,
+  .absolute.bottom-4 h2 {
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  /* Garante que o botão fique abaixo */
+  .button-container, 
+  [class*="button"] {
+    position: relative !important;
+    z-index: 10 !important;
+    margin-top: 10px !important;
+  }
+}

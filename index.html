@@ -227,5 +227,276 @@
       });
     });
   </script>
+<!-- Script de Medição de Engajamento -->
+<script>
+  // Script de Medição de Engajamento - Método ATO
+  document.addEventListener('DOMContentLoaded', function() {
+    // Configuração
+    const SCROLL_DEPTH_THRESHOLDS = [25, 50, 75, 100]; // Percentuais de scroll para registrar
+    const SECTION_VISIBILITY_THRESHOLD = 0.5; // 50% da seção visível para ser considerada em visualização
+    const MIN_TIME_IN_SECTION = 2000; // Tempo mínimo (2 segundos) para considerar engajamento
+    const TRACKING_INTERVAL = 1000; // Verificar a cada 1 segundo
+    
+    // Estado do rastreamento
+    let scrollDepthMarks = new Set();
+    let visibleSections = new Map(); // seção -> timestamp de entrada
+    let sectionTimes = new Map(); // seção -> tempo total acumulado
+    let isScrolling = false;
+    let scrollTimeout;
+    let lastScrollPos = window.scrollY;
+    
+    // Função para identificar todas as seções na página
+    function identifySections() {
+      // Selecionar todos os elementos que podem ser considerados seções
+      const sections = [
+        ...document.querySelectorAll('section, .section, [id^="section-"], [data-section]'),
+        ...document.querySelectorAll('header, footer'),
+        ...document.querySelectorAll('.hero, .benefits, .testimonials, .pricing, .faq, .contact, .cta')
+      ];
+      
+      // Se nenhuma seção for identificada, criar divisões virtuais
+      if (sections.length === 0) {
+        const pageHeight = Math.max(
+          document.body.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.clientHeight,
+          document.documentElement.scrollHeight,
+          document.documentElement.offsetHeight
+        );
+        
+        // Criar 5 seções virtuais dividindo a altura da página
+        const sectionHeight = pageHeight / 5;
+        for (let i = 0; i < 5; i++) {
+          const virtualSection = document.createElement('div');
+          virtualSection.setAttribute('data-section', `section-virtual-${i + 1}`);
+          virtualSection.setAttribute('data-section-name', `Seção ${i + 1}`);
+          virtualSection.style.position = 'absolute';
+          virtualSection.style.height = `${sectionHeight}px`;
+          virtualSection.style.width = '100%';
+          virtualSection.style.top = `${i * sectionHeight}px`;
+          virtualSection.style.pointerEvents = 'none';
+          document.body.appendChild(virtualSection);
+          sections.push(virtualSection);
+        }
+      }
+      
+      // Inicialização do mapa de tempos
+      sections.forEach(section => {
+        const sectionId = section.id || 
+                         section.getAttribute('data-section') || 
+                         section.className.split(' ')[0] || 
+                         'section-' + Array.from(document.querySelectorAll('*')).indexOf(section);
+        
+        const sectionName = section.getAttribute('data-section-name') || 
+                           section.querySelector('h1, h2, h3')?.textContent || 
+                           sectionId;
+        
+        // Garantir que a seção tenha um atributo para identificação
+        section.setAttribute('data-section-id', sectionId);
+        section.setAttribute('data-section-name', sectionName);
+        
+        // Inicializar contadores
+        sectionTimes.set(sectionId, 0);
+      });
+      
+      return sections;
+    }
+    
+    // Função para verificar se um elemento está visível na viewport
+    function isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      
+      // Calcular que porcentagem do elemento está visível
+      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+      const percentVisible = visibleHeight / rect.height;
+      
+      return percentVisible >= SECTION_VISIBILITY_THRESHOLD;
+    }
+    
+    // Função para calcular a profundidade do scroll como percentual
+    function getScrollDepth() {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollHeight <= 0) return 100; // Evitar divisão por zero
+      
+      const scrollPosition = window.scrollY;
+      return Math.floor((scrollPosition / scrollHeight) * 100);
+    }
+    
+    // Função para rastrear o scroll
+    function trackScrollDepth() {
+      const currentDepth = getScrollDepth();
+      
+      SCROLL_DEPTH_THRESHOLDS.forEach(threshold => {
+        if (currentDepth >= threshold && !scrollDepthMarks.has(threshold)) {
+          scrollDepthMarks.add(threshold);
+          
+          // Enviar evento para o Google Analytics
+          if (typeof gtag === 'function') {
+            gtag('event', 'scroll_depth', {
+              'event_category': 'engagement',
+              'event_label': `Scroll ${threshold}%`,
+              'value': threshold
+            });
+          }
+        }
+      });
+    }
+    
+    // Função para rastrear seções visíveis
+    function trackVisibleSections(sections) {
+      const currentTime = Date.now();
+      const sectionsInView = new Set();
+      
+      // Verificar quais seções estão visíveis
+      sections.forEach(section => {
+        const sectionId = section.getAttribute('data-section-id');
+        const sectionName = section.getAttribute('data-section-name');
+        
+        if (isElementInViewport(section)) {
+          sectionsInView.add(sectionId);
+          
+          // Se a seção não estava visível antes, registrar o tempo de entrada
+          if (!visibleSections.has(sectionId)) {
+            visibleSections.set(sectionId, currentTime);
+          }
+        } else if (visibleSections.has(sectionId)) {
+          // Se a seção saiu da visualização, registrar o tempo que ficou visível
+          const entryTime = visibleSections.get(sectionId);
+          const timeSpent = currentTime - entryTime;
+          
+          if (timeSpent >= MIN_TIME_IN_SECTION) {
+            // Acumular o tempo gasto nesta seção
+            sectionTimes.set(sectionId, (sectionTimes.get(sectionId) || 0) + timeSpent);
+            
+            // Enviar evento para o Google Analytics se ficou tempo suficiente
+            if (typeof gtag === 'function') {
+              gtag('event', 'section_view', {
+                'event_category': 'engagement',
+                'event_label': sectionName,
+                'non_interaction': false,
+                'section_id': sectionId,
+                'time_spent': Math.round(timeSpent / 1000) // Em segundos
+              });
+            }
+          }
+          
+          // Remover a seção da lista de visíveis
+          visibleSections.delete(sectionId);
+        }
+      });
+      
+      return sectionsInView;
+    }
+    
+    // Monitorar o engajamento do usuário regularmente
+    function startEngagementTracking() {
+      const sections = identifySections();
+      
+      // Verificar visibilidade em intervalos regulares
+      setInterval(() => {
+        trackVisibleSections(sections);
+      }, TRACKING_INTERVAL);
+      
+      // Monitorar scroll
+      window.addEventListener('scroll', () => {
+        lastScrollPos = window.scrollY;
+        
+        if (!isScrolling) {
+          isScrolling = true;
+        }
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isScrolling = false;
+          trackScrollDepth();
+        }, 200);
+      });
+      
+      // Detectar interações do usuário (cliques)
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        const section = target.closest('[data-section-id]');
+        
+        if (section) {
+          const sectionId = section.getAttribute('data-section-id');
+          const sectionName = section.getAttribute('data-section-name');
+          
+          if (typeof gtag === 'function') {
+            gtag('event', 'section_interaction', {
+              'event_category': 'engagement',
+              'event_label': sectionName,
+              'section_id': sectionId,
+              'interaction_type': 'click'
+            });
+          }
+        }
+      });
+      
+      // Monitorar tempo total na página
+      let sessionStartTime = Date.now();
+      let sessionTracked = false;
+      let totalTimeInterval = setInterval(() => {
+        const timeOnPage = (Date.now() - sessionStartTime) / 1000; // Em segundos
+        
+        // Enviar evento a cada minuto de permanência
+        if (timeOnPage > 60 && !sessionTracked) {
+          sessionTracked = true;
+          
+          if (typeof gtag === 'function') {
+            gtag('event', 'time_on_page', {
+              'event_category': 'engagement',
+              'event_label': 'Mais de 1 minuto',
+              'value': Math.floor(timeOnPage)
+            });
+          }
+        }
+      }, 30000); // Verificar a cada 30 segundos
+      
+      // Monitorar quando o usuário sai da página
+      window.addEventListener('beforeunload', () => {
+        // Tempo total na página
+        const totalTimeOnPage = (Date.now() - sessionStartTime) / 1000;
+        
+        // Verificar se há seções ainda visíveis e calcular seus tempos finais
+        const currentTime = Date.now();
+        visibleSections.forEach((entryTime, sectionId) => {
+          const timeSpent = currentTime - entryTime;
+          sectionTimes.set(sectionId, (sectionTimes.get(sectionId) || 0) + timeSpent);
+        });
+        
+        // Encontrar a seção com maior tempo de visualização
+        let mostEngagingSection = '';
+        let maxTime = 0;
+        
+        sectionTimes.forEach((time, sectionId) => {
+          if (time > maxTime) {
+            maxTime = time;
+            mostEngagingSection = document.querySelector(`[data-section-id="${sectionId}"]`)?.getAttribute('data-section-name') || sectionId;
+          }
+        });
+        
+        // Tentativa de enviar eventos finais (nem sempre funciona devido ao unload)
+        if (typeof gtag === 'function' && mostEngagingSection) {
+          gtag('event', 'most_engaging_section', {
+            'event_category': 'engagement',
+            'event_label': mostEngagingSection,
+            'time_spent': Math.round(maxTime / 1000),
+            'total_time': Math.round(totalTimeOnPage)
+          });
+        }
+        
+        // Limpar o intervalo
+        clearInterval(totalTimeInterval);
+      });
+      
+      // Relatar ao console que o rastreamento foi iniciado
+      console.log('Analytics de engajamento iniciado: Monitorando scroll e tempo por seção');
+    }
+    
+    // Iniciar o rastreamento
+    startEngagementTracking();
+  });
+</script>
 </body>
 </html>

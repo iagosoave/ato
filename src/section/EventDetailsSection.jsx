@@ -167,7 +167,7 @@ const EventDetailsSection = forwardRef(({ noBackground = false, venueImage = nul
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 mb-2 sm:mb-6">
             Local e 
             <span className="inline-mobile text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d] sm:block sm:mt-2">
-              Detalhes do Evento
+            Detalhes da Próxima Turma
             </span>
           </h2>
           <p className="text-sm sm:text-lg md:text-xl text-[#c8d4e6] max-w-2xl mx-auto px-2">
@@ -211,7 +211,7 @@ const EventDetailsSection = forwardRef(({ noBackground = false, venueImage = nul
               {
                 icon: <Calendar className="text-[#e19d24]" size={isMobile ? 16 : 24} />,
                 title: "Datas",
-                description: "25, 26 e 27 de abril de 2024"
+                description: "20,21 e 22 de Junho de 2025"
               },
               {
                 icon: <Clock className="text-[#e19d24]" size={isMobile ? 16 : 24} />,
