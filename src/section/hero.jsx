@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import cristofer from './cristofer.png';
+import banner from './cristofer.png';
+import mobile from './cris2.png';
+import logo from './logo.png';
 
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -17,51 +19,42 @@ const Hero = () => {
 
   // Mobile Version Component
   const MobileVersion = () => (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <div className="flex flex-col">
-        {/* Hero Image Section at top */}
-        <div className="relative h-80 overflow-hidden">
-          <img 
-            src={cristofer}
-            alt="Banner" 
-            className="w-full h-full object-cover"
-          />
-          {/* Lighter blue overlay for better visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/90" />
-        </div>
-
-        {/* Content Container */}
-        <div className="px-6 py-8 -mt-16 relative z-10">
+    <div className="relative min-h-screen bg-slate-900 text-white">
+      {/* Background Image */}
+      <img 
+        src={mobile}
+        alt="Banner" 
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      
+      
+      {/* Content Container - Posicionado no topo */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center pt-20 px-6">
+        <div className="w-full max-w-sm space-y-8">
           {/* Logo */}
-          <div className="flex justify-center mb-4">
-            <div className="h-10 w-32 bg-gray-700 rounded flex items-center justify-center">
-              <span className="text-gray-400 text-sm">Logo</span>
-            </div>
+          <div className="flex justify-center">
+            <img 
+              src={logo}
+              alt="Logo" 
+              className="h-16 w-auto"
+            />
           </div>
-
-          {/* Event Info Badge */}
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center gap-3 border border-blue-500/50 rounded-full px-4 py-2 bg-gray-900/90 backdrop-blur">
-              <span className="text-xs">Lorem Ipsum 156</span>
-              <span className="text-blue-400 text-xs">|</span>
-              <span className="text-xs">16 e 17 DE JUNHO</span>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="space-y-6 text-center">
-            <h1 className="text-2xl font-light leading-tight">
-              Lorem ipsum dolor sit <span className="font-bold">amet consectetur adipisicing elit</span> sed do eiusmod <span className="font-bold">tempor incididunt ut labore</span>
+          
+          {/* Título e Texto */}
+          <div className="space-y-4 text-center">
+            <h1 className="text-3xl font-bold leading-tight">
+              Potencialize sua <br />
+              <span className="text-yellow-500">Excelência Educacional</span>
             </h1>
 
             <p className="text-gray-300 text-sm leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <span className="font-bold">quis nostrud exercitation</span> ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o Método de Cristofer Leone
             </p>
           </div>
-
+          
           {/* CTA Button */}
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-4 rounded-full text-base transition-all duration-300 mt-8 w-full shadow-lg shadow-blue-500/25">
-            LOREM IPSUM DOLOR SIT
+          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg">
+            INICIAR TRANSFORMAÇÃO
           </button>
         </div>
       </div>
@@ -70,61 +63,44 @@ const Hero = () => {
 
   // Desktop Version Component
   const DesktopVersion = () => (
-    <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
-      <div className="relative min-h-screen">
-        {/* Full Background Image with overlay */}
-        <img 
-          src={cristofer}
-          alt="Banner" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0">
-          {/* Lighter overlay for better image visibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/70 to-transparent" />
-          
-          {/* Blue gradient overlay - more subtle */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-transparent" />
-        </div>
+    <div className="relative min-h-screen bg-slate-900 text-white overflow-hidden">
+      {/* Full Background Image */}
+      <img 
+        src={banner}
+        alt="Banner" 
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      
 
-        {/* Container */}
-        <div className="relative z-10 container mx-auto px-12 py-16 min-h-screen flex items-center">
-          <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
-            
-            {/* Left Content */}
-            <div className="space-y-8 lg:pr-12 max-w-2xl">
-              {/* Logo */}
-              <div>
-                <div className="h-12 w-44 bg-gray-700 rounded flex items-center justify-center">
-                  <span className="text-gray-400">Logo</span>
-                </div>
-              </div>
-
-              {/* Event Info */}
-              <div className="inline-flex items-center gap-3 border border-blue-500/50 rounded-full px-6 py-3 bg-gray-900/70 backdrop-blur">
-                <span className="text-sm">Lorem Ipsum 156</span>
-                <span className="text-blue-400">|</span>
-                <span className="text-sm">16 e 17 DE JUNHO</span>
-              </div>
-
-              {/* Main Heading */}
-              <div className="space-y-6">
-                <h1 className="text-4xl lg:text-5xl font-light leading-tight">
-                  Lorem ipsum dolor sit <span className="font-bold">amet consectetur adipisicing elit,</span> sed do eiusmod <span className="font-bold">tempor incididunt ut labore et dolore magna</span>
-                </h1>
-
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <span className="font-bold">quis nostrud exercitation</span> ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-              </div>
-
-              {/* CTA Button */}
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
-                LOREM IPSUM DOLOR SIT
-              </button>
+      {/* Container - Posicionado mais para cima */}
+      <div className="relative z-10 min-h-screen flex items-start pt-24">
+        <div className="container mx-auto px-12">
+          <div className="max-w-xl space-y-8">
+            {/* Logo */}
+            <div className="flex justify-start">
+              <img 
+                src={logo}
+                alt="Logo" 
+                className="h-16 w-auto"
+              />
             </div>
+            
+            {/* Título e Texto */}
+            <div className="space-y-5">
+              <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
+                Potencialize sua <br />
+                <span className="text-yellow-500">Excelência Educacional</span>
+              </h1>
 
-            {/* Right side - empty for background image to show */}
-            <div />
+              <p className="text-gray-300 text-lg leading-relaxed">
+                Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o Método de Cristofer Leone
+              </p>
+            </div>
+            
+            {/* CTA Button */}
+            <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-7 py-3.5 rounded-full text-base transition-all duration-300 transform hover:scale-105 shadow-lg">
+              INICIAR TRANSFORMAÇÃO
+            </button>
           </div>
         </div>
       </div>
