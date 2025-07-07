@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import banner from './cristofer.png';
 import mobile from './cris2.png';
 import logo from './logo.png';
-// Importe o ícone do Lucide React
-import { ChevronDown } from 'lucide-react'; // Ou 'ArrowDown' se preferir uma seta mais reta
+import { ChevronDown } from 'lucide-react'; // Certifique-se de que lucide-react está instalado!
 
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -35,7 +34,8 @@ const Hero = () => {
 
       {/* Content Container */}
       <div className="relative z-10 px-6 py-8 bg-slate-900 flex-grow flex flex-col justify-between">
-        <div className="w-full max-w-sm mx-auto space-y-8 flex flex-col items-center text-center">
+        {/* Usamos flex-grow e flex-col para o conteúdo principal ocupar o espaço disponível */}
+        <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center"> {/* Removido space-y-8 daqui para controlar o espaçamento individualmente */}
           {/* Logo */}
           <img
             src={logo}
@@ -44,7 +44,7 @@ const Hero = () => {
           />
 
           {/* Título e Texto */}
-          <div className="space-y-4">
+          <div className="space-y-4 mb-10"> {/* Adicionei margin-bottom para empurrar o botão para baixo */}
             <h1 className="text-3xl font-bold leading-tight">
               Potencialize sua <br />
               <span className="text-yellow-500">Excelência Educacional</span>
@@ -56,18 +56,14 @@ const Hero = () => {
           </div>
 
           {/* CTA Button */}
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg mt-10 transform hover:scale-105">
+          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg transform hover:scale-105"> {/* Removi o mt-10 daqui pois o mb do div acima já controla */}
             INICIAR TRANSFORMAÇÃO
           </button>
         </div>
 
-        {/* Scroll Indicator - Usando Lucide React */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
-          {/* O ícone ChevronDown é uma seta para baixo. Você pode girá-lo se quiser um "V" */}
-          {/* Para um "V" invertido mais puro, 'ChevronDown' já funciona bem. Se quiser uma seta mais reta, use 'ArrowDown'. */}
+        {/* Scroll Indicator - Usando Lucide React e posicionado ainda mais abaixo */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce mt-auto"> {/* Adicionado mt-auto para empurrar para baixo se o conteúdo acima for curto */}
           <ChevronDown size={28} color="#F59E0B" strokeWidth={2.5} />
-          {/* Ou para uma seta mais reta apontando para baixo: */}
-          {/* <ArrowDown size={28} color="#F59E0B" strokeWidth={2.5} /> */}
         </div>
       </div>
     </div>
