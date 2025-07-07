@@ -3,9 +3,10 @@ import banner from './cristofer.png';
 import mobile from './cris2.png';
 import logo from './logo.png';
 
+
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
-
+  
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -20,17 +21,22 @@ const Hero = () => {
   // Mobile Version Component
   const MobileVersion = () => (
     <div className="relative min-h-screen bg-slate-900 text-white">
-      {/* Background Image */}
-      <img 
-        src={mobile}
-        alt="Banner" 
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {/* Background Image Container */}
+      <div className="relative h-96 overflow-hidden">
+        <img 
+          src={mobile}
+          alt="Banner" 
+          className="w-full h-full object-cover"
+        />
+        
+        
+        {/* Extra gradient for smoother transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900 to-transparent"></div>
+      </div>
       
-      
-      {/* Content Container - Posicionado no topo */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center pt-20 px-6">
-        <div className="w-full max-w-sm space-y-8">
+      {/* Content Container */}
+      <div className="relative z-10 px-6 py-8 bg-slate-900">
+        <div className="w-full max-w-sm mx-auto space-y-8">
           {/* Logo */}
           <div className="flex justify-center">
             <img 
@@ -46,7 +52,7 @@ const Hero = () => {
               Potencialize sua <br />
               <span className="text-yellow-500">Excelência Educacional</span>
             </h1>
-
+            
             <p className="text-gray-300 text-sm leading-relaxed">
               Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o Método de Cristofer Leone
             </p>
@@ -71,7 +77,6 @@ const Hero = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       
-
       {/* Container - Posicionado mais para cima */}
       <div className="relative z-10 min-h-screen flex items-start pt-24">
         <div className="container mx-auto px-12">
@@ -91,7 +96,7 @@ const Hero = () => {
                 Potencialize sua <br />
                 <span className="text-yellow-500">Excelência Educacional</span>
               </h1>
-
+              
               <p className="text-gray-300 text-lg leading-relaxed">
                 Para Profissionais com Experiência e Educadores Natos que buscam expandir seu impacto com o Método de Cristofer Leone
               </p>

@@ -53,7 +53,7 @@ const MethodJourneySection = () => {
   };
 
   return (
-    <section className="relative w-full py-20 sm:py-24 md:py-28 overflow-hidden">
+    <section className="relative w-full py-16 sm:py-20 md:py-28 overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0"
@@ -68,29 +68,29 @@ const MethodJourneySection = () => {
         <div className="absolute inset-0 bg-[#0c1220]/90"></div>
       </div>
 
-      <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-10%" }}
           variants={fadeInUp}
-          className="text-center mb-14 sm:mb-16 md:mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-100 mb-3">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-100 mb-2 sm:mb-3">
             A Jornada do
           </h2>
-          <div className="mb-5 md:mb-6">
-            <span className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d]">
+          <div className="mb-4 sm:mb-5 md:mb-6">
+            <span className="text-3xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e19d24] to-[#f8c56d]">
               Método ATO
             </span>
           </div>
-          <p className="text-base sm:text-lg md:text-xl text-[#c8d4e6] max-w-2xl mx-auto px-4">
+          <p className="text-sm sm:text-lg md:text-xl text-[#c8d4e6] max-w-2xl mx-auto px-2 sm:px-4">
             Três etapas de transformação para converter seu conhecimento em uma mentoria de impacto
           </p>
         </motion.div>
 
         {/* Journey Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
           {journeySteps.map((item, index) => (
             <motion.div
               key={index}
@@ -101,33 +101,33 @@ const MethodJourneySection = () => {
               transition={{ delay: 0.1 * index }}
               className="group relative"
             >
-              <div className="relative p-6 sm:p-7 md:p-8 bg-[#16202d]/95 backdrop-blur-sm rounded-2xl border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all duration-300 h-full hover:transform hover:scale-[1.02]">
+              <div className="relative p-5 sm:p-7 md:p-8 bg-[#16202d]/95 backdrop-blur-sm rounded-2xl border border-[#e19d24]/20 hover:border-[#e19d24]/40 transition-all duration-300 h-full hover:transform hover:scale-[1.02]">
                 {/* Subtle background effect */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#e19d2405_0%,transparent_70%)] rounded-2xl" />
                 
                 {/* Card Header */}
-                <div className="relative flex items-start gap-3 sm:gap-4 mb-6">
-                  <div className="p-3 sm:p-4 bg-gradient-to-br from-[#e19d24] to-[#d3891a] rounded-xl shadow-lg flex-shrink-0">
+                <div className="relative flex items-start gap-3 sm:gap-4 mb-5 sm:mb-6">
+                  <div className="p-2.5 sm:p-3 md:p-4 bg-gradient-to-br from-[#e19d24] to-[#d3891a] rounded-xl shadow-lg flex-shrink-0">
                     {item.icon}
                   </div>
                   <div className="text-left">
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-100 mb-1">
+                    <h3 className="text-base sm:text-xl md:text-2xl font-semibold text-gray-100 mb-1">
                       Etapa {item.step}
                     </h3>
-                    <p className="text-sm sm:text-base text-[#e19d24] font-bold uppercase tracking-wide">
+                    <p className="text-xs sm:text-base text-[#e19d24] font-bold uppercase tracking-wide">
                       {item.title}
                     </p>
-                    <p className="text-xs sm:text-sm text-[#c8d4e6] font-medium mt-1">
+                    <p className="text-xs sm:text-sm text-[#c8d4e6] font-medium mt-0.5 sm:mt-1">
                       {item.subtitle}
                     </p>
                   </div>
                 </div>
                 
                 {/* Highlights List */}
-                <ul className="space-y-2.5 sm:space-y-3 relative">
+                <ul className="space-y-2 sm:space-y-2.5 md:space-y-3 relative">
                   {item.highlights.map((highlight, hlIndex) => (
-                    <li key={hlIndex} className="flex items-start gap-2.5 sm:gap-3">
-                      <CheckCircle className="text-[#e19d24] flex-shrink-0 mt-0.5" size={16} />
+                    <li key={hlIndex} className="flex items-start gap-2 sm:gap-2.5 md:gap-3">
+                      <CheckCircle className="text-[#e19d24] flex-shrink-0 mt-0.5" size={14} />
                       <span className="text-xs sm:text-sm text-[#c8d4e6]/90 leading-relaxed">
                         {highlight}
                       </span>
