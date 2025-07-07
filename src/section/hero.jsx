@@ -3,6 +3,7 @@ import banner from './cristofer.png';
 import mobile from './cris2.png';
 import logo from './logo.png';
 
+
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   
@@ -28,25 +29,22 @@ const Hero = () => {
           className="w-full h-full object-cover"
         />
         
-        {/* Gradient Overlay - Degradê no final da imagem */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900"></div>
         
         {/* Extra gradient for smoother transition */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900 to-transparent"></div>
-        
-        {/* Logo positioned over the gradient */}
-        <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center">
-          <img 
-            src={logo}
-            alt="Logo" 
-            className="h-16 w-auto"
-          />
-        </div>
       </div>
       
       {/* Content Container */}
       <div className="relative z-10 px-6 py-8 bg-slate-900">
         <div className="w-full max-w-sm mx-auto space-y-8">
+          {/* Logo */}
+          <div className="flex justify-center">
+            <img 
+              src={logo}
+              alt="Logo" 
+              className="h-16 w-auto"
+            />
+          </div>
           
           {/* Título e Texto */}
           <div className="space-y-4 text-center">
