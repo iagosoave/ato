@@ -137,22 +137,19 @@ const TestimonialsSection = () => {
         </div>
         
         {/* CTA */}
-        <div className="text-center">
-          <motion.a 
-            href="https://pay.hotmart.com/D98067996F?_hi=eyJjaWQiOiIxNzM5NjU1NjQwNDExNjI4MzUzMDQ4MjMyOTUxODAwIiwiYmlkIjoiMTczOTY1NTY0MDQxMTYyODM1MzA0ODIzMjk1MTgwMCIsInNpZCI6Ijc4NjE1YWEzM2I4MDQwYWNhODg4MTZlZDNlMDY5MzhiIn0=.1741553142689&bid=1741553148353" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="inline-block"
-          >
-            <motion.button 
-              className="px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
-            </motion.button>
-          </motion.a>
-        </div>
+
+{/* CTA */}
+<div className="text-center">
+  <motion.a href="#pricing" className="inline-block">
+    <motion.button 
+      className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 rounded-full text-white transition-all duration-300 shadow-lg"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
+    </motion.button>
+  </motion.a>
+</div>
       </div>
     </section>
   );

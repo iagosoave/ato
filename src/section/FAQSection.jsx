@@ -137,7 +137,7 @@ const FAQSection = forwardRef(({ noBackground = false }, ref) => {
   rel="noopener noreferrer" 
   className="inline-block"
 >
-  <button className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:scale-105 transition-transform">
+  <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 mb-8 w-full sm:w-auto shadow-lg">
     FALAR COM NOSSA EQUIPE
   </button>
 </a>

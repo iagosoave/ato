@@ -59,9 +59,11 @@ const Hero = () => {
           </div>
           
           {/* CTA Button */}
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg">
-            INICIAR TRANSFORMAÇÃO
-          </button>
+          <a href="#pricing" className="block w-full">
+            <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg">
+              INICIAR TRANSFORMAÇÃO
+            </button>
+          </a>
         </div>
       </div>
     </div>
@@ -103,9 +105,11 @@ const Hero = () => {
             </div>
             
             {/* CTA Button */}
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-7 py-3.5 rounded-full text-base transition-all duration-300 transform hover:scale-105 shadow-lg">
-              INICIAR TRANSFORMAÇÃO
-            </button>
+            <a href="#pricing">
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-7 py-3.5 rounded-full text-white transition-all duration-300 transform hover:scale-105 shadow-lg">
+                INICIAR TRANSFORMAÇÃO
+              </button>
+            </a>
           </div>
         </div>
       </div>

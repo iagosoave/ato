@@ -251,9 +251,16 @@ const DiferenciaisSection = forwardRef(({ noBackground = false, deviceType = 'de
   rel="noopener noreferrer" 
   className="inline-block"
 >
-  <button className="px-8 py-4 bg-gradient-to-r from-[#e19d24] to-[#d3891a] text-white font-bold rounded-lg hover:from-[#d3891a] hover:to-[#c27b15] transform transition-all hover:scale-105 shadow-lg shadow-[#e19d24]/10">
-    QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
-  </button>
+  
+
+{/* CTA Final */}
+<div className="text-center">
+  <a href="#pricing" className="inline-block">
+    <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 rounded-full text-white transition-all duration-300 transform hover:scale-105 shadow-lg">
+      QUERO ME TRANSFORMAR EM UM MENTOR ATÔMICO
+    </button>
+  </a>
+</div>
 </a>
         </div>
       </div>

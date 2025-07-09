@@ -69,9 +69,13 @@ const CristoferLeoneSection = ({ profileImage = cristofer }) => {
               </div>
 
               {/* CTA Button */}
-              <button className="bg-[#e19d24] hover:bg-[#f8c56d] text-black font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 mb-8 w-full sm:w-auto">
-                Comece Sua Transformação
-              </button>
+
+{/* CTA Button */}
+<a href="#pricing">
+  <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 mb-8 w-full sm:w-auto shadow-lg">
+    Comece Sua Transformação
+  </button>
+</a>
 
               {/* Social Links */}
               <div className="flex gap-4 justify-center lg:justify-start">
