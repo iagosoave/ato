@@ -60,7 +60,7 @@ const Hero = () => {
           
           {/* CTA Button */}
           <a href="#pricing" className="block w-full">
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg">
+            <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-6 py-4 rounded-full text-base transition-all duration-300 w-full shadow-lg">
               INICIAR TRANSFORMAÇÃO
             </button>
           </a>
